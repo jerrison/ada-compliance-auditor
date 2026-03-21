@@ -7,7 +7,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-import vertexai
 from fastapi import FastAPI, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -19,11 +18,6 @@ from pdf_generator import generate_pdf_report
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-
-vertexai.init(
-    project=os.getenv("GOOGLE_CLOUD_PROJECT"),
-    location=os.getenv("GOOGLE_CLOUD_LOCATION", "us-central1"),
-)
 
 app = FastAPI(title="ADA Compliance Auditor")
 
@@ -65,10 +59,15 @@ async def analyze(file: UploadFile = File(...), location_label: str = Form("")):
                 }))
 
             elif pass_result.pass_name == "consistency_check":
-                # Merge: use positive_features/overall_risk/summary from detection (Pass 2),
-                # use refined violations and follow_up from consistency (Pass 3)
+                # Pass 3 returns "verified_violations" (not "violations")
+                # Fall back to "violations" if the model uses that key instead
+                verified = (
+                    pass_result.data.get("verified_violations")
+                    or pass_result.data.get("violations")
+                    or []
+                )
                 merged = {
-                    "violations": pass_result.data.get("violations", []),
+                    "violations": verified,
                     "positive_features": pass_result.data.get("positive_features", []),
                     "overall_risk": pass_result.data.get("overall_risk", "unknown"),
                     "summary": pass_result.data.get("summary", ""),

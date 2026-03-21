@@ -8,10 +8,22 @@ This module provides:
 """
 
 import json
+import os
 from pathlib import Path
-from vertexai.generative_models import GenerativeModel, Part, GenerationConfig
+
+from google import genai
+from google.genai.types import GenerateContentConfig, Part
 
 DATA_DIR = Path(__file__).parent / "data"
+MODEL = "gemini-2.5-flash"
+
+_client = None
+
+def _get_client():
+    global _client
+    if _client is None:
+        _client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+    return _client
 
 
 def _load_kb():
@@ -87,17 +99,18 @@ ANALYSIS_PROMPT = build_prompt()
 
 
 def analyze_image_direct(image_bytes: bytes, mime_type: str) -> dict:
-    """Direct Gemini API call (fallback when RocketRide engine is not running)."""
+    """Direct Gemini API call (fallback)."""
     return call_gemini_direct(image_bytes, mime_type, ANALYSIS_PROMPT)
 
 
 def call_gemini_direct(image_bytes: bytes, mime_type: str, prompt: str) -> dict:
-    """Generic Gemini API call helper. Used by gemini_pipeline.py."""
-    model = GenerativeModel("gemini-2.0-flash")
-    image_part = Part.from_data(data=image_bytes, mime_type=mime_type)
-    response = model.generate_content(
-        [image_part, prompt],
-        generation_config=GenerationConfig(
+    """Generic Gemini API call helper."""
+    client = _get_client()
+    image_part = Part.from_bytes(data=image_bytes, mime_type=mime_type)
+    response = client.models.generate_content(
+        model=MODEL,
+        contents=[image_part, prompt],
+        config=GenerateContentConfig(
             temperature=0.2,
             max_output_tokens=8192,
             response_mime_type="application/json",
