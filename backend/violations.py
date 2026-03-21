@@ -7,6 +7,8 @@ DATA_DIR = Path(__file__).parent / "data"
 
 _kb = None
 
+CONFIRMED_THRESHOLD = 0.7
+
 
 def _load_kb():
     global _kb
@@ -87,29 +89,66 @@ def _sort_key(violation):
 
 
 def enrich_violations(analysis, address="", location_type=""):
-    """Take raw Gemini analysis and enrich with KB data, produce report payload."""
+    """Take raw Gemini analysis and enrich with KB data, produce flat report payload.
+
+    Returns a flat dict compatible with the frontend, PDF generator, and SSE streaming.
+    """
     kb = _load_kb()
     enriched_violations = []
     total_cost = 0
+    confirmed_count = 0
+    potential_count = 0
 
     for violation in analysis.get("violations", []):
         vtype = violation["violation_type"]
         entry = kb.get(vtype, {})
 
+        # Extract codes for flat field access (frontend/PDF compatibility)
+        federal = entry.get("codes", {}).get("federal_ada") or {}
+        cbc = entry.get("codes", {}).get("cbc_title24") or {}
+
+        # Determine stricter_than_federal
+        cbc_req = entry.get("codes", {}).get("cbc_title24", {}).get("requirement", "") if entry.get("codes", {}).get("cbc_title24") else ""
+        fed_req = entry.get("codes", {}).get("federal_ada", {}).get("requirement", "") if entry.get("codes", {}).get("federal_ada") else ""
+        stricter = (cbc_req != fed_req) if cbc_req else False
+
         enriched = {
             **violation,
             "category": entry.get("category", "general"),
             "title": entry.get("title", violation.get("description", vtype)),
+            # Structured codes (our format)
             "codes": entry.get("codes", {"federal_ada": None, "cbc_title24": None, "sf_local": None}),
+            # Flat code fields (teammate's frontend/PDF format)
+            "ada_section": federal.get("section", "N/A"),
+            "ada_title": federal.get("title", "N/A"),
+            "ada_requirement": federal.get("requirement", ""),
+            "cbc_section": cbc.get("section", "N/A"),
+            "cbc_title": cbc.get("title", "N/A"),
+            "cbc_requirement": cbc.get("requirement", ""),
+            "stricter_than_federal": stricter,
+            "stricter_note": "",
+            # Cost fields
             "legal_risk": entry.get("legal_risk", ""),
             "estimated_cost": entry.get("estimated_cost", 0),
+            "cost_low": entry.get("estimated_cost", 0),
+            "cost_high": entry.get("estimated_cost", 0),
             "cost_unit": entry.get("cost_unit", ""),
-            "remediation": entry.get("remediation", {"summary": "", "steps": []}),
+            "cost_note": entry.get("cost_note", ""),
+            "remediation": entry.get("remediation", {}).get("summary", ""),
+            "remediation_detail": entry.get("remediation", {}),
+            "cost_factors": [],
+            "priority": 0,
         }
         enriched_violations.append(enriched)
         total_cost += entry.get("estimated_cost", 0)
 
-    # Sort AFTER enrichment — _sort_key reads estimated_cost which is set during enrichment above
+        confidence = violation.get("confidence", 0)
+        if confidence >= CONFIRMED_THRESHOLD:
+            confirmed_count += 1
+        else:
+            potential_count += 1
+
+    # Sort and assign priority
     enriched_violations.sort(key=_sort_key)
     for i, v in enumerate(enriched_violations, 1):
         v["priority"] = i
@@ -120,24 +159,24 @@ def enrich_violations(analysis, address="", location_type=""):
         if sev in by_severity:
             by_severity[sev] += 1
 
+    overall_risk = _compute_overall_risk(enriched_violations)
+    headline = _generate_headline(enriched_violations)
+
     return {
-        "report": {
-            "id": str(uuid.uuid4()),
-            "generated_at": datetime.now(timezone.utc).isoformat(),
-            "location": {
-                "address": address,
-                "type": location_type,
-            },
-            "summary": {
-                "total_violations": len(enriched_violations),
-                "by_severity": by_severity,
-                "total_estimated_cost": total_cost,
-                "overall_risk": _compute_overall_risk(enriched_violations),
-                "headline": _generate_headline(enriched_violations),
-            },
-            "violations": enriched_violations,
-            "tax_credits": TAX_CREDITS,
-            "next_steps": NEXT_STEPS,
-            "disclaimer": DISCLAIMER,
-        }
+        "violations": enriched_violations,
+        "positive_features": analysis.get("positive_features", []),
+        "overall_risk": overall_risk,
+        "summary": analysis.get("summary", ""),
+        "total_estimated_cost": {
+            "low": total_cost,
+            "high": total_cost,
+        },
+        "violation_count": len(enriched_violations),
+        "confirmed_count": confirmed_count,
+        "potential_count": potential_count,
+        "by_severity": by_severity,
+        "headline": headline,
+        "tax_credits": TAX_CREDITS,
+        "next_steps": NEXT_STEPS,
+        "disclaimer": DISCLAIMER,
     }

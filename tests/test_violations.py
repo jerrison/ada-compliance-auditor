@@ -1,6 +1,10 @@
 import json
 from pathlib import Path
 
+from backend.violations import enrich_violations
+
+
+# --- Our test helpers ---
 
 def _make_raw_analysis(violations=None):
     """Helper to create a raw Gemini analysis dict."""
@@ -23,127 +27,177 @@ def _make_violation(vtype="missing_ramp", severity="high", confidence=0.9):
     }
 
 
+# --- Our 13 tests (updated for flat output format) ---
+
 class TestEnrichViolations:
-    def test_empty_violations_returns_report_structure(self):
-        """enrich_violations with no violations returns valid report with zero cost."""
-        from backend.violations import enrich_violations
+    def test_empty_violations_returns_flat_structure(self):
+        """enrich_violations with no violations returns valid flat dict with zero cost."""
         result = enrich_violations(_make_raw_analysis())
-        report = result["report"]
-        assert report["summary"]["total_violations"] == 0
-        assert report["summary"]["total_estimated_cost"] == 0
-        assert report["summary"]["overall_risk"] == "none"
-        assert "tax_credits" in report
-        assert "disclaimer" in report
-        assert "next_steps" in report
+        assert result["violation_count"] == 0
+        assert result["total_estimated_cost"]["low"] == 0
+        assert result["total_estimated_cost"]["high"] == 0
+        assert result["overall_risk"] == "none"
+        assert "tax_credits" in result
+        assert "disclaimer" in result
+        assert "next_steps" in result
 
     def test_single_violation_enriched_with_kb_data(self):
         """A known violation type gets codes, cost, remediation from KB."""
-        from backend.violations import enrich_violations
         raw = _make_raw_analysis([_make_violation("missing_ramp")])
-        report = enrich_violations(raw)["report"]
-        v = report["violations"][0]
+        result = enrich_violations(raw)
+        v = result["violations"][0]
         assert v["violation_type"] == "missing_ramp"
         assert v["codes"]["federal_ada"] is not None
         assert "section" in v["codes"]["federal_ada"]
         assert v["estimated_cost"] > 0
-        assert "steps" in v["remediation"]
+        assert len(v["remediation"]) > 0
         assert v["category"] == "entrances"
 
     def test_unknown_violation_type_handled_gracefully(self):
         """Unknown violation types get default/empty enrichment, not errors."""
-        from backend.violations import enrich_violations
         raw = _make_raw_analysis([_make_violation("unknown_type_xyz")])
-        report = enrich_violations(raw)["report"]
-        v = report["violations"][0]
+        result = enrich_violations(raw)
+        v = result["violations"][0]
         assert v["violation_type"] == "unknown_type_xyz"
         assert v["estimated_cost"] == 0
 
     def test_priority_sorting_high_before_medium(self):
         """High severity violations get lower priority numbers than medium."""
-        from backend.violations import enrich_violations
         raw = _make_raw_analysis([
             _make_violation("round_door_knob", severity="medium", confidence=0.9),
             _make_violation("missing_ramp", severity="high", confidence=0.9),
         ])
-        report = enrich_violations(raw)["report"]
-        assert report["violations"][0]["severity"] == "high"
-        assert report["violations"][0]["priority"] < report["violations"][1]["priority"]
+        result = enrich_violations(raw)
+        assert result["violations"][0]["severity"] == "high"
+        assert result["violations"][0]["priority"] < result["violations"][1]["priority"]
 
     def test_priority_tiebreak_by_confidence(self):
         """Same severity: higher confidence gets lower priority number."""
-        from backend.violations import enrich_violations
         raw = _make_raw_analysis([
             _make_violation("missing_ramp", severity="high", confidence=0.7),
             _make_violation("no_accessible_entrance", severity="high", confidence=0.95),
         ])
-        report = enrich_violations(raw)["report"]
-        assert report["violations"][0]["confidence"] > report["violations"][1]["confidence"]
+        result = enrich_violations(raw)
+        assert result["violations"][0]["confidence"] > result["violations"][1]["confidence"]
 
     def test_overall_risk_high_when_any_high_severity(self):
         """overall_risk is 'high' if any violation is high severity."""
-        from backend.violations import enrich_violations
         raw = _make_raw_analysis([
             _make_violation("round_door_knob", severity="low"),
             _make_violation("missing_ramp", severity="high"),
         ])
-        report = enrich_violations(raw)["report"]
-        assert report["summary"]["overall_risk"] == "high"
+        result = enrich_violations(raw)
+        assert result["overall_risk"] == "high"
 
     def test_overall_risk_medium_when_no_high(self):
         """overall_risk is 'medium' when no high but some medium."""
-        from backend.violations import enrich_violations
         raw = _make_raw_analysis([
             _make_violation("round_door_knob", severity="medium"),
         ])
-        report = enrich_violations(raw)["report"]
-        assert report["summary"]["overall_risk"] == "medium"
+        result = enrich_violations(raw)
+        assert result["overall_risk"] == "medium"
 
     def test_overall_risk_none_when_no_violations(self):
-        from backend.violations import enrich_violations
-        report = enrich_violations(_make_raw_analysis())["report"]
-        assert report["summary"]["overall_risk"] == "none"
+        result = enrich_violations(_make_raw_analysis())
+        assert result["overall_risk"] == "none"
 
     def test_total_cost_sums_all_violations(self):
         """total_estimated_cost is sum of all violation estimated_costs."""
-        from backend.violations import enrich_violations
         raw = _make_raw_analysis([
             _make_violation("missing_ramp"),
             _make_violation("round_door_knob"),
         ])
-        report = enrich_violations(raw)["report"]
-        expected = sum(v["estimated_cost"] for v in report["violations"])
-        assert report["summary"]["total_estimated_cost"] == expected
+        result = enrich_violations(raw)
+        expected = sum(v["estimated_cost"] for v in result["violations"])
+        assert result["total_estimated_cost"]["low"] == expected
+        assert result["total_estimated_cost"]["high"] == expected
 
     def test_headline_generated(self):
         """headline is a non-empty template-generated string."""
-        from backend.violations import enrich_violations
         raw = _make_raw_analysis([_make_violation("missing_ramp")])
-        report = enrich_violations(raw)["report"]
-        assert len(report["summary"]["headline"]) > 0
-        assert "access barrier" in report["summary"]["headline"].lower()
+        result = enrich_violations(raw)
+        assert len(result["headline"]) > 0
+        assert "access barrier" in result["headline"].lower()
 
     def test_by_severity_counts(self):
         """by_severity correctly counts violations per severity level."""
-        from backend.violations import enrich_violations
         raw = _make_raw_analysis([
             _make_violation("missing_ramp", severity="high"),
             _make_violation("round_door_knob", severity="medium"),
             _make_violation("missing_tactile_signage", severity="low"),
         ])
-        report = enrich_violations(raw)["report"]
-        assert report["summary"]["by_severity"] == {"high": 1, "medium": 1, "low": 1}
+        result = enrich_violations(raw)
+        assert result["by_severity"] == {"high": 1, "medium": 1, "low": 1}
 
-    def test_location_defaults_to_empty(self):
-        """location fields default to empty strings when not provided."""
-        from backend.violations import enrich_violations
-        report = enrich_violations(_make_raw_analysis())["report"]
-        assert report["location"]["address"] == ""
-        assert report["location"]["type"] == ""
+    def test_positive_features_preserved(self):
+        """positive_features from analysis are preserved in output."""
+        result = enrich_violations(_make_raw_analysis())
+        assert "Automatic door at main entrance" in result["positive_features"]
 
-    def test_location_populated_when_provided(self):
-        """location is populated when caller passes it."""
-        from backend.violations import enrich_violations
-        raw = _make_raw_analysis()
-        report = enrich_violations(raw, address="123 Market St", location_type="commercial")["report"]
-        assert report["location"]["address"] == "123 Market St"
-        assert report["location"]["type"] == "commercial"
+    def test_disclaimer_present(self):
+        """disclaimer is included in enriched output."""
+        result = enrich_violations(_make_raw_analysis())
+        assert "CASp" in result["disclaimer"]
+
+
+# --- Teammate's tests (updated for flat output format & KB data) ---
+
+SAMPLE_ANALYSIS = {
+    "violations": [
+        {
+            "violation_type": "missing_ramp",
+            "description": "No ramp at entrance",
+            "severity": "high",
+            "confidence": 0.9,
+            "location_in_image": "front steps",
+            "reasoning": "Three steps visible",
+            "needs_measurement": False,
+        },
+        {
+            "violation_type": "round_door_knob",
+            "description": "Round knob on front door",
+            "severity": "medium",
+            "confidence": 0.6,
+            "location_in_image": "front door",
+            "reasoning": "Round knob visible",
+            "needs_measurement": False,
+        },
+    ],
+    "positive_features": ["Wide doorway"],
+    "overall_risk": "high",
+    "summary": "Test summary",
+}
+
+
+def test_enrichment_includes_california_codes():
+    result = enrich_violations(SAMPLE_ANALYSIS)
+    violation = result["violations"][0]
+    assert "cbc_section" in violation
+    assert "cbc_title" in violation
+
+
+def test_enrichment_includes_federal_and_california():
+    result = enrich_violations(SAMPLE_ANALYSIS)
+    violation = result["violations"][0]
+    assert "ada_section" in violation
+    assert "cbc_section" in violation
+
+
+def test_enrichment_tracks_confirmed_vs_potential():
+    result = enrich_violations(SAMPLE_ANALYSIS)
+    assert "confirmed_count" in result
+    assert "potential_count" in result
+    assert result["confirmed_count"] == 1  # missing_ramp at 0.9
+    assert result["potential_count"] == 1  # round_door_knob at 0.6
+
+
+def test_enrichment_includes_stricter_flag():
+    result = enrich_violations(SAMPLE_ANALYSIS)
+    ramp = result["violations"][0]
+    assert "stricter_than_federal" in ramp
+
+
+def test_enrichment_cost_totals():
+    result = enrich_violations(SAMPLE_ANALYSIS)
+    assert result["total_estimated_cost"]["low"] > 0
+    assert result["total_estimated_cost"]["high"] > 0

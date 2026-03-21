@@ -1,12 +1,10 @@
 """
 Gemini Vision analysis for ADA compliance.
 
-This module provides two execution paths:
-1. Via RocketRide pipeline (primary) - called through the pipeline engine
-2. Direct Gemini API (fallback) - for testing without RocketRide running
-
-The prompt is dynamically built from the knowledge base at import time,
-so it stays in sync with the violation types defined in ada_knowledge_base.json.
+This module provides:
+1. build_prompt() / ANALYSIS_PROMPT - dynamic prompt built from the knowledge base
+2. analyze_image_direct() - direct Gemini API call (fallback)
+3. call_gemini_direct() - generic Gemini call helper used by gemini_pipeline.py
 """
 
 import json
@@ -90,16 +88,19 @@ ANALYSIS_PROMPT = build_prompt()
 
 def analyze_image_direct(image_bytes: bytes, mime_type: str) -> dict:
     """Direct Gemini API call (fallback when RocketRide engine is not running)."""
+    return call_gemini_direct(image_bytes, mime_type, ANALYSIS_PROMPT)
+
+
+def call_gemini_direct(image_bytes: bytes, mime_type: str, prompt: str) -> dict:
+    """Generic Gemini API call helper. Used by gemini_pipeline.py."""
     model = GenerativeModel("gemini-2.0-flash")
     image_part = Part.from_data(data=image_bytes, mime_type=mime_type)
-
     response = model.generate_content(
-        [image_part, ANALYSIS_PROMPT],
+        [image_part, prompt],
         generation_config=GenerationConfig(
             temperature=0.2,
             max_output_tokens=8192,
             response_mime_type="application/json",
         ),
     )
-
     return json.loads(response.text)

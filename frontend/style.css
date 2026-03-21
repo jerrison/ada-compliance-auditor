@@ -16,3 +16,41 @@
 .risk-high { background-color: #991b1b; color: #fca5a5; }
 .risk-medium { background-color: #92400e; color: #fcd34d; }
 .risk-low { background-color: #14532d; color: #86efac; }
+
+/* Screen navigation */
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* Bottom nav buttons */
+.nav-btn {
+  flex: 1;
+  padding: 10px 0 8px;
+  text-align: center;
+  color: #6b7280;
+  transition: color 0.2s;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.nav-btn.active { color: #3b82f6; }
+
+/* History filter buttons */
+.filter-btn {
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #9ca3af;
+  background-color: #1f2937;
+  border: 1px solid #374151;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.filter-btn.active {
+  background-color: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
+
+/* Progress step indicators */
+.step-indicator { transition: all 0.3s; font-size: 10px; }
