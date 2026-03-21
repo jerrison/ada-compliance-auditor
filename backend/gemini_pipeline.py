@@ -41,11 +41,24 @@ def _call_gemini(image_bytes: bytes, mime_type: str, prompt: str) -> dict:
         contents=[image_part, prompt],
         config=GenerateContentConfig(
             temperature=0.2,
-            max_output_tokens=4096,
+            max_output_tokens=8192,
             response_mime_type="application/json",
         ),
     )
-    return json.loads(response.text)
+    try:
+        return json.loads(response.text)
+    except json.JSONDecodeError:
+        logger.warning("JSON parse failed, retrying with higher token limit")
+        response = client.models.generate_content(
+            model=MODEL,
+            contents=[image_part, prompt],
+            config=GenerateContentConfig(
+                temperature=0.1,
+                max_output_tokens=16384,
+                response_mime_type="application/json",
+            ),
+        )
+        return json.loads(response.text)
 
 
 async def run_analysis_pipeline(image_bytes: bytes, mime_type: str) -> AsyncGenerator[PassResult, None]:
