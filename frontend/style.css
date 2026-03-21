@@ -1,56 +1,193 @@
-/* Drag-over state */
+/* ── Base ──────────────────────────────────────────────── */
+body { font-family: 'DM Sans', system-ui, sans-serif; }
+.font-mono, [class*="font-mono"] { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+/* ── Drag-over ────────────────────────────────────────── */
 .drag-over {
-  border-color: #3b82f6 !important;
-  background-color: rgba(59, 130, 246, 0.05) !important;
+  border-color: #0ea5e9 !important;
+  background-color: rgba(14, 165, 233, 0.05) !important;
 }
 
-/* Severity colors */
-.severity-high { border-left: 4px solid #ef4444; }
-.severity-medium { border-left: 4px solid #f59e0b; }
-.severity-low { border-left: 4px solid #3b82f6; }
+/* ── Severity indicators ──────────────────────────────── */
+.severity-high   { border-left: 3px solid #f43f5e; }
+.severity-medium { border-left: 3px solid #f59e0b; }
+.severity-low    { border-left: 3px solid #0ea5e9; }
 
-.severity-badge-high { background-color: #991b1b; color: #fca5a5; }
-.severity-badge-medium { background-color: #92400e; color: #fcd34d; }
-.severity-badge-low { background-color: #1e3a5f; color: #93c5fd; }
+.severity-badge-high   { background-color: #881337; color: #fda4af; }
+.severity-badge-medium { background-color: #78350f; color: #fcd34d; }
+.severity-badge-low    { background-color: #0c4a6e; color: #7dd3fc; }
 
-.risk-high { background-color: #991b1b; color: #fca5a5; }
-.risk-medium { background-color: #92400e; color: #fcd34d; }
-.risk-low { background-color: #14532d; color: #86efac; }
+.risk-high   { background-color: #881337; color: #fda4af; }
+.risk-medium { background-color: #78350f; color: #fcd34d; }
+.risk-low    { background-color: #14532d; color: #86efac; }
+.risk-none   { background-color: #1e293b; color: #94a3b8; }
 
-/* Screen navigation */
+/* ── Screen navigation ────────────────────────────────── */
 .screen { display: none; }
 .screen.active { display: block; }
 
-/* Bottom nav buttons */
+/* ── Bottom nav ───────────────────────────────────────── */
 .nav-btn {
   flex: 1;
   padding: 10px 0 8px;
   text-align: center;
-  color: #6b7280;
+  color: #64748b;
   transition: color 0.2s;
   background: none;
   border: none;
   cursor: pointer;
 }
-.nav-btn.active { color: #3b82f6; }
+.nav-btn.active { color: #0ea5e9; }
 
-/* History filter buttons */
+/* ── Filter buttons ───────────────────────────────────── */
 .filter-btn {
   padding: 6px 14px;
   border-radius: 9999px;
   font-size: 12px;
   font-weight: 500;
-  color: #9ca3af;
-  background-color: #1f2937;
-  border: 1px solid #374151;
+  color: #94a3b8;
+  background-color: #1e293b;
+  border: 1px solid #334155;
   cursor: pointer;
   transition: all 0.2s;
+  white-space: nowrap;
 }
 .filter-btn.active {
-  background-color: #2563eb;
+  background-color: #0ea5e9;
   color: white;
-  border-color: #2563eb;
+  border-color: #0ea5e9;
 }
 
-/* Progress step indicators */
-.step-indicator { transition: all 0.3s; font-size: 10px; }
+/* ── Progress steps ───────────────────────────────────── */
+.step-indicator { transition: all 0.3s; }
+
+/* ── Violation cards ──────────────────────────────────── */
+.violation-card {
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.violation-card:hover {
+  border-color: #334155;
+}
+
+.violation-card-header {
+  padding: 14px 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.violation-card-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease-out, padding 0.35s ease-out;
+  padding: 0 16px;
+}
+.violation-card.expanded .violation-card-body {
+  max-height: 2000px;
+  padding: 0 16px 16px;
+}
+
+.violation-card-chevron {
+  transition: transform 0.25s ease;
+  width: 16px;
+  height: 16px;
+  color: #475569;
+  shrink: 0;
+}
+.violation-card.expanded .violation-card-chevron {
+  transform: rotate(180deg);
+}
+
+/* ── Priority badge ───────────────────────────────────── */
+.priority-badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.priority-badge.sev-high   { background: #881337; color: #fda4af; }
+.priority-badge.sev-medium { background: #78350f; color: #fcd34d; }
+.priority-badge.sev-low    { background: #0c4a6e; color: #7dd3fc; }
+
+/* ── Legal risk callout ───────────────────────────────── */
+.legal-risk-box {
+  background: rgba(244, 63, 94, 0.06);
+  border: 1px solid rgba(244, 63, 94, 0.15);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+/* ── Remediation steps ────────────────────────────────── */
+.remediation-step {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.step-number {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: #1e293b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  color: #64748b;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ── Code reference pills ─────────────────────────────── */
+.code-ref {
+  background: #1e293b;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+/* ── Info tag ─────────────────────────────────────────── */
+.info-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #1e293b;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+/* ── Cost row in summary table ────────────────────────── */
+.cost-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #1e293b;
+}
+.cost-row:last-child { border-bottom: none; }
+
+/* ── Tax credit card ──────────────────────────────────── */
+.tax-credit-card {
+  background: rgba(16, 185, 129, 0.05);
+  border: 1px solid rgba(16, 185, 129, 0.1);
+  border-radius: 10px;
+  padding: 12px;
+}
+
+/* ── Severity bar segments ────────────────────────────── */
+.sev-bar-high   { background: #f43f5e; transition: width 0.6s ease; }
+.sev-bar-medium { background: #f59e0b; transition: width 0.6s ease; }
+.sev-bar-low    { background: #0ea5e9; transition: width 0.6s ease; }
