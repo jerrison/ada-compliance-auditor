@@ -17,7 +17,7 @@ The current system has 18 violation types with basic federal ADA references and 
 
 ## Solution
 
-Build a comprehensive, single-file knowledge base (`ada_knowledge_base.json`) covering ~55 violation types across federal ADA, CBC Title 24, and SF local codes. Each entry includes codes, SF-market costs, step-by-step remediation, legal risk, and visual detection cues for AI image analysis.
+Build a comprehensive, single-file knowledge base (`ada_knowledge_base.json`) covering ~56 violation types across federal ADA, CBC Title 24, and SF local codes. Each entry includes codes, SF-market costs, step-by-step remediation, legal risk, and visual detection cues for AI image analysis.
 
 ## Team Context
 
@@ -67,8 +67,9 @@ Each violation entry:
         "requirement": "CBC allows 1:10 slope for existing buildings (stricter new construction requirements). Handrails required on both sides for rises > 6 inches."
       },
       "sf_local": {
-        "ordinance": "SF Building Code Chapter 11B",
-        "note": "SF DBI enforces CBC Title 24 with local amendments. Accessible Business Entrance program may apply."
+        "section": "SF BC Ch. 11B",
+        "title": "Accessibility — Local Amendments",
+        "requirement": "SF DBI enforces CBC Title 24 with local amendments. Accessible Business Entrance program may apply."
       }
     },
 
@@ -124,7 +125,7 @@ Each violation entry:
 | `description` | string | One-line description of the violation |
 | `codes.federal_ada` | object/null | ADA Standards section, title, requirement text |
 | `codes.cbc_title24` | object/null | California Building Code section, title, requirement text |
-| `codes.sf_local` | object/null | SF-specific ordinance or program reference |
+| `codes.sf_local` | object/null | SF-specific: uses `section` (ordinance ref), `title`, `requirement` — same shape as other code objects. `section` may contain ordinance numbers like "SF BC Ch. 11B" |
 | `severity` | string | `high`, `medium`, or `low` |
 | `legal_risk` | string | California-specific legal exposure description |
 | `estimated_cost` | number | Single SF-market cost estimate in USD |
@@ -143,7 +144,7 @@ Each violation entry:
 | `detection.needs_measurement` | boolean | Whether physical measurement is needed to confirm |
 | `detection.false_positive_notes` | string | Common misidentifications to avoid |
 
-## Violation Categories (~55 types)
+## Violation Categories (~56 types)
 
 ### 1. Entrances & Doors (8 types)
 - `missing_ramp` — No ramp at entrance with level change
@@ -170,8 +171,9 @@ Each violation entry:
 - `missing_van_accessible_space` — No van-accessible space (96-inch aisle)
 - `damaged_parking_surface` — Accessible route from parking has cracks, potholes, or heaving
 
-### 4. Routes & Pathways (7 types)
+### 4. Routes & Pathways (8 types)
 - `blocked_accessible_route` — Obstruction in accessible path
+- `missing_curb_cut` — No curb ramp where accessible route crosses a curb
 - `surface_gaps_or_cracks` — Walking surface has gaps > 1/2 inch or significant cracks
 - `excessive_cross_slope` — Cross slope exceeds 1:48
 - `insufficient_route_width` — Path width < 36 inches (44 for high-traffic corridors)
@@ -222,7 +224,8 @@ The enrichment layer (`violations.py`) produces this JSON payload:
     "generated_at": "ISO-8601 timestamp",
     "location": {
       "address": "",
-      "type": "commercial"
+      "type": "commercial",
+      "_note": "Optional. Populated by caller if available (e.g., iOS app sends address). Defaults to empty strings if not provided."
     },
 
     "summary": {
@@ -230,7 +233,8 @@ The enrichment layer (`violations.py`) produces this JSON payload:
       "by_severity": { "high": 2, "medium": 2, "low": 1 },
       "total_estimated_cost": 34500,
       "overall_risk": "high",
-      "headline": "2 critical access barriers found — entrance and restroom require immediate attention"
+      "headline": "2 critical access barriers found — entrance and restroom require immediate attention",
+      "_headline_logic": "Template-generated: '{N} {severity} access barrier(s) found — {top categories} require immediate attention'. Not AI-generated."
     },
 
     "violations": [
@@ -285,10 +289,22 @@ The enrichment layer (`violations.py`) produces this JSON payload:
 
 ### Priority Assignment Logic
 
-Violations are auto-sorted by priority:
-1. **High severity** violations first (blocks access entirely)
-2. Within same severity, higher confidence first
-3. Within same severity and confidence, lower cost first (quick wins)
+Violations are auto-sorted and assigned ascending priority numbers (1 = address first):
+1. **High severity** violations get lowest priority numbers (address first — they block access)
+2. Within same severity, higher confidence gets lower priority number (more certain issues first)
+3. Within same severity and confidence, lower cost gets lower priority number (quick wins first)
+
+### Overall Risk
+
+`overall_risk` is computed by `violations.py` from the severity distribution, NOT taken from Gemini's response:
+- Any high-severity violation → `"high"`
+- No high but any medium → `"medium"`
+- All low → `"low"`
+- No violations → `"none"`
+
+### Tax Credits
+
+Report-level `tax_credits` is a **static reference list** hardcoded in `violations.py`. It lists the three main programs available to SF property owners. The per-violation `tax_credits.eligible` field in the KB indicates whether that specific violation's fix likely qualifies, but the report-level list is always included as general guidance.
 
 ## File Changes
 
@@ -296,9 +312,32 @@ Violations are auto-sorted by priority:
 |------|--------|-------------|
 | `backend/data/ada_knowledge_base.json` | **Create** | ~55 violation entries with full schema |
 | `backend/violations.py` | **Rewrite** | Load new KB, produce report output schema, priority sorting |
-| `backend/gemini_client.py` | **Update** | Dynamic prompt with violation types + visual cues from KB |
+| `backend/gemini_client.py` | **Rewrite** | See Gemini Prompt Strategy below |
 | `backend/data/ada_codes.json` | **Delete** | Superseded by knowledge base |
 | `backend/data/cost_estimates.json` | **Delete** | Superseded by knowledge base |
+| `ARCHITECTURE.md` | **Update** | Update data flow, directory structure, and violation count to reflect new KB |
+| `CLAUDE.md` | **Update** | Update Key Paths section to reference new KB file |
+
+## Gemini Prompt Strategy
+
+The current prompt has a hardcoded list of 18 violation types. With ~56 types, the prompt must be dynamically built.
+
+**Approach:** At module load time, `gemini_client.py` loads the knowledge base and builds the prompt:
+
+1. Extract all violation type IDs and their `detection.visual_cues` from the KB
+2. Format them into a categorized reference section in the prompt
+3. The prompt instructs Gemini to return only: `violation_type`, `description`, `severity`, `confidence`, `location_in_image`, `needs_measurement` — same fields as today
+4. All enrichment (codes, costs, remediation, legal risk) is done by `violations.py` after Gemini responds — Gemini does NOT return these fields
+
+**Prompt structure:**
+```
+[System instruction — you are an ADA auditor]
+[Categorized violation types with visual cues — generated from KB]
+[Output format — same JSON schema as current, with the expanded type list]
+[Severity guide — same as current]
+```
+
+**Loading:** KB is loaded once at module import time (not per-request). The prompt string is built once and reused.
 
 ## Research Approach
 
@@ -315,3 +354,5 @@ Violations are auto-sorted by priority:
 - Output JSON must serve both iOS app (summary view) and HTML/PDF (full report)
 - Estimated costs are single numbers, not ranges
 - All costs reflect SF market rates
+- The response shape changes (cost fields rename, report wrapper added) — frontend will need updates in a follow-up task (out of scope for this spec)
+- `location` in the report is optional — caller provides it if available, defaults to empty
