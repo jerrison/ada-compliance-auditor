@@ -1,0 +1,13 @@
+[project]
+name = "ada-compliance-auditor"
+version = "0.1.0"
+description = "AI-powered ADA accessibility auditor using Gemini Vision + RocketRide"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn>=0.30.6",
+    "python-multipart>=0.0.9",
+    "google-cloud-aiplatform>=1.72.0",
+    "python-dotenv>=1.0.1",
+    "rocketride",
+]

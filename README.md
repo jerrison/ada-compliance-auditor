@@ -26,7 +26,7 @@ Photo Upload → [RocketRide Pipeline] → Gemini Vision Analysis → ADA Code M
 # 1. Clone and install
 git clone <repo-url>
 cd 01-build-with-ai-sf
-pip install -r requirements.txt
+uv sync
 
 # 2. Set up Google Cloud credentials
 cp .env.example .env
@@ -40,7 +40,7 @@ gcloud auth application-default login
 
 # 4. Run the app
 cd backend
-uvicorn main:app --reload --port 8000
+uv run uvicorn main:app --reload --port 8000
 
 # 5. Open http://localhost:8000
 ```
