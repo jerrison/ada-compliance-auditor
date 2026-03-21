@@ -22,6 +22,8 @@ var historyEmpty = document.getElementById('history-empty');
 var selectedFile = null;
 var currentPdfUrl = null;
 var currentReportData = null;
+var detectedState = '';
+var detectedLocation = null;
 
 function clearChildren(el) {
   while (el.firstChild) el.removeChild(el.firstChild);
@@ -64,6 +66,121 @@ function handleFile(file) {
   analyzeBtn.disabled = false;
 }
 
+// ── Google Places Autocomplete ───────────────────────────────────
+var placesAutocomplete = null;
+var locateBtn = document.getElementById('locate-btn');
+var locateBtnText = document.getElementById('locate-btn-text');
+var locationDetail = document.getElementById('location-detail');
+var standardLabel = document.getElementById('standard-label');
+
+function initPlacesAutocomplete(apiKey) {
+  if (!apiKey) return;
+  var script = document.createElement('script');
+  script.src = 'https://maps.googleapis.com/maps/api/js?key=' + apiKey + '&libraries=places&callback=onGoogleMapsLoaded';
+  script.async = true;
+  script.defer = true;
+  document.head.appendChild(script);
+}
+
+window.onGoogleMapsLoaded = function() {
+  placesAutocomplete = new google.maps.places.Autocomplete(locationField, {
+    types: ['address'],
+    fields: ['address_components', 'formatted_address', 'geometry'],
+  });
+  placesAutocomplete.addListener('place_changed', function() {
+    var place = placesAutocomplete.getPlace();
+    if (!place || !place.address_components) return;
+    var city = '', county = '', state = '';
+    for (var i = 0; i < place.address_components.length; i++) {
+      var types = place.address_components[i].types;
+      if (types.indexOf('locality') !== -1) city = place.address_components[i].long_name;
+      else if (types.indexOf('administrative_area_level_2') !== -1) county = place.address_components[i].long_name;
+      else if (types.indexOf('administrative_area_level_1') !== -1) state = place.address_components[i].long_name;
+    }
+    detectedState = state;
+    detectedLocation = { city: city, county: county, state: state, full: place.formatted_address || '' };
+    var parts = [city, county, state].filter(Boolean);
+    locationDetail.textContent = parts.join(' \u00B7 ');
+    locationDetail.classList.remove('hidden');
+    updateStandardLabel(state);
+  });
+};
+
+fetch('/api/config')
+  .then(function(r) { return r.json(); })
+  .then(function(c) { if (c.google_maps_api_key) initPlacesAutocomplete(c.google_maps_api_key); })
+  .catch(function() {});
+
+// ── Geolocation (Locate Me) ─────────────────────────────────────
+locateBtn.addEventListener('click', function() {
+  if (!navigator.geolocation) { alert('Geolocation not supported.'); return; }
+  locateBtnText.textContent = '...';
+  locateBtn.disabled = true;
+  navigator.geolocation.getCurrentPosition(
+    function(pos) { reverseGeocode(pos.coords.latitude, pos.coords.longitude); },
+    function(err) {
+      locateBtnText.textContent = 'Locate';
+      locateBtn.disabled = false;
+      var msg = 'Location unavailable.';
+      if (err.code === 1) msg = 'Location permission denied.';
+      alert(msg);
+    },
+    { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+  );
+});
+
+function reverseGeocode(lat, lon) {
+  fetch('https://nominatim.openstreetmap.org/reverse?lat=' + lat + '&lon=' + lon + '&format=json&addressdetails=1')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      var a = data.address || {};
+      var city = a.city || a.town || a.village || '';
+      var county = a.county || '';
+      var state = a.state || '';
+      var road = a.road || '';
+      var num = a.house_number || '';
+      var zip = a.postcode || '';
+      var parts = [];
+      if (num && road) parts.push(num + ' ' + road);
+      else if (road) parts.push(road);
+      if (city) parts.push(city);
+      if (state) parts.push(state);
+      if (zip) parts.push(zip);
+      locationField.value = parts.join(', ');
+      detectedState = state;
+      detectedLocation = { city: city, county: county, state: state, full: parts.join(', ') };
+      var detail = [city, county, state].filter(Boolean);
+      locationDetail.textContent = detail.join(' \u00B7 ');
+      locationDetail.classList.remove('hidden');
+      updateStandardLabel(state);
+      locateBtnText.textContent = '\u2713';
+      locateBtn.disabled = false;
+      setTimeout(function() { locateBtnText.textContent = 'Locate'; }, 2000);
+    })
+    .catch(function() {
+      locateBtnText.textContent = 'Locate';
+      locateBtn.disabled = false;
+      alert('Could not determine address.');
+    });
+}
+
+function updateStandardLabel(state) {
+  if (!standardLabel) return;
+  if (state === 'California') {
+    standardLabel.textContent = 'Federal ADA + CA CBC Title 24';
+    standardLabel.classList.remove('text-slate-500');
+    standardLabel.classList.add('text-sky-400');
+  } else if (state) {
+    standardLabel.textContent = 'Federal ADA Standards \u00B7 ' + state;
+    standardLabel.classList.remove('text-sky-400');
+    standardLabel.classList.add('text-slate-500');
+  } else {
+    standardLabel.textContent = 'Federal ADA Standards';
+    standardLabel.classList.remove('text-sky-400');
+    standardLabel.classList.add('text-slate-500');
+  }
+}
+
 // ── SSE Analysis ────────────────────────────────────────────────
 analyzeBtn.addEventListener('click', async function() {
   if (!selectedFile) return;
@@ -77,6 +194,7 @@ analyzeBtn.addEventListener('click', async function() {
   formData.append('file', selectedFile);
   var loc = locationField.value.trim();
   if (loc) formData.append('location_label', loc);
+  if (detectedState) formData.append('state', detectedState);
   formData.append('session_id', getSessionId());
 
   try {

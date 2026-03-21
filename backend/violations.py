@@ -88,11 +88,17 @@ def _sort_key(violation):
     return (sev, conf, cost)
 
 
-def enrich_violations(analysis, address="", location_type=""):
+def _is_california(state: str) -> bool:
+    return state.strip().lower() in ("california", "ca")
+
+
+def enrich_violations(analysis, address="", location_type="", state=""):
     """Take raw Gemini analysis and enrich with KB data, produce flat report payload.
 
     Returns a flat dict compatible with the frontend, PDF generator, and SSE streaming.
+    When state is California, includes CBC Title 24 codes. Otherwise federal ADA only.
     """
+    include_california = _is_california(state)
     kb = _load_kb()
     enriched_violations = []
     total_cost = 0
@@ -107,26 +113,16 @@ def enrich_violations(analysis, address="", location_type=""):
         federal = entry.get("codes", {}).get("federal_ada") or {}
         cbc = entry.get("codes", {}).get("cbc_title24") or {}
 
-        # Determine stricter_than_federal
-        cbc_req = entry.get("codes", {}).get("cbc_title24", {}).get("requirement", "") if entry.get("codes", {}).get("cbc_title24") else ""
-        fed_req = entry.get("codes", {}).get("federal_ada", {}).get("requirement", "") if entry.get("codes", {}).get("federal_ada") else ""
-        stricter = (cbc_req != fed_req) if cbc_req else False
-
         enriched = {
             **violation,
             "category": entry.get("category", "general"),
             "title": entry.get("title", violation.get("description", vtype)),
-            # Structured codes (our format)
+            # Structured codes
             "codes": entry.get("codes", {"federal_ada": None, "cbc_title24": None, "sf_local": None}),
-            # Flat code fields (teammate's frontend/PDF format)
+            # Federal ADA (always included)
             "ada_section": federal.get("section", "N/A"),
             "ada_title": federal.get("title", "N/A"),
             "ada_requirement": federal.get("requirement", ""),
-            "cbc_section": cbc.get("section", "N/A"),
-            "cbc_title": cbc.get("title", "N/A"),
-            "cbc_requirement": cbc.get("requirement", ""),
-            "stricter_than_federal": stricter,
-            "stricter_note": "",
             # Cost fields
             "legal_risk": entry.get("legal_risk", ""),
             "estimated_cost": entry.get("estimated_cost", 0),
@@ -139,6 +135,18 @@ def enrich_violations(analysis, address="", location_type=""):
             "cost_factors": [],
             "priority": 0,
         }
+
+        # California CBC fields (only when in California)
+        if include_california:
+            cbc_req = cbc.get("requirement", "")
+            fed_req = federal.get("requirement", "")
+            stricter = (cbc_req != fed_req) if cbc_req else False
+            enriched["cbc_section"] = cbc.get("section", "N/A")
+            enriched["cbc_title"] = cbc.get("title", "N/A")
+            enriched["cbc_requirement"] = cbc_req
+            enriched["stricter_than_federal"] = stricter
+            enriched["stricter_note"] = ""
+
         enriched_violations.append(enriched)
         total_cost += entry.get("estimated_cost", 0)
 
@@ -176,7 +184,12 @@ def enrich_violations(analysis, address="", location_type=""):
         "potential_count": potential_count,
         "by_severity": by_severity,
         "headline": headline,
-        "tax_credits": TAX_CREDITS,
-        "next_steps": NEXT_STEPS,
-        "disclaimer": DISCLAIMER,
+        "standard_applied": "Federal ADA + CA CBC Title 24" if include_california else "Federal ADA",
+        "state": state,
+        "tax_credits": TAX_CREDITS if include_california else [c for c in TAX_CREDITS if "CA" not in c.get("name", "")],
+        "next_steps": NEXT_STEPS if include_california else [s for s in NEXT_STEPS if "CASp" not in s and "SF" not in s],
+        "disclaimer": DISCLAIMER if include_california else (
+            "This is an AI-powered pre-screening tool. An ADA consultant should verify "
+            "findings before remediation. This report does not constitute legal advice."
+        ),
     }

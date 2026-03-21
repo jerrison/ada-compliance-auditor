@@ -96,55 +96,83 @@ def build_scene_classification_prompt() -> str:
     )
 
 
-def build_violation_detection_prompt(space_type: str) -> str:
+def _is_california(state: str) -> bool:
+    return state.strip().lower() in ("california", "ca")
+
+
+def build_violation_detection_prompt(space_type: str, state: str = "") -> str:
     """Build prompt for Pass 2: detect ADA violations scoped to the given space type.
 
-    Loads space_violations.json to determine relevant violation types for the space,
-    and extracts California CBC / Title 24 data from the knowledge base.
-
-    If the space_type is not recognized, all violation types are used.
+    Loads space_violations.json to determine relevant violation types.
+    If state is California, includes CBC Title 24 data from knowledge base.
 
     Args:
         space_type: One of SPACE_TYPES, or any string (unknown falls back to all).
+        state: US state name. California triggers CBC codes.
 
     Returns:
         A prompt string scoped to the relevant violations for the space type.
     """
     space_violations = _load_space_violations()
-    california_codes = _load_california_codes()
+    include_california = _is_california(state)
 
-    # Determine which violations to check
     if space_type in space_violations:
         relevant_violations = space_violations[space_type]
     else:
         relevant_violations = VIOLATION_TYPES
 
-    # Build violation descriptions with California code references
     violation_details = []
-    for vtype in relevant_violations:
-        code_info = california_codes.get(vtype, {})
-        section = code_info.get("cbc_section", "N/A")
-        title = code_info.get("title", vtype)
-        description = code_info.get("description", "")
-        requirement = code_info.get("requirement", "")
-        stricter = code_info.get("stricter_than_federal", False)
-        stricter_note = code_info.get("stricter_note", "")
-
-        detail = (
-            f"- {vtype} (CBC Section {section} — {title})\n"
-            f"  Description: {description}\n"
-            f"  Requirement: {requirement}"
-        )
-        if stricter and stricter_note:
-            detail += f"\n  ** STRICTER THAN FEDERAL: {stricter_note}"
-        violation_details.append(detail)
+    if include_california:
+        california_codes = _load_california_codes()
+        for vtype in relevant_violations:
+            code_info = california_codes.get(vtype, {})
+            section = code_info.get("cbc_section", "N/A")
+            title = code_info.get("title", vtype)
+            description = code_info.get("description", "")
+            requirement = code_info.get("requirement", "")
+            stricter = code_info.get("stricter_than_federal", False)
+            stricter_note = code_info.get("stricter_note", "")
+            detail = (
+                f"- {vtype} (CBC Section {section} — {title})\n"
+                f"  Description: {description}\n"
+                f"  Requirement: {requirement}"
+            )
+            if stricter and stricter_note:
+                detail += f"\n  ** STRICTER THAN FEDERAL: {stricter_note}"
+            violation_details.append(detail)
+    else:
+        kb = _load_kb()
+        for vtype in relevant_violations:
+            entry = kb.get(vtype, {})
+            federal = entry.get("codes", {}).get("federal_ada") or {}
+            detail = f"- {vtype}"
+            if federal.get("section"):
+                detail += f" (ADA Section {federal['section']})"
+            if entry.get("description"):
+                detail += f"\n  {entry['description']}"
+            violation_details.append(detail)
 
     violations_text = "\n\n".join(violation_details)
 
+    if include_california:
+        intro = (
+            "You are an ADA compliance expert specializing in the California Building Code "
+            "(CBC) and Title 24 accessibility standards. This property is in California. "
+            f"Analyze the provided photograph of a {space_type} space for the following "
+            "potential violations:"
+        )
+        code_field = "  - cbc_section: the applicable California Building Code section\n"
+    else:
+        state_note = f" This property is in {state}." if state else ""
+        intro = (
+            f"You are an ADA (Americans with Disabilities Act) compliance expert.{state_note} "
+            f"Analyze the provided photograph of a {space_type} space for the following "
+            "potential violations:"
+        )
+        code_field = ""
+
     return (
-        "You are an ADA compliance expert specializing in the California Building Code "
-        "(CBC) and Title 24 accessibility standards. Analyze the provided photograph of "
-        f"a {space_type} space for the following potential violations:\n\n"
+        f"{intro}\n\n"
         f"{violations_text}\n\n"
         "MEASUREMENT HEURISTICS — Use these reference sizes to estimate dimensions:\n"
         "  - Standard door height: ~80 inches (6 ft 8 in)\n"
@@ -156,7 +184,7 @@ def build_violation_detection_prompt(space_type: str) -> str:
         "  - severity: low, medium, or high\n"
         "  - confidence: 0.0 to 1.0\n"
         "  - description: what you observed\n"
-        "  - cbc_section: the applicable California Building Code section\n"
+        f"{code_field}"
         "  - estimated_measurement: your best estimate of the relevant dimension\n\n"
         "Respond ONLY with valid JSON in this format:\n"
         '{"violations": [...]}'

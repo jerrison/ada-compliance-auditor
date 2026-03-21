@@ -25,10 +25,20 @@ def test_violation_detection_prompt_scoped_to_restroom():
     assert "missing_accessible_parking_sign" not in prompt  # parking-only
 
 
-def test_violation_detection_prompt_includes_california():
-    prompt = build_violation_detection_prompt("entrance")
+def test_violation_detection_prompt_includes_california_when_in_ca():
+    prompt = build_violation_detection_prompt("entrance", state="California")
     assert "California Building Code" in prompt or "CBC" in prompt
-    assert "Title 24" in prompt
+
+
+def test_violation_detection_prompt_no_cbc_when_other_state():
+    prompt = build_violation_detection_prompt("entrance", state="Texas")
+    assert "California Building Code" not in prompt
+    assert "CBC Section" not in prompt
+
+
+def test_violation_detection_prompt_federal_always():
+    prompt = build_violation_detection_prompt("entrance", state="New York")
+    assert "ADA" in prompt
 
 
 def test_consistency_check_prompt_includes_violations_json():

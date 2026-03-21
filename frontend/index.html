@@ -24,7 +24,7 @@
         <span class="text-[10px] font-mono text-emerald-400/80 uppercase tracking-[0.2em]">Active Scanner</span>
       </div>
       <h1 class="text-2xl font-bold text-white" style="font-family:'DM Sans',sans-serif">ADA Compliance Auditor</h1>
-      <p class="text-slate-500 text-xs mt-1 font-mono">Federal ADA + CA CBC Title 24 + SF Local Codes</p>
+      <p id="standard-label" class="text-slate-500 text-xs mt-1 font-mono">Federal ADA Standards</p>
     </header>
 
     <!-- Upload Area -->
@@ -46,9 +46,23 @@
 
     <!-- Location Input -->
     <div class="mb-4">
-      <input type="text" id="location-field"
-             placeholder="Address or location name (optional)"
-             class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500/30 transition font-mono" />
+      <div class="flex gap-2">
+        <input type="text" id="location-field"
+               placeholder="Search any address..."
+               class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500/30 transition font-mono" />
+        <button id="locate-btn"
+                class="bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl px-4 py-3 text-sm text-slate-300 transition-all duration-200 flex items-center gap-1.5 shrink-0"
+                title="Use my current location">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          <span id="locate-btn-text" class="font-mono text-xs">Locate</span>
+        </button>
+      </div>
+      <p id="location-detail" class="text-xs text-slate-500 mt-1.5 font-mono hidden"></p>
     </div>
 
     <!-- Analyze Button -->
