@@ -38,6 +38,18 @@ def _get_violation_types():
 VIOLATION_TYPES = _get_violation_types()
 
 
+_visual_ref = None
+
+
+def _load_visual_reference() -> dict:
+    """Load the visual reference guide for violation detection accuracy."""
+    global _visual_ref
+    if _visual_ref is None:
+        with open(DATA_DIR / "visual_reference.json") as f:
+            _visual_ref = json.load(f)
+    return _visual_ref
+
+
 def _load_space_violations() -> dict:
     """Load the space-to-violation mapping from backend/data/space_violations.json."""
     with open(DATA_DIR / "space_violations.json") as f:
@@ -154,6 +166,29 @@ def build_violation_detection_prompt(space_type: str, state: str = "") -> str:
 
     violations_text = "\n\n".join(violation_details)
 
+    # Build visual reference context for each relevant violation
+    visual_ref = _load_visual_reference()
+    visual_context_parts = []
+    for vtype in relevant_violations:
+        ref = visual_ref.get(vtype)
+        if not ref:
+            continue
+        lines = [f"  {vtype}:"]
+        lines.append("    VIOLATION looks like: " + "; ".join(ref.get("violation_indicators", [])[:2]))
+        lines.append("    COMPLIANT looks like: " + "; ".join(ref.get("compliant_indicators", [])[:2]))
+        fps = ref.get("false_positives_to_avoid", [])
+        if fps:
+            lines.append("    DO NOT flag if: " + "; ".join(fps[:2]))
+        comp = ref.get("visual_comparison", "")
+        if comp:
+            lines.append("    " + comp)
+        visual_context_parts.append("\n".join(lines))
+
+    visual_reference_text = "\n\n".join(visual_context_parts)
+
+    principles = visual_ref.get("_meta", {}).get("important_principles", [])
+    principles_text = "\n".join(f"  - {p}" for p in principles)
+
     if include_california:
         intro = (
             "You are an ADA compliance expert specializing in the California Building Code "
@@ -174,6 +209,10 @@ def build_violation_detection_prompt(space_type: str, state: str = "") -> str:
     return (
         f"{intro}\n\n"
         f"{violations_text}\n\n"
+        "VISUAL REFERENCE GUIDE — Use this to distinguish violations from compliant features:\n\n"
+        f"{visual_reference_text}\n\n"
+        "CRITICAL ANALYSIS PRINCIPLES:\n"
+        f"{principles_text}\n\n"
         "MEASUREMENT HEURISTICS — Use these reference sizes to estimate dimensions:\n"
         "  - Standard door height: ~80 inches (6 ft 8 in)\n"
         "  - Parking space width: ~8.5 feet (102 inches)\n"
@@ -184,8 +223,11 @@ def build_violation_detection_prompt(space_type: str, state: str = "") -> str:
         "  - severity: low, medium, or high\n"
         "  - confidence: 0.0 to 1.0\n"
         "  - description: what you observed\n"
+        "  - reasoning: explain WHY this is a violation, referencing the visual guide\n"
         f"{code_field}"
         "  - estimated_measurement: your best estimate of the relevant dimension\n\n"
+        "IMPORTANT: Check the 'false positives to avoid' for each violation type before flagging it. "
+        "If a feature is compliant, do NOT flag it as a violation. Only flag what you can visually confirm.\n\n"
         "Respond ONLY with valid JSON in this format:\n"
         '{"violations": [...]}'
     )
@@ -205,15 +247,32 @@ def build_consistency_check_prompt(violations: list) -> str:
     """
     violations_json = json.dumps(violations, indent=2)
 
+    # Build false-positive checklist for detected violations
+    visual_ref = _load_visual_reference()
+    fp_checks = []
+    detected_types = {v.get("violation_type") for v in violations if v.get("violation_type")}
+    for vtype in detected_types:
+        ref = visual_ref.get(vtype, {})
+        fps = ref.get("false_positives_to_avoid", [])
+        if fps:
+            fp_checks.append(f"  {vtype}:")
+            for fp in fps:
+                fp_checks.append(f"    - {fp}")
+    fp_text = "\n".join(fp_checks) if fp_checks else "  (no specific checks)"
+
     return (
         "You are an ADA compliance expert performing a consistency review. "
         "A previous analysis pass detected the following potential violations:\n\n"
         f"{violations_json}\n\n"
+        "BEFORE confirming each violation, check these FALSE POSITIVE rules:\n"
+        f"{fp_text}\n\n"
         "Please perform the following checks:\n"
-        "1. VERIFY each violation — does it appear consistent with the image?\n"
-        "2. REMOVE any contradictory or duplicate violations.\n"
-        "3. ADJUST confidence scores based on image clarity and evidence strength.\n"
-        "4. FLAG any violations that need additional evidence or a different angle.\n\n"
+        "1. VERIFY each violation — does it appear consistent with the image? "
+        "Check the false positive rules above for each violation type.\n"
+        "2. REMOVE any violation that matches a false positive condition above.\n"
+        "3. REMOVE any contradictory or duplicate violations.\n"
+        "4. ADJUST confidence scores based on image clarity and evidence strength.\n"
+        "5. FLAG any violations that need additional evidence or a different angle.\n\n"
         "Respond ONLY with valid JSON in this format:\n"
         "{\n"
         '  "verified_violations": [\n'

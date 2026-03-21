@@ -1,0 +1,377 @@
+{
+  "missing_ramp": {
+    "violation_indicators": [
+      "Steps or stairs at entrance with NO adjacent ramp visible",
+      "Elevation change greater than 1/2 inch with only stairs as access",
+      "Entrance accessible only by climbing steps — no alternative path",
+      "Portable/temporary ramp that is clearly too steep or narrow"
+    ],
+    "compliant_indicators": [
+      "Concrete or metal ramp alongside or instead of stairs",
+      "Sloped walkway at grade level (no steps needed)",
+      "Ground-level entrance with no elevation change",
+      "Ramp with visible handrails on both sides and landing areas"
+    ],
+    "false_positives_to_avoid": [
+      "Do NOT flag if a ramp is visible even if it's on the side of the building",
+      "Do NOT flag if the entrance is at grade level (no elevation change)",
+      "Do NOT flag a slight slope that is clearly less than 1:20 — that's not a ramp situation",
+      "A loading dock ramp is not an accessible entrance ramp"
+    ],
+    "visual_comparison": "VIOLATION: You see 2-3 concrete steps leading to a door with no ramp anywhere in the image. COMPLIANT: You see a sloped surface with handrails leading to the same level as the door, or the entrance is flush with the sidewalk."
+  },
+  "missing_handrail": {
+    "violation_indicators": [
+      "Ramp with rise greater than 6 inches that has NO handrails",
+      "Ramp with handrail on only one side (both sides required)",
+      "Stairs (3+ risers) without continuous handrails",
+      "Handrail that stops short — doesn't extend 12 inches beyond top/bottom"
+    ],
+    "compliant_indicators": [
+      "Handrails visible on BOTH sides of ramp or stairs",
+      "Handrails that are continuous and appear to be 34-38 inches high",
+      "Handrails with visible extensions at top and bottom of run",
+      "Grab-style round or oval rail mounted at consistent height"
+    ],
+    "false_positives_to_avoid": [
+      "Short ramps (rise under 6 inches) do not require handrails",
+      "Decorative railings that ARE functional handrails count as compliant",
+      "Do NOT require handrails on a ramp with less than 6 inches of rise"
+    ],
+    "visual_comparison": "VIOLATION: A ramp going up 2+ feet with bare walls or no railings on either side. COMPLIANT: Metal or wood rails running the full length of the ramp on both sides, with visible curved extensions at the top and bottom."
+  },
+  "narrow_doorway": {
+    "violation_indicators": [
+      "Door opening that appears significantly narrower than a standard wheelchair (26 inches)",
+      "Double doors where only one leaf opens and the single leaf is narrow",
+      "Door frame that visually restricts the clear opening below 32 inches",
+      "Visible obstructions reducing effective door width (door stops, hardware)"
+    ],
+    "compliant_indicators": [
+      "Standard commercial door (typically 36 inches wide — clearly wider than a person's shoulders)",
+      "Double doors that both open to provide wide passage",
+      "Automatic sliding doors with wide opening",
+      "Door opening that could clearly fit a wheelchair with room to spare"
+    ],
+    "false_positives_to_avoid": [
+      "Standard commercial doors (36 inches) are almost always compliant — do NOT flag unless clearly narrow",
+      "Perspective distortion can make doors look narrower than they are",
+      "Interior closet/utility doors have different requirements than entrance doors",
+      "If a person is walking through and the door looks normal width, it's likely compliant"
+    ],
+    "visual_comparison": "VIOLATION: A visibly narrow doorframe where you can tell a wheelchair would not fit through — the opening looks barely wider than a person. COMPLIANT: A standard or wide commercial door where there's clearly space for a wheelchair."
+  },
+  "round_door_knob": {
+    "violation_indicators": [
+      "Spherical/round knob that requires grasping and twisting to operate",
+      "Knob-style handle (ball shape) on any door along an accessible route",
+      "Small round knob requiring pinch grip"
+    ],
+    "compliant_indicators": [
+      "Lever-style handle (L-shaped or J-shaped)",
+      "Push bar / panic bar hardware",
+      "Pull handle (D-shaped or U-shaped)",
+      "Automatic door opener button/sensor",
+      "Push plate (no grasping needed)"
+    ],
+    "false_positives_to_avoid": [
+      "Lever handles that are slightly rounded are still compliant — only flag actual spherical knobs",
+      "Thumb-turn deadbolts above the main lever handle are acceptable",
+      "Gate latches that operate with a push are not round knobs"
+    ],
+    "visual_comparison": "VIOLATION: A shiny round ball-shaped knob on the door — you'd need to grip and twist it. COMPLIANT: An L-shaped lever that you push down, or a horizontal bar you push."
+  },
+  "missing_accessible_parking_sign": {
+    "violation_indicators": [
+      "Parking space with blue paint/striping but NO vertical sign",
+      "Sign present but mounted too low (below 60 inches federal / 80 inches CA)",
+      "Faded or unreadable parking sign",
+      "No International Symbol of Accessibility (ISA — wheelchair icon) on sign"
+    ],
+    "compliant_indicators": [
+      "Vertical sign with ISA (wheelchair) symbol clearly visible",
+      "Sign mounted on pole at proper height (head height or above)",
+      "In California: sign showing fine amount ($250+) and tow-away warning",
+      "Van-accessible sign where space has extra-wide aisle"
+    ],
+    "false_positives_to_avoid": [
+      "The ISA painted ON THE GROUND is supplemental — the vertical sign is what matters",
+      "A sign that is partially obscured by a tree but still present is not 'missing'",
+      "Loading zones are not accessible parking spaces"
+    ],
+    "visual_comparison": "VIOLATION: Blue-painted parking space with striping but no sign post visible, or a sign that's at waist height. COMPLIANT: Blue space with a tall sign post showing the wheelchair symbol clearly visible above car rooflines."
+  },
+  "missing_parking_striping": {
+    "violation_indicators": [
+      "Accessible parking space with no visible access aisle markings",
+      "Faded striping that is barely visible",
+      "Access aisle that appears narrower than 60 inches",
+      "No blue paint border around the accessible space",
+      "Cross-hatching missing from the access aisle"
+    ],
+    "compliant_indicators": [
+      "Clear blue-painted border around the space",
+      "Diagonal cross-hatching in the access aisle (loading zone)",
+      "ISA symbol painted on the pavement within the space",
+      "Wide access aisle (at least 5 feet) with clear markings"
+    ],
+    "false_positives_to_avoid": [
+      "Wet or shadowed pavement can obscure existing striping — look carefully",
+      "Some jurisdictions use white striping instead of blue — still compliant",
+      "Recently repaved lots may have temporary markings"
+    ],
+    "visual_comparison": "VIOLATION: A parking space near the entrance with a sign but no painted lines, no cross-hatching, or completely faded markings. COMPLIANT: Bright blue border lines with diagonal stripes in the adjacent aisle and a wheelchair symbol painted on the pavement."
+  },
+  "missing_curb_cut": {
+    "violation_indicators": [
+      "Sidewalk meeting street/parking with a full vertical curb — no ramp",
+      "Accessible route that dead-ends at a curb with no transition",
+      "Crosswalk landing that has no curb ramp",
+      "Parking lot accessible aisle that has a curb without a ramp to the sidewalk"
+    ],
+    "compliant_indicators": [
+      "Sloped ramp cut into the curb at crosswalks and transitions",
+      "Detectable warning surface (truncated domes) at the curb ramp base",
+      "Flared sides on curb ramps",
+      "Flush transition between parking lot and sidewalk"
+    ],
+    "false_positives_to_avoid": [
+      "A driveway apron that slopes to street level IS a curb transition — don't flag it",
+      "If the sidewalk and parking lot are at the same level, no curb cut is needed",
+      "Curb ramps may be located nearby but out of frame"
+    ],
+    "visual_comparison": "VIOLATION: A straight vertical curb (4+ inches) between a parking space/crosswalk and the sidewalk with no ramp. COMPLIANT: A sloped cut in the curb with textured bumps (truncated domes) at the bottom."
+  },
+  "missing_tactile_signage": {
+    "violation_indicators": [
+      "Room identification signs with only printed/visual text — no raised characters",
+      "No Braille visible on permanent room signs",
+      "Signs mounted in wrong location (not on latch side of door)",
+      "Restroom doors with only visual gender icons (no tactile/Braille)"
+    ],
+    "compliant_indicators": [
+      "Signs with visibly raised characters (you can see shadow/depth)",
+      "Braille dots visible below text on room signs",
+      "Signs mounted on the wall adjacent to the door (latch side), about shoulder height",
+      "In California: geometric shapes (triangle=men, circle=women) on restroom signs"
+    ],
+    "false_positives_to_avoid": [
+      "You may not be able to see raised characters or Braille from a photo taken at distance",
+      "Overhead/hanging signs do not require tactile features — only permanent room ID signs do",
+      "Directional signs (arrows, maps) have different requirements than room signs",
+      "If you cannot clearly see the sign surface, note it needs physical verification"
+    ],
+    "visual_comparison": "VIOLATION: A flat printed sign on a door reading 'RESTROOM' with no visible raised letters or Braille. COMPLIANT: A sign next to the door with characters that cast slight shadows (raised), small Braille dots below, at about 5 feet height."
+  },
+  "missing_grab_bars": {
+    "violation_indicators": [
+      "Toilet visible with bare walls — no bars mounted on side or rear wall",
+      "Only a toilet paper holder near the toilet (not a grab bar)",
+      "Single grab bar when two are required (side AND rear)",
+      "Grab bar that appears too high or too low (should be 33-36 inches)"
+    ],
+    "compliant_indicators": [
+      "Horizontal bar on the side wall next to the toilet (42+ inches long)",
+      "Horizontal bar on the rear wall behind the toilet (36+ inches long)",
+      "Bars that appear to be stainless steel/metal and securely mounted",
+      "Bars at approximately waist height when seated"
+    ],
+    "false_positives_to_avoid": [
+      "Towel bars are NOT grab bars — they are thinner and not rated for weight",
+      "This violation can only be confirmed in restroom photos — don't guess from exterior shots",
+      "A shelf or counter near the toilet is not a grab bar substitute"
+    ],
+    "visual_comparison": "VIOLATION: A toilet against bare drywall with nothing to grab onto. COMPLIANT: Sturdy metal bars mounted horizontally on the wall beside and behind the toilet."
+  },
+  "blocked_accessible_route": {
+    "violation_indicators": [
+      "Furniture, displays, or merchandise blocking a walkway to under 36 inches",
+      "A-frame signs, planters, or bike racks in the middle of a sidewalk path",
+      "Parked vehicles blocking a curb ramp or access aisle",
+      "Construction barriers with no alternative accessible path marked",
+      "Overgrown vegetation narrowing a walkway"
+    ],
+    "compliant_indicators": [
+      "Clear, unobstructed path at least 36 inches wide",
+      "Outdoor dining areas that leave a clear pedestrian path",
+      "Objects positioned to the side, not blocking the walking surface",
+      "Construction zones with clearly marked accessible detour"
+    ],
+    "false_positives_to_avoid": [
+      "People standing in a walkway are temporary — not a violation",
+      "A path that appears narrow due to photo angle may actually be wide enough",
+      "Objects placed off to the side of the path are not blocking it",
+      "Bollards spaced 36+ inches apart are not obstructions"
+    ],
+    "visual_comparison": "VIOLATION: A sandwich board sign, planter box, and outdoor table creating a gap too narrow for a wheelchair in the middle of the sidewalk. COMPLIANT: The sidewalk has objects pushed to the building side with a clear 4+ foot walking lane."
+  },
+  "no_accessible_entrance": {
+    "violation_indicators": [
+      "ALL visible entrances have steps with no ramps",
+      "Only entrance is through a heavy door at the top of stairs",
+      "No ISA signage directing to an accessible entrance",
+      "Building with only a raised entrance and no grade-level alternative"
+    ],
+    "compliant_indicators": [
+      "At least one entrance at grade level or with a ramp",
+      "ISA directional sign pointing to an accessible entrance",
+      "Automatic door opener at an accessible entrance",
+      "Multiple entrances visible with at least one accessible"
+    ],
+    "false_positives_to_avoid": [
+      "The accessible entrance may be on a different side of the building — if you only see one facade, note this",
+      "A side entrance with a ramp counts as an accessible entrance",
+      "If you see an ISA directional sign, there IS an accessible entrance somewhere"
+    ],
+    "visual_comparison": "VIOLATION: The front of a building with steps at every door and no ramp, no ISA signs, no alternative path visible. COMPLIANT: At least one doorway reachable without climbing steps, or an ISA sign pointing around the corner."
+  },
+  "step_only_entrance": {
+    "violation_indicators": [
+      "Single step (over 1/2 inch) at the entrance threshold with no ramp",
+      "Two or three steps at an entrance with no alternative access",
+      "A lip or raised threshold clearly higher than 1/2 inch"
+    ],
+    "compliant_indicators": [
+      "Flush/level entrance — no step at all",
+      "Threshold that is clearly very low (1/2 inch or less)",
+      "Entrance with a small ramp or beveled threshold",
+      "Automatic doors with flush floor transition"
+    ],
+    "false_positives_to_avoid": [
+      "Very small thresholds (under 1/2 inch) are compliant — don't flag tiny lips",
+      "A single step that has a portable ramp is partially addressed",
+      "Weather stripping creating a small bump is not the same as a step"
+    ],
+    "visual_comparison": "VIOLATION: A clear step-up (2+ inches) to get through the front door with no ramp. COMPLIANT: The door threshold is flush with the ground or has a very slight beveled transition."
+  },
+  "protruding_objects": {
+    "violation_indicators": [
+      "Wall-mounted objects (fire extinguishers, shelves, signs) sticking out more than 4 inches between 27-80 inches height",
+      "Overhead signs with brackets protruding into the walking path",
+      "Open stairways with no cane-detectable barrier underneath",
+      "Wall-mounted displays or equipment in a corridor"
+    ],
+    "compliant_indicators": [
+      "Recessed objects (in alcoves or wall cutouts)",
+      "Objects mounted above 80 inches (overhead) or below 27 inches (cane-detectable)",
+      "Cane-detectable barriers placed below protruding objects",
+      "Objects flush with or close to the wall surface"
+    ],
+    "false_positives_to_avoid": [
+      "Objects below 27 inches from the floor can protrude any amount",
+      "Objects above 80 inches are not restricted",
+      "Columns and permanent building elements are not protruding objects",
+      "You often cannot accurately judge protrusion depth from a photo — note it needs measurement"
+    ],
+    "visual_comparison": "VIOLATION: A fire extinguisher cabinet sticking out 6 inches from the wall at about 4 feet height in a hallway. COMPLIANT: The same cabinet recessed into the wall so it's flush with the surface."
+  },
+  "inaccessible_counter": {
+    "violation_indicators": [
+      "Service counter that is uniformly high (above 36 inches) with no lowered section",
+      "Reception desk with no portion low enough for wheelchair approach",
+      "All counter surfaces at standing height only"
+    ],
+    "compliant_indicators": [
+      "A lowered section of counter (36 inches or below) at least 36 inches long",
+      "A separate accessible counter or service window at lower height",
+      "A fold-down or pull-out shelf at accessible height",
+      "Clipboard/writing surface offered as alternative"
+    ],
+    "false_positives_to_avoid": [
+      "Some counters have a lowered section that's not visible from all angles",
+      "A cashier window/opening that is at accessible height counts",
+      "If you can't see the full counter, note it needs physical verification"
+    ],
+    "visual_comparison": "VIOLATION: A long, uniformly high counter (chest height) with no dip or lowered section anywhere along it. COMPLIANT: A counter with a clearly visible lowered section (about elbow height when seated) with space underneath for wheelchair knees."
+  },
+  "missing_directional_signage": {
+    "violation_indicators": [
+      "Building with accessible entrance on a different side but no signs directing to it",
+      "Complex with multiple buildings and no ISA wayfinding signs",
+      "Accessible features (elevator, restroom) with no directional signs"
+    ],
+    "compliant_indicators": [
+      "ISA (wheelchair) symbol on directional signs at decision points",
+      "Clear arrows pointing to accessible features",
+      "Consistent wayfinding signage throughout the facility"
+    ],
+    "false_positives_to_avoid": [
+      "If all entrances are accessible, directional signage to an accessible entrance is not required",
+      "Interior wayfinding may not be visible from exterior photos",
+      "Small businesses with simple layouts may not need extensive wayfinding"
+    ],
+    "visual_comparison": "VIOLATION: A building where the accessible entrance is around the corner but the front has no sign indicating that. COMPLIANT: A sign with a wheelchair symbol and arrow saying 'Accessible Entrance →' visible from the main approach."
+  },
+  "steep_ramp": {
+    "violation_indicators": [
+      "Ramp that appears very steep — visually steeper than a standard driveway",
+      "Short ramp covering a large elevation change (rise over 30 inches)",
+      "Ramp where water would run down quickly (indicating steep grade)",
+      "Person leaning forward significantly while going up the ramp"
+    ],
+    "compliant_indicators": [
+      "Ramp with a gentle, gradual slope (1:12 or less — barely noticeable)",
+      "Long ramp run for a modest height change",
+      "Ramp with intermediate landings (flat areas) breaking up the slope",
+      "Ramp that appears about as steep as a standard sidewalk cross-slope"
+    ],
+    "false_positives_to_avoid": [
+      "Camera angle can make ramps look steeper than they are — note this uncertainty",
+      "Driveways and vehicle ramps have different slope requirements",
+      "A ramp that looks steep but is actually 1:12 should not be flagged without measurement",
+      "Always note that slope requires physical measurement to confirm"
+    ],
+    "visual_comparison": "VIOLATION: A ramp that rises sharply — it looks like you'd have difficulty pushing a wheelchair up it. The rise covers maybe 3 feet in a very short horizontal distance. COMPLIANT: A long, gentle ramp where the slope is barely visible — it takes many feet of ramp to gain a small amount of height."
+  },
+  "missing_detectable_warnings": {
+    "violation_indicators": [
+      "Curb ramp transition to street with a smooth surface — no truncated domes",
+      "Transit platform edge with no tactile warning strip",
+      "Flush pedestrian/vehicle boundary with no textural change"
+    ],
+    "compliant_indicators": [
+      "Truncated dome surface (bumpy texture) at curb ramp base",
+      "Yellow truncated domes in California (other colors elsewhere)",
+      "Tactile strip along transit platform edges",
+      "Cast-in-place or surface-applied dome tiles at transitions"
+    ],
+    "false_positives_to_avoid": [
+      "Textured concrete that is not truncated domes (e.g., broom finish) is not the same",
+      "Detectable warnings are only required at specific locations — not every sidewalk edge",
+      "If you can't see the ground surface clearly, note it needs physical verification"
+    ],
+    "visual_comparison": "VIOLATION: A curb ramp that slopes smoothly to the street with a plain concrete surface — no bumps or texture change at the bottom. COMPLIANT: Bright yellow (in CA) bumpy dome texture covering the bottom portion of the curb ramp where it meets the street."
+  },
+  "inaccessible_restroom": {
+    "violation_indicators": [
+      "Restroom door that appears too narrow for wheelchair entry",
+      "No ISA symbol on or near the restroom",
+      "Restroom with only a round knob on the door",
+      "Visible cramped interior that would not allow wheelchair turning"
+    ],
+    "compliant_indicators": [
+      "Wide restroom door (36+ inches) with lever handle",
+      "ISA symbol on the restroom sign",
+      "Spacious interior visible through open door",
+      "Grab bars visible inside"
+    ],
+    "false_positives_to_avoid": [
+      "Cannot fully assess restroom accessibility from exterior photo alone",
+      "A restroom that looks small from outside may have adequate turning space inside",
+      "Always note that interior assessment requires physical inspection"
+    ],
+    "visual_comparison": "VIOLATION: A narrow restroom door with a round knob and no accessibility signage. COMPLIANT: A wide door with lever handle, ISA sign, and visible interior space."
+  },
+  "_meta": {
+    "usage": "This reference guide is injected into Gemini prompts to improve violation detection accuracy. Each entry describes what violations and compliance look like visually, plus common false positives to avoid.",
+    "version": "1.0",
+    "important_principles": [
+      "Only flag violations you can VISUALLY CONFIRM in the image",
+      "When uncertain, mark as low confidence and note it needs physical verification",
+      "Camera angle and distance can distort perception — account for this",
+      "A feature being out of frame does not mean it's missing — be conservative",
+      "Always prefer false negatives (missing a violation) over false positives (flagging something compliant)",
+      "Measurements from photos are estimates only — note when physical measurement is needed"
+    ]
+  }
+}
