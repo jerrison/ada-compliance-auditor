@@ -15,10 +15,37 @@
         "title": "Ramps",
         "requirement": "CBC mirrors ADA 405 but has no exception for employee work areas. Ramps must comply regardless of occupancy classification."
       },
-      "sf_local": {
-        "section": "SF ABE Program",
-        "title": "Accessible Business Entrance",
-        "requirement": "SF Ordinance 51-16 requires all primary business entrances to be accessible. Building owners must submit compliance checklists and obtain permits for ramp installation."
+      "local_codes": {
+        "sf": {
+          "section": "SF ABE Program",
+          "title": "Accessible Business Entrance",
+          "requirement": "SF Ordinance 51-16 requires all primary business entrances to be accessible. Building owners must submit compliance checklists and obtain permits for ramp installation."
+        },
+        "la": {
+          "section": "LADBS Info Bulletin P/BC 2020-027",
+          "title": "Accessibility Requirements for Existing Buildings",
+          "requirement": "LADBS requires accessibility upgrades for existing buildings undergoing alterations. The LA Retrofit Ordinance (Div. 89) for unreinforced masonry buildings mandates accessibility improvements including ramp installation as part of seismic retrofit work."
+        },
+        "san_jose": {
+          "section": "San Jose Municipal Code Title 24 Amendments",
+          "title": "Enhanced Entrance Accessibility",
+          "requirement": "San Jose enforces CBC with enhanced path-of-travel review during permit applications. Building permit reviews include mandatory accessibility compliance checks for entrance ramp requirements."
+        },
+        "san_diego": {
+          "section": "San Diego Municipal Code Ch. 14 Art. 9",
+          "title": "Building Accessibility Compliance Review",
+          "requirement": "San Diego Development Services Department requires accessibility compliance review for all building permits. Ramp installations must meet CBC standards and are inspected during both plan check and field inspection."
+        },
+        "long_beach": {
+          "section": "Long Beach Building Code / LA County Standards",
+          "title": "Entrance Accessibility",
+          "requirement": "Long Beach follows LA County building standards with additional accessibility requirements for waterfront and public-facing facilities. Ramp installations at entrances are enforced through building permit review."
+        },
+        "sacramento": {
+          "section": "Sacramento City Code 15.36",
+          "title": "Building Accessibility Standards",
+          "requirement": "Sacramento enforces enhanced accessibility standards for public-facing buildings, particularly in the state capitol district. Building permits require demonstrated compliance with CBC entrance accessibility requirements."
+        }
       }
     },
     "severity": "high",
@@ -49,8 +76,18 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit (up to $5,000 for small businesses) and Section 190 Barrier Removal Deduction (up to $15,000 for any business)."
     },
     "detection": {
-      "visual_cues": ["Steps at entrance with no adjacent ramp", "Level change at doorway threshold", "Stairs as only means of entry", "Portable or temporary ramp indicating permanent solution needed"],
-      "common_contexts": ["Older commercial buildings", "Historic storefronts", "Buildings with raised first floors", "Sidewalk-level entrances with interior steps"],
+      "visual_cues": [
+        "Steps at entrance with no adjacent ramp",
+        "Level change at doorway threshold",
+        "Stairs as only means of entry",
+        "Portable or temporary ramp indicating permanent solution needed"
+      ],
+      "common_contexts": [
+        "Older commercial buildings",
+        "Historic storefronts",
+        "Buildings with raised first floors",
+        "Sidewalk-level entrances with interior steps"
+      ],
       "needs_measurement": true,
       "false_positive_notes": "A ramp may exist at an alternate entrance. Check for directional signage to accessible entrance before flagging. Interior level changes visible through glass may not represent the primary entrance condition."
     }
@@ -71,10 +108,37 @@
         "title": "Entrances",
         "requirement": "CBC requires the same 60% minimum but additionally requires that the primary entrance be accessible whenever technically feasible."
       },
-      "sf_local": {
-        "section": "SF Ordinance 51-16",
-        "title": "Accessible Business Entrance Program",
-        "requirement": "All primary entrances to places of public accommodation must be accessible. Building owners must complete the ABE compliance process by their category deadline."
+      "local_codes": {
+        "sf": {
+          "section": "SF Ordinance 51-16",
+          "title": "Accessible Business Entrance Program",
+          "requirement": "All primary entrances to places of public accommodation must be accessible. Building owners must complete the ABE compliance process by their category deadline."
+        },
+        "la": {
+          "section": "LAMC Div. 89 / LADBS Disability Access",
+          "title": "LA Disability Access Compliance",
+          "requirement": "LADBS Disability Access Compliance program requires all places of public accommodation to provide at least one accessible entrance. Buildings undergoing seismic retrofit under the URM Ordinance must include entrance accessibility upgrades."
+        },
+        "san_jose": {
+          "section": "San Jose Municipal Code Title 24 Amendments",
+          "title": "Accessible Entrance Enforcement",
+          "requirement": "San Jose's permit review process requires demonstration of accessible entrance compliance for all commercial buildings. Plan check includes verification that at least one primary entrance meets CBC accessibility standards."
+        },
+        "san_diego": {
+          "section": "San Diego Municipal Code Ch. 14 Art. 9",
+          "title": "Accessible Entrance Requirements",
+          "requirement": "San Diego requires accessibility compliance review for all building permit applications. Entrance accessibility is a mandatory plan check item for commercial and public buildings."
+        },
+        "long_beach": {
+          "section": "Long Beach Building Code / LA County Standards",
+          "title": "Accessible Entrance Requirements",
+          "requirement": "Long Beach follows LA County accessibility standards requiring accessible entrances at all places of public accommodation. Enhanced enforcement applies to waterfront commercial properties."
+        },
+        "sacramento": {
+          "section": "Sacramento City Code 15.36",
+          "title": "Accessible Entrance Requirements",
+          "requirement": "Sacramento requires accessible entrance compliance for all commercial and public buildings. State government buildings in the capitol area are subject to additional accessibility oversight."
+        }
       }
     },
     "severity": "high",
@@ -104,8 +168,18 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction. May also qualify for California state tax incentives for accessibility improvements."
     },
     "detection": {
-      "visual_cues": ["All visible entrances have steps with no ramps", "No ISA signage visible anywhere on building exterior", "Narrow doorways at all entrances", "Heavy manual doors with no automatic openers at any entrance"],
-      "common_contexts": ["Pre-ADA buildings (built before 1992)", "Multi-story buildings without ground-floor access", "Historic buildings in older neighborhoods", "Converted residential buildings"],
+      "visual_cues": [
+        "All visible entrances have steps with no ramps",
+        "No ISA signage visible anywhere on building exterior",
+        "Narrow doorways at all entrances",
+        "Heavy manual doors with no automatic openers at any entrance"
+      ],
+      "common_contexts": [
+        "Pre-ADA buildings (built before 1992)",
+        "Multi-story buildings without ground-floor access",
+        "Historic buildings in older neighborhoods",
+        "Converted residential buildings"
+      ],
       "needs_measurement": false,
       "false_positive_notes": "An accessible entrance may exist on a different facade not visible in the photo. Look for directional signage indicating an accessible entrance elsewhere. Rear or side entrances may be accessible."
     }
@@ -126,10 +200,22 @@
         "title": "Thresholds at Doorways",
         "requirement": "Thresholds at doorways shall be 1/2 inch maximum in height. Raised thresholds and changes in level at doorways shall be identified with a visually contrasting stripe."
       },
-      "sf_local": {
-        "section": "SF ABE Program",
-        "title": "Accessible Business Entrance",
-        "requirement": "Primary business entrances must provide step-free access. Property owners must remediate step-only entrances per the ABE compliance timeline."
+      "local_codes": {
+        "sf": {
+          "section": "SF ABE Program",
+          "title": "Accessible Business Entrance",
+          "requirement": "Primary business entrances must provide step-free access. Property owners must remediate step-only entrances per the ABE compliance timeline."
+        },
+        "la": {
+          "section": "LADBS Info Bulletin P/BC 2020-027",
+          "title": "Accessibility Requirements for Existing Buildings",
+          "requirement": "LADBS enforces CBC with local amendments requiring step-free access at primary entrances during building alterations. The Retrofit Ordinance requires entrance accessibility as part of mandatory seismic upgrades."
+        },
+        "san_jose": {
+          "section": "San Jose Municipal Code Title 24 Amendments",
+          "title": "Step-Free Entrance Requirements",
+          "requirement": "San Jose building permit review mandates step-free access evaluation at primary entrances. Alteration permits trigger accessibility upgrade requirements for entrance conditions."
+        }
       }
     },
     "severity": "high",
@@ -159,8 +245,18 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["One or more steps at entrance with no ramp visible", "Stairs leading to door with no alternative path", "Small step or raised threshold at doorway", "Portable ramp leaning against wall (indicates awareness but no permanent fix)"],
-      "common_contexts": ["Older storefronts with raised floors", "Buildings on sloped streets", "Entrances with single step that owners overlook", "Basement or below-grade businesses"],
+      "visual_cues": [
+        "One or more steps at entrance with no ramp visible",
+        "Stairs leading to door with no alternative path",
+        "Small step or raised threshold at doorway",
+        "Portable ramp leaning against wall (indicates awareness but no permanent fix)"
+      ],
+      "common_contexts": [
+        "Older storefronts with raised floors",
+        "Buildings on sloped streets",
+        "Entrances with single step that owners overlook",
+        "Basement or below-grade businesses"
+      ],
       "needs_measurement": true,
       "false_positive_notes": "A single step less than 1/2 inch may be a threshold issue rather than a step-only entrance. Verify the height of the level change. Also check if a ramp exists out of frame."
     }
@@ -181,7 +277,7 @@
         "title": "Clear Width",
         "requirement": "Same 32-inch minimum clear width requirement. CBC additionally requires that the clear opening width be maintained for the full height of the doorway."
       },
-      "sf_local": null
+      "local_codes": {}
     },
     "severity": "high",
     "legal_risk": "Narrow doorways that prevent wheelchair access are a frequent basis for Unruh Act claims ($4,000+ per occurrence). This is particularly litigated for restroom doors and primary entrances in San Francisco.",
@@ -210,8 +306,18 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["Visibly narrow door opening", "Door appears significantly narrower than standard width", "Person or wheelchair would clearly not fit through opening", "Non-standard or residential-size door in commercial setting"],
-      "common_contexts": ["Older buildings with original narrow doorframes", "Restroom entrances", "Interior office doors", "Storage areas converted to public spaces"],
+      "visual_cues": [
+        "Visibly narrow door opening",
+        "Door appears significantly narrower than standard width",
+        "Person or wheelchair would clearly not fit through opening",
+        "Non-standard or residential-size door in commercial setting"
+      ],
+      "common_contexts": [
+        "Older buildings with original narrow doorframes",
+        "Restroom entrances",
+        "Interior office doors",
+        "Storage areas converted to public spaces"
+      ],
       "needs_measurement": true,
       "false_positive_notes": "Standard residential doors (30 inches) may appear narrow but could meet requirements if the door opens fully. The 32-inch measurement is of the clear opening, not the door leaf width. A 36-inch door leaf typically provides 32+ inches of clear width."
     }
@@ -232,7 +338,7 @@
         "title": "Door Hardware",
         "requirement": "Same requirement as ADA. Hardware shall have a shape that is easy to grasp with one hand and does not require tight grasping, pinching, or twisting of the wrist to operate."
       },
-      "sf_local": null
+      "local_codes": {}
     },
     "severity": "medium",
     "legal_risk": "Non-compliant door hardware is a common, easily documented violation. Under the Unruh Act, each door with a round knob can constitute a separate violation ($4,000+ each). Plaintiffs often cite multiple doors in a single lawsuit.",
@@ -258,8 +364,18 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction. Low cost makes this an excellent quick-win for compliance."
     },
     "detection": {
-      "visual_cues": ["Round door knob visible on door", "Spherical handle shape", "Knob-style hardware on commercial doors", "Twist-type lock mechanisms"],
-      "common_contexts": ["Older commercial buildings with original hardware", "Interior office doors", "Restroom doors", "Storage or utility room doors open to public"],
+      "visual_cues": [
+        "Round door knob visible on door",
+        "Spherical handle shape",
+        "Knob-style hardware on commercial doors",
+        "Twist-type lock mechanisms"
+      ],
+      "common_contexts": [
+        "Older commercial buildings with original hardware",
+        "Interior office doors",
+        "Restroom doors",
+        "Storage or utility room doors open to public"
+      ],
       "needs_measurement": false,
       "false_positive_notes": "Some round-looking handles may actually be compliant push-pull or paddle-style hardware. Look carefully at the grip mechanism. Decorative round rosettes with lever handles beneath are compliant."
     }
@@ -280,10 +396,12 @@
         "title": "Automatic Door Openers",
         "requirement": "CBC requires power-assisted or automatic doors at primary entrances to buildings with high public traffic (medical facilities, government buildings, certain commercial occupancies). Door openers must have accessible activation controls."
       },
-      "sf_local": {
-        "section": "SF ABE Program",
-        "title": "Accessible Business Entrance",
-        "requirement": "SF ABE program may require automatic door openers as part of accessible entrance compliance for qualifying businesses."
+      "local_codes": {
+        "sf": {
+          "section": "SF ABE Program",
+          "title": "Accessible Business Entrance",
+          "requirement": "SF ABE program may require automatic door openers as part of accessible entrance compliance for qualifying businesses."
+        }
       }
     },
     "severity": "medium",
@@ -313,10 +431,20 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["Heavy manual door at primary entrance", "No push-button or sensor visible near door", "No automatic door operator hardware visible on door frame", "People struggling to open heavy entrance door"],
-      "common_contexts": ["Medical facilities and clinics", "Government offices", "High-traffic retail entrances", "Buildings with heavy fire-rated doors"],
+      "visual_cues": [
+        "Heavy manual door at primary entrance",
+        "No push-button or sensor visible near door",
+        "No automatic door operator hardware visible on door frame",
+        "People struggling to open heavy entrance door"
+      ],
+      "common_contexts": [
+        "Medical facilities and clinics",
+        "Government offices",
+        "High-traffic retail entrances",
+        "Buildings with heavy fire-rated doors"
+      ],
       "needs_measurement": false,
-      "false_positive_notes": "Not all buildings require automatic doors under ADA. Check the building type — this is primarily a CBC requirement for certain occupancies. An existing push-button may be hidden from the camera angle."
+      "false_positive_notes": "Not all buildings require automatic doors under ADA. Check the building type \u2014 this is primarily a CBC requirement for certain occupancies. An existing push-button may be hidden from the camera angle."
     }
   },
   "insufficient_door_clearance": {
@@ -335,7 +463,7 @@
         "title": "Maneuvering Clearances",
         "requirement": "Same maneuvering clearance requirements as ADA. CBC additionally requires that maneuvering clearances be level (1:48 maximum slope) and free of obstructions."
       },
-      "sf_local": null
+      "local_codes": {}
     },
     "severity": "medium",
     "legal_risk": "Insufficient maneuvering clearance effectively prevents independent wheelchair access through doors. Unruh Act statutory damages of $4,000+ per occurrence apply. This is often cited alongside other door-related violations.",
@@ -363,8 +491,18 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["Walls, furniture, or fixtures very close to door on latch side", "Narrow hallway or alcove around door", "Objects blocking floor space near door", "Door opens into cramped space"],
-      "common_contexts": ["Interior doors in older buildings", "Restroom entries in tight spaces", "Doors at end of narrow corridors", "Doors adjacent to perpendicular walls"],
+      "visual_cues": [
+        "Walls, furniture, or fixtures very close to door on latch side",
+        "Narrow hallway or alcove around door",
+        "Objects blocking floor space near door",
+        "Door opens into cramped space"
+      ],
+      "common_contexts": [
+        "Interior doors in older buildings",
+        "Restroom entries in tight spaces",
+        "Doors at end of narrow corridors",
+        "Doors adjacent to perpendicular walls"
+      ],
       "needs_measurement": true,
       "false_positive_notes": "Required clearance varies by approach direction (front, side, latch side). A tight-looking space may actually meet requirements for the applicable approach. Automatic doors have reduced clearance requirements."
     }
@@ -385,7 +523,7 @@
         "title": "Door and Gate Opening Force",
         "requirement": "Same 5 lbs maximum for interior doors. CBC also specifies that exterior doors shall have the minimum opening force allowable by the applicable fire code. Door closers must be adjusted to the minimum force necessary."
       },
-      "sf_local": null
+      "local_codes": {}
     },
     "severity": "medium",
     "legal_risk": "Excessive door force prevents access for persons with limited upper body strength. Under the Unruh Act, $4,000+ statutory damages per occurrence. This is a measurable, objective standard easily proven in court.",
@@ -412,10 +550,20 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction. Very low cost quick-win."
     },
     "detection": {
-      "visual_cues": ["Heavy-looking commercial door closer mechanism", "Person visibly struggling to push door open", "Fire-rated door with heavy closure hardware", "Self-closing door that slams shut quickly"],
-      "common_contexts": ["Interior doors with spring-loaded closers", "Fire-rated doors", "Exterior doors with wind resistance", "Restroom doors"],
+      "visual_cues": [
+        "Heavy-looking commercial door closer mechanism",
+        "Person visibly struggling to push door open",
+        "Fire-rated door with heavy closure hardware",
+        "Self-closing door that slams shut quickly"
+      ],
+      "common_contexts": [
+        "Interior doors with spring-loaded closers",
+        "Fire-rated doors",
+        "Exterior doors with wind resistance",
+        "Restroom doors"
+      ],
       "needs_measurement": true,
-      "false_positive_notes": "Cannot accurately assess door force from a photo alone. This detection relies on visual cues like heavy closer hardware. Fire doors may legitimately require higher force — check with fire code requirements. Exterior doors are exempt from the 5 lb requirement."
+      "false_positive_notes": "Cannot accurately assess door force from a photo alone. This detection relies on visual cues like heavy closer hardware. Fire doors may legitimately require higher force \u2014 check with fire code requirements. Exterior doors are exempt from the 5 lb requirement."
     }
   },
   "steep_ramp": {
@@ -434,10 +582,21 @@
         "title": "Slope",
         "requirement": "Same 1:12 maximum running slope. CBC does not allow the ADA exception for existing sites to use steeper slopes (1:10 for 6-inch max rise or 1:8 for 3-inch max rise), making CBC stricter for existing buildings."
       },
-      "sf_local": null
+      "local_codes": {
+        "la": {
+          "section": "LADBS CBC Amendments",
+          "title": "Ramp Slope Enforcement",
+          "requirement": "LADBS enforces CBC ramp slope requirements and conducts field inspections for slope compliance. LA's hilly terrain triggers additional scrutiny on ramp installations during permit review."
+        },
+        "san_diego": {
+          "section": "San Diego DSD Information Bulletin 510",
+          "title": "Ramp Compliance Standards",
+          "requirement": "San Diego Development Services issues specific guidance on ramp compliance. Field inspections verify slope ratios for all permitted ramp installations."
+        }
+      }
     },
     "severity": "high",
-    "legal_risk": "Steep ramps create safety hazards and inaccessibility for wheelchair users. Under the Unruh Act, $4,000+ per occurrence. A ramp that exists but doesn't comply is still a violation — not a defense against litigation.",
+    "legal_risk": "Steep ramps create safety hazards and inaccessibility for wheelchair users. Under the Unruh Act, $4,000+ per occurrence. A ramp that exists but doesn't comply is still a violation \u2014 not a defense against litigation.",
     "estimated_cost": 15000,
     "cost_unit": "per ramp",
     "cost_note": "SF market rate for demolishing and rebuilding a ramp to proper slope. Includes new concrete work, handrails, and permitting. May be higher if site conditions require retaining walls or significant grading.",
@@ -464,8 +623,18 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["Ramp that appears visually steep", "Short ramp covering significant height change", "Ramp surface that looks like it exceeds 8% grade", "Wheelchair user would need significant effort or assistance"],
-      "common_contexts": ["Retrofit ramps added without proper design", "Ramps on steep San Francisco streets", "Temporary ramps that became permanent", "DIY ramp installations"],
+      "visual_cues": [
+        "Ramp that appears visually steep",
+        "Short ramp covering significant height change",
+        "Ramp surface that looks like it exceeds 8% grade",
+        "Wheelchair user would need significant effort or assistance"
+      ],
+      "common_contexts": [
+        "Retrofit ramps added without proper design",
+        "Ramps on steep San Francisco streets",
+        "Temporary ramps that became permanent",
+        "DIY ramp installations"
+      ],
       "needs_measurement": true,
       "false_positive_notes": "Visual assessment of slope can be misleading, especially on San Francisco hills where surrounding terrain skews perception. A ramp on a steep street may appear steeper than it is relative to the building floor. Measurement is essential."
     }
@@ -486,7 +655,7 @@
         "title": "Handrails",
         "requirement": "Same requirement as ADA. CBC is stricter in that it does not exempt employee work areas and requires handrails on all ramps with rise greater than 6 inches regardless of location."
       },
-      "sf_local": null
+      "local_codes": {}
     },
     "severity": "high",
     "legal_risk": "Missing handrails create fall hazards and prevent safe ramp use. Under the Unruh Act, $4,000+ per occurrence. Combined with steep ramp violations, damages can multiply.",
@@ -514,8 +683,18 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["Ramp with no handrails on either side", "Ramp with handrail on only one side", "Ramp with non-graspable top rail only (no separate handrail)", "Short ramp that clearly rises more than 6 inches without rails"],
-      "common_contexts": ["Exterior ramps at building entrances", "Retrofit ramps added without full compliance", "Interior ramps between floor levels", "Parking structure ramps to building entries"],
+      "visual_cues": [
+        "Ramp with no handrails on either side",
+        "Ramp with handrail on only one side",
+        "Ramp with non-graspable top rail only (no separate handrail)",
+        "Short ramp that clearly rises more than 6 inches without rails"
+      ],
+      "common_contexts": [
+        "Exterior ramps at building entrances",
+        "Retrofit ramps added without full compliance",
+        "Interior ramps between floor levels",
+        "Parking structure ramps to building entries"
+      ],
       "needs_measurement": false,
       "false_positive_notes": "Ramps with less than 6 inches of rise are exempt from handrail requirements. Curb ramps are also exempt. A guard rail or decorative railing may not meet graspability requirements even if present."
     }
@@ -536,7 +715,7 @@
         "title": "Landings",
         "requirement": "Same 60-inch minimum landing length. CBC additionally requires that landings be level with a maximum slope of 1:48 in any direction."
       },
-      "sf_local": null
+      "local_codes": {}
     },
     "severity": "medium",
     "legal_risk": "Missing landings create safety hazards where wheelchair users cannot safely stop or turn. Under the Unruh Act, $4,000+ per occurrence. Often cited alongside slope and handrail violations.",
@@ -564,10 +743,20 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["Ramp that transitions directly to floor or ground without flat area", "Ramp that changes direction without level platform", "Long ramp run without intermediate flat sections", "Door opening directly onto sloped ramp surface"],
-      "common_contexts": ["Retrofit ramps with space constraints", "Switchback ramps at building entrances", "Interior ramps between levels", "Ramps connecting to doorway thresholds"],
+      "visual_cues": [
+        "Ramp that transitions directly to floor or ground without flat area",
+        "Ramp that changes direction without level platform",
+        "Long ramp run without intermediate flat sections",
+        "Door opening directly onto sloped ramp surface"
+      ],
+      "common_contexts": [
+        "Retrofit ramps with space constraints",
+        "Switchback ramps at building entrances",
+        "Interior ramps between levels",
+        "Ramps connecting to doorway thresholds"
+      ],
       "needs_measurement": true,
-      "false_positive_notes": "Short ramps with less than 6 inches of rise may have reduced landing requirements. The landing must be truly level (1:48 max) — a slightly sloped area may look flat but not comply."
+      "false_positive_notes": "Short ramps with less than 6 inches of rise may have reduced landing requirements. The landing must be truly level (1:48 max) \u2014 a slightly sloped area may look flat but not comply."
     }
   },
   "missing_edge_protection": {
@@ -586,7 +775,7 @@
         "title": "Edge Protection",
         "requirement": "CBC requires either a curb or a barrier for edge protection. CBC does not recognize the extended floor or ground surface option permitted by ADA, making CBC stricter."
       },
-      "sf_local": null
+      "local_codes": {}
     },
     "severity": "medium",
     "legal_risk": "Missing edge protection creates fall hazards for wheelchair users. Under the Unruh Act, $4,000+ per occurrence. If an injury results from missing edge protection, premises liability claims may apply in addition.",
@@ -612,8 +801,18 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["Ramp with open edges and no curbs or barriers", "Ramp surface that drops off at sides", "Gap between ramp edge and adjacent surface", "Ramp without bottom rail or curb along sides"],
-      "common_contexts": ["Exterior ramps without curbs", "Elevated ramps and walkways", "Ramps adjacent to landscaping or grade changes", "Wooden deck ramps"],
+      "visual_cues": [
+        "Ramp with open edges and no curbs or barriers",
+        "Ramp surface that drops off at sides",
+        "Gap between ramp edge and adjacent surface",
+        "Ramp without bottom rail or curb along sides"
+      ],
+      "common_contexts": [
+        "Exterior ramps without curbs",
+        "Elevated ramps and walkways",
+        "Ramps adjacent to landscaping or grade changes",
+        "Wooden deck ramps"
+      ],
       "needs_measurement": false,
       "false_positive_notes": "A ramp with walls on both sides inherently has edge protection. Ramps at grade (flush with surrounding surface) may not need edge protection. Check if the ramp edge is actually elevated above adjacent ground."
     }
@@ -634,7 +833,7 @@
         "title": "Handrail Extensions",
         "requirement": "Same 12-inch extension requirement. CBC 11B-505.10.3 has stricter requirements for bottom extensions at stairs than ADA."
       },
-      "sf_local": null
+      "local_codes": {}
     },
     "severity": "low",
     "legal_risk": "While less severe than missing handrails entirely, non-compliant extensions are still actionable under the Unruh Act ($4,000+ per occurrence). Often cited as part of a bundle of ramp violations.",
@@ -661,8 +860,17 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["Handrails that end abruptly at top or bottom of ramp", "Handrails that do not extend past the ramp slope", "Handrail ends that are not returned to wall or floor", "Handrails cut flush with end of ramp"],
-      "common_contexts": ["Existing ramps with retrofit handrails", "Handrails that terminate at wall corners", "Ramps where space constraints limited handrail installation"],
+      "visual_cues": [
+        "Handrails that end abruptly at top or bottom of ramp",
+        "Handrails that do not extend past the ramp slope",
+        "Handrail ends that are not returned to wall or floor",
+        "Handrails cut flush with end of ramp"
+      ],
+      "common_contexts": [
+        "Existing ramps with retrofit handrails",
+        "Handrails that terminate at wall corners",
+        "Ramps where space constraints limited handrail installation"
+      ],
       "needs_measurement": true,
       "false_positive_notes": "Extensions may be present but not clearly visible in the photo angle. Handrails that return to a wall immediately at the ramp end may still comply if the return is at the correct location."
     }
@@ -683,7 +891,7 @@
         "title": "Rise",
         "requirement": "Same 30-inch maximum rise per run. At 1:12 slope, this means a maximum run length of 30 feet before a landing is required."
       },
-      "sf_local": null
+      "local_codes": {}
     },
     "severity": "medium",
     "legal_risk": "Excessive continuous rise creates fatigue and safety hazards for wheelchair users. Under the Unruh Act, $4,000+ per occurrence. Often combined with missing landing violations.",
@@ -711,8 +919,18 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["Very long ramp run without any flat sections", "Ramp that covers more than approximately 2.5 feet of height in one run", "Ramp that appears to go on for more than 30 feet without a break", "Switchback ramp with runs that appear excessively long"],
-      "common_contexts": ["Buildings with significant grade changes", "Hillside construction in San Francisco", "Parking structure ramps", "Multi-level access ramps"],
+      "visual_cues": [
+        "Very long ramp run without any flat sections",
+        "Ramp that covers more than approximately 2.5 feet of height in one run",
+        "Ramp that appears to go on for more than 30 feet without a break",
+        "Switchback ramp with runs that appear excessively long"
+      ],
+      "common_contexts": [
+        "Buildings with significant grade changes",
+        "Hillside construction in San Francisco",
+        "Parking structure ramps",
+        "Multi-level access ramps"
+      ],
       "needs_measurement": true,
       "false_positive_notes": "Estimating 30 inches of rise from a photo is difficult. A ramp that looks long may have a gentle slope and not exceed 30 inches of rise. Measurement or dimensional reference in the photo is needed."
     }
@@ -733,7 +951,28 @@
         "title": "Identification",
         "requirement": "CBC requires ISA signs at 80 inches minimum above ground (stricter than ADA's 60 inches). Signs must include 'Minimum Fine $250' text and tow-away warning per California Vehicle Code 22511.8."
       },
-      "sf_local": null
+      "local_codes": {
+        "la": {
+          "section": "LAMC 62.104.1",
+          "title": "Accessible Parking Signage",
+          "requirement": "LA enforces CBC parking signage requirements with additional local enforcement through LADOT. Parking facilities must display California-compliant accessible parking signs at required heights."
+        },
+        "oakland": {
+          "section": "Oakland Municipal Code 10.28",
+          "title": "Accessible Parking Enforcement",
+          "requirement": "Oakland enforces accessible parking requirements with enhanced enforcement in commercial districts. On-street accessible parking spaces must comply with CBC signage requirements including minimum fine and tow-away warnings."
+        },
+        "san_diego": {
+          "section": "San Diego Municipal Code 86.0137",
+          "title": "Accessible Parking Standards",
+          "requirement": "San Diego enforces CBC accessible parking signage requirements through both building permit review and code enforcement. Parking facilities must comply with California-specific sign height and content requirements."
+        },
+        "long_beach": {
+          "section": "Long Beach Municipal Code 10.28",
+          "title": "Accessible Parking Enforcement",
+          "requirement": "Long Beach enforces CBC parking accessibility standards with enhanced enforcement in waterfront, downtown, and tourist areas. Accessible parking signage must comply with California requirements."
+        }
+      }
     },
     "severity": "medium",
     "legal_risk": "Missing signage is a clearly documented, easily photographed violation. Under the Unruh Act, $4,000+ per occurrence. Each unmarked space can be a separate violation. Parking violations are among the most frequently litigated ADA claims in California.",
@@ -759,8 +998,18 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction. Very low cost quick-win."
     },
     "detection": {
-      "visual_cues": ["Blue-painted parking space without sign post", "Accessible space markings on pavement but no vertical sign", "Sign post without ISA sign attached", "Low-mounted sign below 60 inches"],
-      "common_contexts": ["Surface parking lots", "Parking garages", "Street-level commercial parking", "Shopping center parking areas"],
+      "visual_cues": [
+        "Blue-painted parking space without sign post",
+        "Accessible space markings on pavement but no vertical sign",
+        "Sign post without ISA sign attached",
+        "Low-mounted sign below 60 inches"
+      ],
+      "common_contexts": [
+        "Surface parking lots",
+        "Parking garages",
+        "Street-level commercial parking",
+        "Shopping center parking areas"
+      ],
       "needs_measurement": false,
       "false_positive_notes": "A sign may exist but be obscured by trees, vehicles, or structures. Check for signs mounted on walls or overhead. Some jurisdictions use pavement markings in addition to signs but pavement markings alone do not meet the requirement."
     }
@@ -781,7 +1030,7 @@
         "title": "Access Aisle",
         "requirement": "CBC requires access aisles with blue border striping and diagonal hatch marks. 'NO PARKING' must be painted within the access aisle. Van-accessible aisles must be 96 inches minimum width."
       },
-      "sf_local": null
+      "local_codes": {}
     },
     "severity": "medium",
     "legal_risk": "Unmarked access aisles lead to parking encroachment that blocks wheelchair access. Under the Unruh Act, $4,000+ per occurrence. Easily documented and photographed violation.",
@@ -809,8 +1058,18 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction. Low cost, quick implementation."
     },
     "detection": {
-      "visual_cues": ["Accessible parking space without adjacent striped aisle", "Faded or missing blue hatch marks next to accessible space", "Access aisle area without 'NO PARKING' text", "Cars parked in what should be the access aisle area"],
-      "common_contexts": ["Aging parking lots with faded markings", "Recently resurfaced lots without restriping", "Small parking areas behind buildings", "Street-level parking"],
+      "visual_cues": [
+        "Accessible parking space without adjacent striped aisle",
+        "Faded or missing blue hatch marks next to accessible space",
+        "Access aisle area without 'NO PARKING' text",
+        "Cars parked in what should be the access aisle area"
+      ],
+      "common_contexts": [
+        "Aging parking lots with faded markings",
+        "Recently resurfaced lots without restriping",
+        "Small parking areas behind buildings",
+        "Street-level parking"
+      ],
       "needs_measurement": false,
       "false_positive_notes": "Faded but still visible striping may technically comply. New asphalt may be awaiting restriping. Some lots use alternative marking methods (raised markers, different paint colors) that may be compliant."
     }
@@ -831,7 +1090,28 @@
         "title": "Minimum Number",
         "requirement": "CBC follows the same ratio table as ADA. However, CBC requires additional accessible spaces for medical facilities and outpatient units (10% of total must be accessible)."
       },
-      "sf_local": null
+      "local_codes": {
+        "la": {
+          "section": "LAMC 62.104.1 / LADOT",
+          "title": "Accessible Parking Requirements",
+          "requirement": "LADOT enforces accessible parking space requirements for both on-street and off-street parking. Commercial developments require LADBS plan check verification of accessible parking ratios."
+        },
+        "oakland": {
+          "section": "Oakland Planning Code",
+          "title": "Parking Accessibility Requirements",
+          "requirement": "Oakland Planning Code requires accessible parking compliance verification during building permit review. New developments and major renovations must demonstrate accessible parking ratios per CBC."
+        },
+        "san_diego": {
+          "section": "San Diego Municipal Code 142.0560",
+          "title": "Off-Street Parking Accessibility",
+          "requirement": "San Diego's off-street parking regulations incorporate CBC accessible parking ratios. Development permits require demonstration of compliant accessible parking counts."
+        },
+        "long_beach": {
+          "section": "Long Beach Municipal Code 21.41",
+          "title": "Off-Street Parking Accessibility",
+          "requirement": "Long Beach zoning code requires accessible parking compliance for all new and modified parking facilities. Waterfront developments have additional accessible parking requirements."
+        }
+      }
     },
     "severity": "high",
     "legal_risk": "Insufficient accessible parking is a systemic violation affecting every visitor. Under the Unruh Act, $4,000+ per occurrence per visit. Parking violations are the single most litigated category of ADA claims in California.",
@@ -859,8 +1139,18 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["Large parking lot with very few or no visible accessible spaces", "Accessible spaces far from building entrance", "Parking lot with no blue-painted spaces visible", "Only one accessible space in a large commercial lot"],
-      "common_contexts": ["Shopping centers", "Large office parking lots", "Apartment and condo complexes", "Entertainment venues"],
+      "visual_cues": [
+        "Large parking lot with very few or no visible accessible spaces",
+        "Accessible spaces far from building entrance",
+        "Parking lot with no blue-painted spaces visible",
+        "Only one accessible space in a large commercial lot"
+      ],
+      "common_contexts": [
+        "Shopping centers",
+        "Large office parking lots",
+        "Apartment and condo complexes",
+        "Entertainment venues"
+      ],
       "needs_measurement": false,
       "false_positive_notes": "May not be able to count total spaces from a single photo. Some accessible spaces may be out of frame. Multi-level garages may have accessible spaces on different levels. Count must include the entire facility, not just what's visible."
     }
@@ -881,7 +1171,7 @@
         "title": "Vehicle Spaces",
         "requirement": "Same van-accessible ratios as ADA. CBC additionally requires that van-accessible spaces be located on the shortest accessible route to the building entrance."
       },
-      "sf_local": null
+      "local_codes": {}
     },
     "severity": "medium",
     "legal_risk": "Missing van-accessible spaces exclude wheelchair van users entirely. Under the Unruh Act, $4,000+ per occurrence. Van users are often the most motivated and organized plaintiffs in ADA litigation.",
@@ -908,8 +1198,17 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["Accessible parking spaces with standard-width (60-inch) access aisles only", "No 'Van Accessible' signage visible at any accessible space", "Parking structure with low clearance at accessible spaces", "All accessible spaces appear to be standard width"],
-      "common_contexts": ["Parking garages with height restrictions", "Small parking lots with minimal accessible spaces", "Older facilities that predate van-accessible requirements"],
+      "visual_cues": [
+        "Accessible parking spaces with standard-width (60-inch) access aisles only",
+        "No 'Van Accessible' signage visible at any accessible space",
+        "Parking structure with low clearance at accessible spaces",
+        "All accessible spaces appear to be standard width"
+      ],
+      "common_contexts": [
+        "Parking garages with height restrictions",
+        "Small parking lots with minimal accessible spaces",
+        "Older facilities that predate van-accessible requirements"
+      ],
       "needs_measurement": true,
       "false_positive_notes": "Van-accessible spaces may exist in a different area of the lot not visible in the photo. Vertical clearance issues are common in garages but may not be obvious from exterior photos."
     }
@@ -928,12 +1227,12 @@
       "cbc_title24": {
         "section": "11B-502.4",
         "title": "Floor or Ground Surfaces",
-        "requirement": "Same slope and surface requirements as ADA. CBC requires that surfaces be maintained to remain compliant — deterioration that creates level changes or unstable surfaces is a violation."
+        "requirement": "Same slope and surface requirements as ADA. CBC requires that surfaces be maintained to remain compliant \u2014 deterioration that creates level changes or unstable surfaces is a violation."
       },
-      "sf_local": null
+      "local_codes": {}
     },
     "severity": "medium",
-    "legal_risk": "Damaged surfaces can trap wheelchair casters, cause falls, and prevent van lift deployment. Under the Unruh Act, $4,000+ per occurrence. Maintenance failures are not a defense — ongoing compliance is required.",
+    "legal_risk": "Damaged surfaces can trap wheelchair casters, cause falls, and prevent van lift deployment. Under the Unruh Act, $4,000+ per occurrence. Maintenance failures are not a defense \u2014 ongoing compliance is required.",
     "estimated_cost": 4000,
     "cost_unit": "per space",
     "cost_note": "SF market rate for resurfacing an accessible parking space and access aisle. Includes removal of damaged surface, base repair, new asphalt or concrete, and restriping.",
@@ -958,8 +1257,19 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["Visible cracks or heaving in accessible parking area", "Pothole or settlement in access aisle", "Crumbling pavement edges around accessible space", "Standing water indicating uneven surface", "Tree root damage lifting pavement"],
-      "common_contexts": ["Aging parking lots", "Areas with heavy vehicle traffic", "Spaces near trees with invasive roots", "Freeze-thaw climate zones"],
+      "visual_cues": [
+        "Visible cracks or heaving in accessible parking area",
+        "Pothole or settlement in access aisle",
+        "Crumbling pavement edges around accessible space",
+        "Standing water indicating uneven surface",
+        "Tree root damage lifting pavement"
+      ],
+      "common_contexts": [
+        "Aging parking lots",
+        "Areas with heavy vehicle traffic",
+        "Spaces near trees with invasive roots",
+        "Freeze-thaw climate zones"
+      ],
       "needs_measurement": true,
       "false_positive_notes": "Minor surface imperfections (hairline cracks, small texture variations) may not constitute a violation. The key question is whether the surface creates level changes greater than 1/4 inch or is unstable for wheelchair use."
     }
@@ -980,10 +1290,37 @@
         "title": "Accessible Routes",
         "requirement": "Same continuous path requirements. CBC additionally requires that accessible routes be maintained free of obstructions at all times, including temporary obstructions."
       },
-      "sf_local": {
-        "section": "SF Public Works Code",
-        "title": "Sidewalk Maintenance",
-        "requirement": "Property owners are responsible for maintaining sidewalks and accessible routes adjacent to their property free from obstructions per SF Public Works Code Article 706."
+      "local_codes": {
+        "sf": {
+          "section": "SF Public Works Code",
+          "title": "Sidewalk Maintenance",
+          "requirement": "Property owners are responsible for maintaining sidewalks and accessible routes adjacent to their property free from obstructions per SF Public Works Code Article 706."
+        },
+        "la": {
+          "section": "LAMC 56.08-56.11",
+          "title": "Sidewalk and Pedestrian Path Regulations",
+          "requirement": "LA Municipal Code prohibits obstructions in pedestrian paths of travel. The Bureau of Street Services enforces minimum clear width requirements and can issue citations for blocked accessible routes on public rights-of-way."
+        },
+        "oakland": {
+          "section": "Oakland ADA Transition Plan",
+          "title": "Public Right-of-Way Accessibility",
+          "requirement": "Oakland's ADA Transition Plan for public rights-of-way establishes enhanced standards for maintaining accessible pedestrian routes. The city prioritizes removal of barriers on routes near transit stops, schools, and government buildings."
+        },
+        "san_jose": {
+          "section": "San Jose Municipal Code 13.36",
+          "title": "Pedestrian Path Maintenance",
+          "requirement": "San Jose Municipal Code requires property owners to maintain sidewalks and accessible routes adjacent to their property free from obstructions that impede accessibility."
+        },
+        "long_beach": {
+          "section": "Long Beach Municipal Code 14.08",
+          "title": "Pedestrian Accessibility and Waterfront Access",
+          "requirement": "Long Beach follows LA County accessibility standards with additional requirements for waterfront and coastal zone accessibility. Accessible routes to waterfront amenities must be maintained free of obstructions."
+        },
+        "sacramento": {
+          "section": "Sacramento City Code 12.56",
+          "title": "Sidewalk and Pedestrian Path Standards",
+          "requirement": "Sacramento Municipal Code requires maintaining clear pedestrian paths of travel on public sidewalks. Enhanced enforcement applies in the downtown grid and state capitol district."
+        }
       }
     },
     "severity": "high",
@@ -1011,10 +1348,22 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction if permanent modifications are made."
     },
     "detection": {
-      "visual_cues": ["Objects blocking sidewalk or pathway", "Merchandise displays narrowing walkway", "A-frame signs in middle of sidewalk", "Planters or furniture reducing clear width below 36 inches", "Construction materials or equipment in path", "Parked bicycles or scooters blocking route"],
-      "common_contexts": ["Retail storefronts with outdoor displays", "Restaurant sidewalk seating areas", "Construction zones", "Building entries with deliveries or trash bins"],
+      "visual_cues": [
+        "Objects blocking sidewalk or pathway",
+        "Merchandise displays narrowing walkway",
+        "A-frame signs in middle of sidewalk",
+        "Planters or furniture reducing clear width below 36 inches",
+        "Construction materials or equipment in path",
+        "Parked bicycles or scooters blocking route"
+      ],
+      "common_contexts": [
+        "Retail storefronts with outdoor displays",
+        "Restaurant sidewalk seating areas",
+        "Construction zones",
+        "Building entries with deliveries or trash bins"
+      ],
       "needs_measurement": false,
-      "false_positive_notes": "A route may appear blocked but still maintain 36 inches of clear width. Multiple accessible routes may exist — blocking one route is still a violation only if it is a designated accessible route. Temporary construction with proper detour signage may be compliant."
+      "false_positive_notes": "A route may appear blocked but still maintain 36 inches of clear width. Multiple accessible routes may exist \u2014 blocking one route is still a violation only if it is a designated accessible route. Temporary construction with proper detour signage may be compliant."
     }
   },
   "missing_curb_cut": {
@@ -1033,10 +1382,27 @@
         "title": "Curb Ramps",
         "requirement": "Same requirements as ADA. CBC additionally requires that curb ramps have a 48-inch minimum landing at the top and be aligned with the crosswalk direction."
       },
-      "sf_local": {
-        "section": "SF Public Works",
-        "title": "Curb Ramp Program",
-        "requirement": "SF Department of Public Works manages curb ramp installation citywide. Property owners can request curb ramps through 311 or DPW. SF has allocated $86M over 10 years for ADA curb ramp installation."
+      "local_codes": {
+        "sf": {
+          "section": "SF Public Works",
+          "title": "Curb Ramp Program",
+          "requirement": "SF Department of Public Works manages curb ramp installation citywide. Property owners can request curb ramps through 311 or DPW. SF has allocated $86M over 10 years for ADA curb ramp installation."
+        },
+        "la": {
+          "section": "LA Bureau of Engineering Standard Plan S-442",
+          "title": "Curb Ramp Standards",
+          "requirement": "LA Bureau of Engineering maintains standards for curb ramp design and installation. LA has a curb ramp request program through 311 and prioritizes installations based on ADA Transition Plan."
+        },
+        "oakland": {
+          "section": "Oakland ADA Transition Plan / Standard Details",
+          "title": "Curb Ramp Installation Program",
+          "requirement": "Oakland's ADA Transition Plan includes a curb ramp installation and upgrade program with enhanced design standards. Curb ramps must include truncated domes and be directionally aligned with crosswalks per Oakland Standard Details."
+        },
+        "sacramento": {
+          "section": "Sacramento ADA Transition Plan",
+          "title": "Curb Ramp Program",
+          "requirement": "Sacramento's ADA Transition Plan includes a systematic curb ramp installation program for public rights-of-way. Priority areas include routes to government buildings, transit stops, and schools."
+        }
       }
     },
     "severity": "high",
@@ -1067,8 +1433,18 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction for private property. Public ROW curb ramps may be city-funded."
     },
     "detection": {
-      "visual_cues": ["Curb with no ramp at pedestrian crossing", "Sidewalk ending at street level with vertical curb face", "Wheelchair user would need to navigate off curb into street", "Intersection corner without visible curb cut"],
-      "common_contexts": ["Older neighborhoods with original curbs", "Mid-block crossings", "Driveway entrances used as pedestrian routes", "Corners near public transit stops"],
+      "visual_cues": [
+        "Curb with no ramp at pedestrian crossing",
+        "Sidewalk ending at street level with vertical curb face",
+        "Wheelchair user would need to navigate off curb into street",
+        "Intersection corner without visible curb cut"
+      ],
+      "common_contexts": [
+        "Older neighborhoods with original curbs",
+        "Mid-block crossings",
+        "Driveway entrances used as pedestrian routes",
+        "Corners near public transit stops"
+      ],
       "needs_measurement": false,
       "false_positive_notes": "A curb ramp may exist at a nearby location (adjacent corner or mid-block). Driveway aprons are sometimes used as informal curb ramps but may not meet ADA standards. Some modern curbs are flush with the street, eliminating the need for a ramp."
     }
@@ -1089,10 +1465,17 @@
         "title": "Openings",
         "requirement": "Same 1/2-inch maximum opening size. CBC additionally requires that grate openings in accessible routes be no greater than 1/2 inch in the direction of travel."
       },
-      "sf_local": {
-        "section": "SF Public Works Code Art. 706",
-        "title": "Sidewalk Maintenance",
-        "requirement": "Property owners responsible for maintaining sidewalks in safe condition. Cracks or gaps that create trip hazards or accessibility barriers must be repaired."
+      "local_codes": {
+        "sf": {
+          "section": "SF Public Works Code Art. 706",
+          "title": "Sidewalk Maintenance",
+          "requirement": "Property owners responsible for maintaining sidewalks in safe condition. Cracks or gaps that create trip hazards or accessibility barriers must be repaired."
+        },
+        "oakland": {
+          "section": "Oakland Sidewalk Repair Program",
+          "title": "Sidewalk Maintenance Standards",
+          "requirement": "Oakland's sidewalk repair program addresses accessibility barriers on public sidewalks. Property owners are responsible for maintaining adjacent sidewalks free of gaps and cracks that impede wheelchair travel."
+        }
       }
     },
     "severity": "medium",
@@ -1121,8 +1504,19 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction for private property repairs."
     },
     "detection": {
-      "visual_cues": ["Visible cracks wider than 1/2 inch in sidewalk or walkway", "Gaps between concrete panels", "Broken or displaced pavement sections", "Tree root uplift causing pavement separation", "Drainage grates with wide openings parallel to travel direction"],
-      "common_contexts": ["Aging concrete sidewalks", "Areas near trees", "Brick or paver walkways with loose joints", "Transition points between different surface materials"],
+      "visual_cues": [
+        "Visible cracks wider than 1/2 inch in sidewalk or walkway",
+        "Gaps between concrete panels",
+        "Broken or displaced pavement sections",
+        "Tree root uplift causing pavement separation",
+        "Drainage grates with wide openings parallel to travel direction"
+      ],
+      "common_contexts": [
+        "Aging concrete sidewalks",
+        "Areas near trees",
+        "Brick or paver walkways with loose joints",
+        "Transition points between different surface materials"
+      ],
       "needs_measurement": true,
       "false_positive_notes": "Narrow hairline cracks (less than 1/2 inch) do not violate this standard. Control joints in concrete are typically less than 1/2 inch and are compliant. Expansion joints with proper filler are acceptable."
     }
@@ -1141,9 +1535,9 @@
       "cbc_title24": {
         "section": "11B-403.3",
         "title": "Slope",
-        "requirement": "Same 1:48 maximum cross slope. CBC does not provide exceptions for existing conditions — all accessible routes must meet this standard regardless of construction date."
+        "requirement": "Same 1:48 maximum cross slope. CBC does not provide exceptions for existing conditions \u2014 all accessible routes must meet this standard regardless of construction date."
       },
-      "sf_local": null
+      "local_codes": {}
     },
     "severity": "medium",
     "legal_risk": "Excessive cross slope causes wheelchair drift toward traffic or hazards, creating safety risks. Under the Unruh Act, $4,000+ per occurrence. On San Francisco's hilly terrain, this is a commonly encountered but often overlooked violation.",
@@ -1173,8 +1567,18 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["Sidewalk visibly tilting to one side", "Water pooling on one side of walkway indicating slope", "Walkway following a hillside with visible lateral tilt", "Wheelchair user leaning to compensate for slope"],
-      "common_contexts": ["Sidewalks on San Francisco hills", "Walkways near driveways with cross-slope transitions", "Parking lot paths between rows", "Outdoor walkways with drainage grades"],
+      "visual_cues": [
+        "Sidewalk visibly tilting to one side",
+        "Water pooling on one side of walkway indicating slope",
+        "Walkway following a hillside with visible lateral tilt",
+        "Wheelchair user leaning to compensate for slope"
+      ],
+      "common_contexts": [
+        "Sidewalks on San Francisco hills",
+        "Walkways near driveways with cross-slope transitions",
+        "Parking lot paths between rows",
+        "Outdoor walkways with drainage grades"
+      ],
       "needs_measurement": true,
       "false_positive_notes": "Cross slope is very difficult to assess visually. A walkway may appear level but exceed 1:48, or appear sloped but be within limits. Measurement with a digital level is essential. San Francisco's hilly streets can make photos misleading about actual cross slopes."
     }
@@ -1195,7 +1599,7 @@
         "title": "Clear Width",
         "requirement": "Same 36-inch minimum clear width. CBC does not allow the ADA exception for a 32-inch minimum width at constrictions up to 24 inches long."
       },
-      "sf_local": null
+      "local_codes": {}
     },
     "severity": "medium",
     "legal_risk": "Narrow routes prevent wheelchair passage entirely. Under the Unruh Act, $4,000+ per occurrence. Frequently cited in lawsuits involving interior commercial spaces with cluttered aisles.",
@@ -1223,8 +1627,18 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["Narrow corridor or walkway", "Path squeezed between walls, furniture, or fixtures", "Person in wheelchair would clearly not fit through passage", "Display racks or merchandise narrowing aisle"],
-      "common_contexts": ["Retail store aisles", "Interior corridors in older buildings", "Restaurant seating areas", "Narrow hallways leading to restrooms"],
+      "visual_cues": [
+        "Narrow corridor or walkway",
+        "Path squeezed between walls, furniture, or fixtures",
+        "Person in wheelchair would clearly not fit through passage",
+        "Display racks or merchandise narrowing aisle"
+      ],
+      "common_contexts": [
+        "Retail store aisles",
+        "Interior corridors in older buildings",
+        "Restaurant seating areas",
+        "Narrow hallways leading to restrooms"
+      ],
       "needs_measurement": true,
       "false_positive_notes": "A 36-inch clear width is narrower than many people estimate. A standard wheelchair is about 26 inches wide. What appears narrow may actually comply. Measure the clear width between fixed elements, not including temporary items."
     }
@@ -1245,7 +1659,7 @@
         "title": "Changes in Level",
         "requirement": "Same thresholds as ADA. CBC additionally requires that level changes be identified with visual contrast where they occur in the accessible route."
       },
-      "sf_local": null
+      "local_codes": {}
     },
     "severity": "medium",
     "legal_risk": "Abrupt level changes cause wheelchair tipping and tripping hazards. Under the Unruh Act, $4,000+ per occurrence. This is a common, easily documented violation in older buildings and sidewalks.",
@@ -1273,8 +1687,20 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["Visible lip or step between surface sections", "Cracked or heaved concrete creating an edge", "Threshold at doorway that appears raised", "Transition between floor materials with visible height difference", "Sidewalk panel raised above adjacent panel"],
-      "common_contexts": ["Sidewalk panel joints", "Doorway thresholds", "Transitions between indoor and outdoor surfaces", "Elevator landings", "Expansion joints in concrete"],
+      "visual_cues": [
+        "Visible lip or step between surface sections",
+        "Cracked or heaved concrete creating an edge",
+        "Threshold at doorway that appears raised",
+        "Transition between floor materials with visible height difference",
+        "Sidewalk panel raised above adjacent panel"
+      ],
+      "common_contexts": [
+        "Sidewalk panel joints",
+        "Doorway thresholds",
+        "Transitions between indoor and outdoor surfaces",
+        "Elevator landings",
+        "Expansion joints in concrete"
+      ],
       "needs_measurement": true,
       "false_positive_notes": "Level changes of 1/4 inch or less are permitted without treatment. Beveled transitions may appear as level changes but could be compliant. Door thresholds up to 1/2 inch (3/4 inch for sliding doors) with proper bevel are acceptable."
     }
@@ -1293,9 +1719,9 @@
       "cbc_title24": {
         "section": "11B-302.1",
         "title": "General",
-        "requirement": "Same requirement for stable, firm, slip-resistant surfaces. CBC requires surfaces to be maintained in compliant condition — deterioration over time does not excuse non-compliance."
+        "requirement": "Same requirement for stable, firm, slip-resistant surfaces. CBC requires surfaces to be maintained in compliant condition \u2014 deterioration over time does not excuse non-compliance."
       },
-      "sf_local": null
+      "local_codes": {}
     },
     "severity": "medium",
     "legal_risk": "Unstable surfaces prevent wheelchair travel and create fall hazards for mobility-impaired individuals. Under the Unruh Act, $4,000+ per occurrence. Garden paths, courtyards, and outdoor dining areas are common sources of violations.",
@@ -1323,8 +1749,20 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["Gravel or crushed stone pathway", "Mulch or wood chip surface on route", "Sand or loose dirt path", "Grass or lawn used as accessible route", "Deep carpet or thick mat that would impede wheels"],
-      "common_contexts": ["Garden or courtyard paths", "Outdoor event spaces", "Parking lot connections through landscaping", "Paths to outdoor dining areas", "Park trails designated as accessible routes"],
+      "visual_cues": [
+        "Gravel or crushed stone pathway",
+        "Mulch or wood chip surface on route",
+        "Sand or loose dirt path",
+        "Grass or lawn used as accessible route",
+        "Deep carpet or thick mat that would impede wheels"
+      ],
+      "common_contexts": [
+        "Garden or courtyard paths",
+        "Outdoor event spaces",
+        "Parking lot connections through landscaping",
+        "Paths to outdoor dining areas",
+        "Park trails designated as accessible routes"
+      ],
       "needs_measurement": false,
       "false_positive_notes": "Properly compacted decomposed granite (DG) with stabilizer binder can be ADA-compliant. Not all natural-looking surfaces are non-compliant. Rubber playground surfaces and poured-in-place rubber are typically compliant. Pavers with tight joints are acceptable."
     }
@@ -1345,7 +1783,7 @@
         "title": "Protruding Objects",
         "requirement": "Same 4-inch maximum protrusion between 27 and 80 inches. CBC additionally requires that protruding objects not reduce the clear width of accessible routes below 36 inches."
       },
-      "sf_local": null
+      "local_codes": {}
     },
     "severity": "medium",
     "legal_risk": "Protruding objects are hazardous to visually impaired persons who cannot detect them with a cane above 27 inches. Under the Unruh Act, $4,000+ per occurrence. Fire extinguisher cabinets, display cases, and signs are common violators.",
@@ -1372,8 +1810,21 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["Wall-mounted fire extinguisher cabinet protruding into hallway", "Shelving or display case jutting out from wall", "Wall-mounted TV or monitor at head height", "Drinking fountain with front protruding more than 4 inches", "Signs or light fixtures on brackets extending from wall", "Open stairway underside without cane-detectable barrier"],
-      "common_contexts": ["Corridors and hallways", "Lobby areas", "Near restroom entries", "Commercial display areas", "Under open staircases"],
+      "visual_cues": [
+        "Wall-mounted fire extinguisher cabinet protruding into hallway",
+        "Shelving or display case jutting out from wall",
+        "Wall-mounted TV or monitor at head height",
+        "Drinking fountain with front protruding more than 4 inches",
+        "Signs or light fixtures on brackets extending from wall",
+        "Open stairway underside without cane-detectable barrier"
+      ],
+      "common_contexts": [
+        "Corridors and hallways",
+        "Lobby areas",
+        "Near restroom entries",
+        "Commercial display areas",
+        "Under open staircases"
+      ],
       "needs_measurement": true,
       "false_positive_notes": "Objects below 27 inches are exempt (cane-detectable). Objects above 80 inches are exempt. Objects recessed into alcoves may not protrude into the circulation path. Wall-mounted objects flush with the wall surface are compliant regardless of height."
     }
@@ -1394,7 +1845,13 @@
         "title": "Raised Characters",
         "requirement": "Same requirements as ADA. CBC additionally specifies California Grade 2 Braille and requires that Braille dots be domed or rounded."
       },
-      "sf_local": null
+      "local_codes": {
+        "sacramento": {
+          "section": "Sacramento City Code 15.36",
+          "title": "Signage Accessibility for Public Buildings",
+          "requirement": "Sacramento enforces CBC tactile signage requirements with enhanced standards for public and government-adjacent buildings. State capitol area buildings receive heightened accessibility signage scrutiny."
+        }
+      }
     },
     "severity": "medium",
     "legal_risk": "Missing tactile signage denies wayfinding to visually impaired persons. Under the Unruh Act, $4,000+ per occurrence per sign. Every room without a tactile sign can be a separate violation. High volume of potential claims in large buildings.",
@@ -1408,7 +1865,7 @@
         "2. Order ADA-compliant signs with raised characters and Grade 2 Braille",
         "3. Signs must use sans serif, uppercase characters, 5/8 to 2 inches high",
         "4. Mount signs on wall on latch side of door",
-        "5. Center of sign at 60 inches above floor (ADA) — note CBC specifies 48-60 inches",
+        "5. Center of sign at 60 inches above floor (ADA) \u2014 note CBC specifies 48-60 inches",
         "6. Provide 18 inches minimum by 18 inches minimum clear floor space centered on sign for tactile reading",
         "7. Signs must have non-glare finish with contrast between characters and background"
       ],
@@ -1422,10 +1879,22 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction. Low cost per unit makes this a high-value compliance action."
     },
     "detection": {
-      "visual_cues": ["Room identification sign without visible raised text or Braille", "Flat-printed signs on doors or walls", "Handwritten or paper signs identifying rooms", "No sign present at room entrance", "Sign with only visual text, no tactile elements"],
-      "common_contexts": ["Office suites and conference rooms", "Restroom doors", "Stairwell entries", "Elevator lobbies", "Hotel room doors"],
+      "visual_cues": [
+        "Room identification sign without visible raised text or Braille",
+        "Flat-printed signs on doors or walls",
+        "Handwritten or paper signs identifying rooms",
+        "No sign present at room entrance",
+        "Sign with only visual text, no tactile elements"
+      ],
+      "common_contexts": [
+        "Office suites and conference rooms",
+        "Restroom doors",
+        "Stairwell entries",
+        "Elevator lobbies",
+        "Hotel room doors"
+      ],
       "needs_measurement": false,
-      "false_positive_notes": "Braille and raised characters may not be visible in photos taken from a distance. Directional and informational signs do not require tactile elements — only permanent room/space identification signs do. Temporary signs (event names, personnel names) are exempt."
+      "false_positive_notes": "Braille and raised characters may not be visible in photos taken from a distance. Directional and informational signs do not require tactile elements \u2014 only permanent room/space identification signs do. Temporary signs (event names, personnel names) are exempt."
     }
   },
   "missing_directional_signage": {
@@ -1444,7 +1913,13 @@
         "title": "Visual Characters",
         "requirement": "Same ISA requirement on directional signs. CBC additionally requires directional signs at inaccessible entrances pointing to the nearest accessible entrance."
       },
-      "sf_local": null
+      "local_codes": {
+        "sacramento": {
+          "section": "Sacramento City Code 15.36",
+          "title": "Wayfinding and Directional Signage",
+          "requirement": "Sacramento requires directional accessibility signage as part of building permit review. Public buildings and those near government facilities are subject to enhanced signage requirements."
+        }
+      }
     },
     "severity": "low",
     "legal_risk": "Missing directional signage forces persons with disabilities to search for accessible features. Under the Unruh Act, $4,000+ per occurrence. Often cited alongside the underlying accessibility barrier it should direct to.",
@@ -1471,8 +1946,18 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["Non-accessible entrance without sign pointing to accessible entrance", "Building with multiple entrances but no ISA directional signs", "Complex building layout with no wayfinding for accessibility", "Accessible restroom exists but no signs directing to it"],
-      "common_contexts": ["Buildings with accessible entrance on a different facade", "Large commercial buildings with multiple entries", "Campuses and multi-building complexes", "Buildings where accessible route differs from main path"],
+      "visual_cues": [
+        "Non-accessible entrance without sign pointing to accessible entrance",
+        "Building with multiple entrances but no ISA directional signs",
+        "Complex building layout with no wayfinding for accessibility",
+        "Accessible restroom exists but no signs directing to it"
+      ],
+      "common_contexts": [
+        "Buildings with accessible entrance on a different facade",
+        "Large commercial buildings with multiple entries",
+        "Campuses and multi-building complexes",
+        "Buildings where accessible route differs from main path"
+      ],
       "needs_measurement": false,
       "false_positive_notes": "If all entrances are accessible, directional signage to an accessible entrance is not required. Small buildings with a single entrance may not need directional signs. Signs may exist inside the building or out of camera view."
     }
@@ -1493,7 +1978,7 @@
         "title": "Detectable Warnings",
         "requirement": "Same requirement as ADA. CBC specifies bright yellow as the required color for detectable warnings in California, unlike ADA which only requires visual contrast."
       },
-      "sf_local": null
+      "local_codes": {}
     },
     "severity": "medium",
     "legal_risk": "Missing detectable warnings endanger visually impaired persons at vehicular boundaries. Under the Unruh Act, $4,000+ per occurrence. Transit-related violations can also involve additional federal claims.",
@@ -1505,7 +1990,7 @@
       "steps": [
         "1. Identify all locations requiring detectable warnings (curb ramps, transit platforms, vehicular crossings)",
         "2. Select detectable warning product (surface-applied tiles, cast-in-place, or retrofit)",
-        "3. Prepare surface — clean and level the installation area",
+        "3. Prepare surface \u2014 clean and level the installation area",
         "4. Install detectable warning surface with bright yellow color (CBC requirement)",
         "5. Ensure visual contrast with adjacent walking surface",
         "6. Truncated domes must be 0.2 inch diameter, 0.9 inch center-to-center spacing",
@@ -1521,8 +2006,20 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["Curb ramp without raised dome surface", "Smooth concrete at curb ramp base", "Transit platform edge without tactile strip", "Driveway crossing without warning surface", "Faded or worn detectable warning with domes missing"],
-      "common_contexts": ["Curb ramps at intersections", "Transit platform edges", "Parking garage pedestrian crossings", "Loading dock areas", "Driveways crossing sidewalks"],
+      "visual_cues": [
+        "Curb ramp without raised dome surface",
+        "Smooth concrete at curb ramp base",
+        "Transit platform edge without tactile strip",
+        "Driveway crossing without warning surface",
+        "Faded or worn detectable warning with domes missing"
+      ],
+      "common_contexts": [
+        "Curb ramps at intersections",
+        "Transit platform edges",
+        "Parking garage pedestrian crossings",
+        "Loading dock areas",
+        "Driveways crossing sidewalks"
+      ],
       "needs_measurement": false,
       "false_positive_notes": "In California, detectable warnings must be bright yellow. Other colors may indicate non-compliant warnings. Textured concrete that is not truncated domes does not comply. Some older installations use non-standard patterns that may not meet current requirements."
     }
@@ -1543,7 +2040,7 @@
         "title": "Means of Egress",
         "requirement": "Same requirements as ADA. CBC coordinates with California Fire Code requirements for exit signage, including illuminated exit signs and accessible evacuation route identification."
       },
-      "sf_local": null
+      "local_codes": {}
     },
     "severity": "medium",
     "legal_risk": "Missing exit signage endangers persons with disabilities during emergencies. Under the Unruh Act, $4,000+ per occurrence. Fire code violations may compound liability.",
@@ -1571,8 +2068,18 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["Exit door without illuminated exit sign", "Exit sign without tactile characters or Braille", "No directional exit signage in corridors", "Accessible exit not differentiated from non-accessible exits"],
-      "common_contexts": ["Multi-story commercial buildings", "Buildings with stair-only exits", "Older buildings without updated exit signage", "Assembly occupancies (theaters, restaurants)"],
+      "visual_cues": [
+        "Exit door without illuminated exit sign",
+        "Exit sign without tactile characters or Braille",
+        "No directional exit signage in corridors",
+        "Accessible exit not differentiated from non-accessible exits"
+      ],
+      "common_contexts": [
+        "Multi-story commercial buildings",
+        "Buildings with stair-only exits",
+        "Older buildings without updated exit signage",
+        "Assembly occupancies (theaters, restaurants)"
+      ],
       "needs_measurement": false,
       "false_positive_notes": "Standard illuminated EXIT signs may comply with fire code but not ADA tactile requirements. The issue is often missing Braille/raised characters on exit identification signs, not the illuminated sign itself."
     }
@@ -1593,13 +2100,13 @@
         "title": "Symbols of Accessibility",
         "requirement": "Same ISA display requirements. CBC requires the ISA symbol to be white on a blue background for maximum visibility and standardization."
       },
-      "sf_local": null
+      "local_codes": {}
     },
     "severity": "low",
     "legal_risk": "Missing ISA symbols make it difficult for persons with disabilities to identify accessible features. Under the Unruh Act, $4,000+ per occurrence. Low severity but easy to document and claim.",
     "estimated_cost": 100,
     "cost_unit": "per sign",
-    "cost_note": "SF market rate for ISA symbol sign or decal. Very low cost item — primarily labor for proper placement.",
+    "cost_note": "SF market rate for ISA symbol sign or decal. Very low cost item \u2014 primarily labor for proper placement.",
     "remediation": {
       "summary": "Install ISA symbol signs at all required accessible features.",
       "steps": [
@@ -1615,11 +2122,21 @@
     },
     "tax_credits": {
       "eligible": true,
-      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction. Minimal cost — among the easiest compliance wins."
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction. Minimal cost \u2014 among the easiest compliance wins."
     },
     "detection": {
-      "visual_cues": ["Accessible entrance without wheelchair symbol", "Accessible restroom without ISA sign", "Accessible parking without ISA on sign", "Elevator without ISA identification"],
-      "common_contexts": ["Buildings with mixed accessible and non-accessible entrances", "Multi-restroom facilities", "Parking facilities", "Buildings with accessible features on different floors"],
+      "visual_cues": [
+        "Accessible entrance without wheelchair symbol",
+        "Accessible restroom without ISA sign",
+        "Accessible parking without ISA on sign",
+        "Elevator without ISA identification"
+      ],
+      "common_contexts": [
+        "Buildings with mixed accessible and non-accessible entrances",
+        "Multi-restroom facilities",
+        "Parking facilities",
+        "Buildings with accessible features on different floors"
+      ],
       "needs_measurement": false,
       "false_positive_notes": "ISA symbol is not required if all features of that type are accessible (e.g., if all entrances are accessible, ISA is not required at entrances). The symbol may be present on another side of the sign or door not visible in the photo."
     }
@@ -1640,7 +2157,7 @@
         "title": "Installation Height and Location",
         "requirement": "CBC specifies signs shall be located so the centerline is at 60 inches above the finished floor. Sign must be on the latch side of the door with 18 x 18 inch clear floor space for reading."
       },
-      "sf_local": null
+      "local_codes": {}
     },
     "severity": "low",
     "legal_risk": "Incorrectly mounted signs cannot be found by visually impaired persons who rely on consistent placement conventions. Under the Unruh Act, $4,000+ per occurrence. Often included as part of a bundle of signage violations.",
@@ -1668,8 +2185,18 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["Tactile sign mounted on door instead of adjacent wall", "Sign mounted too high or too low on wall", "Sign mounted on hinge side of door instead of latch side", "Sign centered on door frame rather than offset to latch side"],
-      "common_contexts": ["Restroom signs mounted on doors", "Office signs at incorrect heights", "Signs on wrong side of door", "Signs mounted on glass partitions"],
+      "visual_cues": [
+        "Tactile sign mounted on door instead of adjacent wall",
+        "Sign mounted too high or too low on wall",
+        "Sign mounted on hinge side of door instead of latch side",
+        "Sign centered on door frame rather than offset to latch side"
+      ],
+      "common_contexts": [
+        "Restroom signs mounted on doors",
+        "Office signs at incorrect heights",
+        "Signs on wrong side of door",
+        "Signs mounted on glass partitions"
+      ],
       "needs_measurement": true,
       "false_positive_notes": "Directional and informational signs do not have the same mounting requirements as room identification signs. Only permanent room/space identification signs with tactile elements must be at specific heights on the latch side."
     }
@@ -1690,7 +2217,18 @@
         "title": "Toilet and Bathing Rooms",
         "requirement": "Same requirements as ADA. CBC additionally requires that accessible restrooms have visual contrast on door hardware and that emergency call systems be provided in single-user accessible restrooms."
       },
-      "sf_local": null
+      "local_codes": {
+        "san_diego": {
+          "section": "San Diego Municipal Code Ch. 14 Art. 9",
+          "title": "Restroom Accessibility Requirements",
+          "requirement": "San Diego requires restroom accessibility compliance as part of all commercial building permits. Plan check includes verification of turning space, grab bars, fixture heights, and door clearances per CBC."
+        },
+        "sacramento": {
+          "section": "Sacramento City Code 15.36",
+          "title": "Restroom Accessibility Standards",
+          "requirement": "Sacramento enforces CBC restroom accessibility standards for all commercial buildings. Enhanced accessibility review applies to public buildings and facilities in the state capitol area."
+        }
+      }
     },
     "severity": "high",
     "legal_risk": "Inaccessible restrooms are among the most commonly litigated ADA violations. Under the Unruh Act, $4,000+ per occurrence per visit. Restroom violations often involve multiple sub-violations (grab bars, clearances, fixtures), each potentially a separate claim.",
@@ -1721,8 +2259,20 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction. Large projects may benefit from combining both credits."
     },
     "detection": {
-      "visual_cues": ["Narrow restroom door", "No grab bars visible", "Small restroom with no turning space", "Non-compliant fixtures visible through open door", "No ISA signage on restroom", "Round door knob on restroom door"],
-      "common_contexts": ["Older commercial buildings", "Small restaurants and cafes", "Retail stores with original construction restrooms", "Converted buildings"],
+      "visual_cues": [
+        "Narrow restroom door",
+        "No grab bars visible",
+        "Small restroom with no turning space",
+        "Non-compliant fixtures visible through open door",
+        "No ISA signage on restroom",
+        "Round door knob on restroom door"
+      ],
+      "common_contexts": [
+        "Older commercial buildings",
+        "Small restaurants and cafes",
+        "Retail stores with original construction restrooms",
+        "Converted buildings"
+      ],
       "needs_measurement": true,
       "false_positive_notes": "A restroom may appear small but still meet minimum requirements. Single-user restrooms have different requirements than multi-stall. An accessible stall in a larger restroom may satisfy requirements even if the entire restroom doesn't appear accessible."
     }
@@ -1743,7 +2293,18 @@
         "title": "Grab Bars",
         "requirement": "Same grab bar specifications as ADA. CBC additionally requires that grab bars have a 1-1/4 to 2-inch diameter and be able to support 250 lbs of force."
       },
-      "sf_local": null
+      "local_codes": {
+        "san_diego": {
+          "section": "San Diego DSD Information Bulletin 510",
+          "title": "Restroom Fixture Compliance",
+          "requirement": "San Diego building inspectors verify grab bar installation during restroom inspections. Grab bar compliance is a required inspection item for all commercial restroom permits."
+        },
+        "sacramento": {
+          "section": "Sacramento City Code 15.36",
+          "title": "Restroom Fixture Standards",
+          "requirement": "Sacramento building inspections include grab bar compliance verification for commercial and public restroom permits."
+        }
+      }
     },
     "severity": "high",
     "legal_risk": "Missing grab bars prevent safe toilet transfers for wheelchair users. Under the Unruh Act, $4,000+ per occurrence. Grab bars are among the most commonly cited restroom violations and are inexpensive to fix, making non-compliance particularly indefensible.",
@@ -1771,8 +2332,17 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction. Very cost-effective compliance fix."
     },
     "detection": {
-      "visual_cues": ["Toilet without grab bars on adjacent walls", "Towel bars used in place of proper grab bars (not rated for 250 lbs)", "Grab bar on only one wall (missing second bar)", "Grab bar mounted at incorrect height or length"],
-      "common_contexts": ["Older restroom construction", "Recently renovated restrooms that overlooked accessibility", "Single-user restrooms in small businesses"],
+      "visual_cues": [
+        "Toilet without grab bars on adjacent walls",
+        "Towel bars used in place of proper grab bars (not rated for 250 lbs)",
+        "Grab bar on only one wall (missing second bar)",
+        "Grab bar mounted at incorrect height or length"
+      ],
+      "common_contexts": [
+        "Older restroom construction",
+        "Recently renovated restrooms that overlooked accessibility",
+        "Single-user restrooms in small businesses"
+      ],
       "needs_measurement": true,
       "false_positive_notes": "Decorative towel bars are not grab bars and do not meet strength requirements. Fold-down grab bars are acceptable if they meet length and strength requirements. Grab bars may exist but be partially hidden by the toilet or partition in photos."
     }
@@ -1793,7 +2363,7 @@
         "title": "Toilet Compartments",
         "requirement": "Same minimum dimensions as ADA. CBC additionally requires that the door be self-closing and that the stall have a coat hook at 48 inches maximum height."
       },
-      "sf_local": null
+      "local_codes": {}
     },
     "severity": "high",
     "legal_risk": "Undersized stalls prevent wheelchair users from entering, transferring, and using the toilet. Under the Unruh Act, $4,000+ per occurrence. Stall size violations typically require significant renovation to fix.",
@@ -1804,7 +2374,7 @@
       "summary": "Reconfigure accessible stall to meet minimum 60-inch width and required depth.",
       "steps": [
         "1. Measure existing stall dimensions and identify deficiencies",
-        "2. Design reconfiguration plan — may involve combining two stalls or removing adjacent fixtures",
+        "2. Design reconfiguration plan \u2014 may involve combining two stalls or removing adjacent fixtures",
         "3. Apply for SF DBI permit if plumbing relocation needed",
         "4. Relocate partition walls to achieve 60-inch minimum width",
         "5. Ensure depth meets requirements (56 or 59 inches depending on toilet type)",
@@ -1822,8 +2392,17 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["Accessible stall that appears too narrow for wheelchair", "Stall door that swings inward (reducing usable space)", "Toilet very close to side partition", "No visible turning space within stall"],
-      "common_contexts": ["Older restrooms with original partition layouts", "Restrooms in small commercial spaces", "Multi-stall restrooms where accessible stall was not properly designed"],
+      "visual_cues": [
+        "Accessible stall that appears too narrow for wheelchair",
+        "Stall door that swings inward (reducing usable space)",
+        "Toilet very close to side partition",
+        "No visible turning space within stall"
+      ],
+      "common_contexts": [
+        "Older restrooms with original partition layouts",
+        "Restrooms in small commercial spaces",
+        "Multi-stall restrooms where accessible stall was not properly designed"
+      ],
       "needs_measurement": true,
       "false_positive_notes": "Ambulatory accessible stalls (36 inches wide) are a different stall type than wheelchair accessible and have different size requirements. A stall may appear small in a photo but meet requirements. Floor-mounted vs. wall-hung toilets have different depth requirements."
     }
@@ -1844,7 +2423,7 @@
         "title": "Mirrors",
         "requirement": "Same 40-inch maximum height requirement. CBC specifies that mirrors must be mounted with the bottom edge of the reflecting surface at 40 inches maximum, not the bottom edge of the frame."
       },
-      "sf_local": null
+      "local_codes": {}
     },
     "severity": "low",
     "legal_risk": "High-mounted mirrors deny equal access to seated persons. Under the Unruh Act, $4,000+ per occurrence. Easy to document and fix, making non-compliance hard to defend.",
@@ -1870,8 +2449,17 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction. Very low cost."
     },
     "detection": {
-      "visual_cues": ["Mirror mounted high above sink with significant gap between counter and mirror bottom", "Mirror bottom edge visually above waist height of standing person", "Mirror that a seated person clearly could not use", "Mirror mounted at or near eye level for standing person only"],
-      "common_contexts": ["Commercial restrooms with mirrors above sinks", "Restrooms in restaurants, offices, and retail", "Gym locker rooms"],
+      "visual_cues": [
+        "Mirror mounted high above sink with significant gap between counter and mirror bottom",
+        "Mirror bottom edge visually above waist height of standing person",
+        "Mirror that a seated person clearly could not use",
+        "Mirror mounted at or near eye level for standing person only"
+      ],
+      "common_contexts": [
+        "Commercial restrooms with mirrors above sinks",
+        "Restrooms in restaurants, offices, and retail",
+        "Gym locker rooms"
+      ],
       "needs_measurement": true,
       "false_positive_notes": "The measurement is to the bottom of the reflecting surface, not the frame. Tilted mirrors may have their bottom edge above 40 inches but still comply because the reflecting surface is angled to be usable. Full-length mirrors at any height are compliant."
     }
@@ -1892,7 +2480,7 @@
         "title": "Clear Floor Space",
         "requirement": "Same clearance requirements as ADA. CBC additionally requires insulation or covering of exposed water supply and drain pipes to prevent contact burns and abrasion injuries."
       },
-      "sf_local": null
+      "local_codes": {}
     },
     "severity": "medium",
     "legal_risk": "Insufficient sink clearance prevents wheelchair users from washing hands independently. Under the Unruh Act, $4,000+ per occurrence. Exposed pipes creating burn risks add premises liability exposure.",
@@ -1920,10 +2508,19 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["Sink with vanity cabinet underneath blocking knee space", "Pedestal sink with wide base blocking approach", "Sink mounted too high for seated use", "Exposed hot water pipes without insulation under sink"],
-      "common_contexts": ["Restrooms with vanity cabinets", "Older restrooms with pedestal sinks", "Kitchenette areas in commercial spaces"],
+      "visual_cues": [
+        "Sink with vanity cabinet underneath blocking knee space",
+        "Pedestal sink with wide base blocking approach",
+        "Sink mounted too high for seated use",
+        "Exposed hot water pipes without insulation under sink"
+      ],
+      "common_contexts": [
+        "Restrooms with vanity cabinets",
+        "Older restrooms with pedestal sinks",
+        "Kitchenette areas in commercial spaces"
+      ],
       "needs_measurement": true,
-      "false_positive_notes": "Wall-mounted sinks at proper height typically provide adequate clearance. The presence of a cabinet does not automatically mean non-compliance — some accessible vanities provide required clearance. An apron-front sink may look like it blocks clearance but could comply."
+      "false_positive_notes": "Wall-mounted sinks at proper height typically provide adequate clearance. The presence of a cabinet does not automatically mean non-compliance \u2014 some accessible vanities provide required clearance. An apron-front sink may look like it blocks clearance but could comply."
     }
   },
   "non_compliant_toilet_height": {
@@ -1942,7 +2539,7 @@
         "title": "Seat Height",
         "requirement": "Same 17-19 inch seat height requirement. CBC specifies measurement to top of seat in the down position."
       },
-      "sf_local": null
+      "local_codes": {}
     },
     "severity": "medium",
     "legal_risk": "Non-standard toilet height prevents safe transfers from wheelchair. Under the Unruh Act, $4,000+ per occurrence. Often cited with other restroom violations in serial litigation.",
@@ -1970,8 +2567,15 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["Toilet that appears noticeably low (standard residential height ~15 inches)", "Toilet with added riser indicating original was too low", "Toilet seat visibly below or above wheelchair seat level (~18 inches)"],
-      "common_contexts": ["Older restrooms with original residential-height toilets", "Recently renovated restrooms where contractor used standard (non-ADA) toilets"],
+      "visual_cues": [
+        "Toilet that appears noticeably low (standard residential height ~15 inches)",
+        "Toilet with added riser indicating original was too low",
+        "Toilet seat visibly below or above wheelchair seat level (~18 inches)"
+      ],
+      "common_contexts": [
+        "Older restrooms with original residential-height toilets",
+        "Recently renovated restrooms where contractor used standard (non-ADA) toilets"
+      ],
       "needs_measurement": true,
       "false_positive_notes": "Cannot reliably determine toilet height from photos without a reference measurement. 'Comfort height' toilets marketed for residential use are typically 17-19 inches and comply. The measurement includes the seat, not just the bowl rim."
     }
@@ -1992,7 +2596,7 @@
         "title": "Flush Controls",
         "requirement": "Same requirements as ADA. CBC allows automatic sensor-activated flush as an alternative to hand-operated controls on the open side."
       },
-      "sf_local": null
+      "local_codes": {}
     },
     "severity": "low",
     "legal_risk": "Flush controls on the wall side require unsafe reaching across the toilet. Under the Unruh Act, $4,000+ per occurrence. Often cited as part of a bundle of restroom violations.",
@@ -2003,7 +2607,7 @@
       "summary": "Relocate flush control to open side of toilet or install automatic flush sensor.",
       "steps": [
         "1. Identify the open (transfer) side of the toilet based on stall layout",
-        "2. Option A: Install automatic flush sensor (preferred — eliminates hand-operation requirement entirely)",
+        "2. Option A: Install automatic flush sensor (preferred \u2014 eliminates hand-operation requirement entirely)",
         "3. Option B: Replace flush valve with one having handle on open side",
         "4. If handle relocation requires plumbing changes, apply for SF DBI plumbing permit",
         "5. Verify control operates without tight grasping, pinching, or twisting",
@@ -2019,8 +2623,15 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["Flush handle on wall side of toilet (side closest to wall, not open stall area)", "Flush control requiring reach across or behind toilet", "No automatic flush sensor visible"],
-      "common_contexts": ["Standard toilet installations where plumber did not consider ADA transfer side", "Restrooms where stall layout was changed but toilet orientation wasn't"],
+      "visual_cues": [
+        "Flush handle on wall side of toilet (side closest to wall, not open stall area)",
+        "Flush control requiring reach across or behind toilet",
+        "No automatic flush sensor visible"
+      ],
+      "common_contexts": [
+        "Standard toilet installations where plumber did not consider ADA transfer side",
+        "Restrooms where stall layout was changed but toilet orientation wasn't"
+      ],
       "needs_measurement": false,
       "false_positive_notes": "The open side depends on the stall layout, which may not be fully visible in a photo. Left-hand and right-hand transfer configurations affect which side is the open side. Automatic flush sensors make handle placement moot."
     }
@@ -2041,7 +2652,7 @@
         "title": "Dispensers",
         "requirement": "Same reach range requirements as ADA. CBC requires that toilet paper dispensers be mounted 19 inches minimum above floor and 36 inches maximum from the rear wall. Dispensers shall not be behind grab bars."
       },
-      "sf_local": null
+      "local_codes": {}
     },
     "severity": "low",
     "legal_risk": "Inaccessible dispensers prevent independent restroom use. Under the Unruh Act, $4,000+ per occurrence per dispenser. Multiple dispensers in one restroom can mean multiple violations.",
@@ -2068,8 +2679,17 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["Paper towel dispenser mounted at head height or higher", "Soap dispenser above counter at high position", "Toilet paper dispenser behind grab bar or far from toilet", "Dispenser requiring significant reaching from seated position"],
-      "common_contexts": ["Commercial restrooms with wall-mounted dispensers", "Restrooms where dispensers were placed for standing users", "Recently renovated restrooms with improperly placed dispensers"],
+      "visual_cues": [
+        "Paper towel dispenser mounted at head height or higher",
+        "Soap dispenser above counter at high position",
+        "Toilet paper dispenser behind grab bar or far from toilet",
+        "Dispenser requiring significant reaching from seated position"
+      ],
+      "common_contexts": [
+        "Commercial restrooms with wall-mounted dispensers",
+        "Restrooms where dispensers were placed for standing users",
+        "Recently renovated restrooms with improperly placed dispensers"
+      ],
       "needs_measurement": true,
       "false_positive_notes": "Dispensers at 44-48 inches may appear high but could be within compliant reach range depending on approach direction. Counter-mounted soap dispensers may comply if the counter is within reach range."
     }
@@ -2090,7 +2710,7 @@
         "title": "Sales and Service Counters",
         "requirement": "CBC requires 34-inch maximum counter height (stricter than ADA's 36 inches) for at least one accessible service position. Must be at least 36 inches long."
       },
-      "sf_local": null
+      "local_codes": {}
     },
     "severity": "medium",
     "legal_risk": "Inaccessible counters prevent wheelchair users from conducting transactions. Under the Unruh Act, $4,000+ per occurrence. Retail and food service businesses are heavily targeted for counter height violations in California.",
@@ -2118,8 +2738,19 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["Service counter at chest height for standing person", "Counter that a seated person clearly cannot see over or reach across", "No visible lowered section of counter", "Cash register or POS terminal on high counter with no accessible alternative"],
-      "common_contexts": ["Retail checkout counters", "Restaurant order counters", "Hotel reception desks", "Bank teller counters", "Medical office reception windows"],
+      "visual_cues": [
+        "Service counter at chest height for standing person",
+        "Counter that a seated person clearly cannot see over or reach across",
+        "No visible lowered section of counter",
+        "Cash register or POS terminal on high counter with no accessible alternative"
+      ],
+      "common_contexts": [
+        "Retail checkout counters",
+        "Restaurant order counters",
+        "Hotel reception desks",
+        "Bank teller counters",
+        "Medical office reception windows"
+      ],
       "needs_measurement": true,
       "false_positive_notes": "A counter that appears high may have a lowered section out of frame. Some businesses use a separate accessible service area. A clipboard provided for transactions at a seated level can constitute equivalent facilitation."
     }
@@ -2140,7 +2771,7 @@
         "title": "Automatic Teller Machines and Fare Machines",
         "requirement": "Same requirements as ADA. CBC additionally requires that at least one ATM at each location be accessible and on an accessible route."
       },
-      "sf_local": null
+      "local_codes": {}
     },
     "severity": "medium",
     "legal_risk": "Inaccessible kiosks exclude persons with mobility and vision disabilities from self-service. Under the Unruh Act, $4,000+ per occurrence. ATM and kiosk accessibility has become an active litigation area in California.",
@@ -2168,8 +2799,19 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["Kiosk with touchscreen mounted above comfortable seated reach", "ATM on raised platform with no ramp", "Self-checkout terminal with no clear floor space for wheelchair", "Payment terminal mounted too high on pole or stand"],
-      "common_contexts": ["Bank ATMs", "Transit fare machines", "Self-checkout stations", "Check-in kiosks at hotels and airports", "Parking payment machines"],
+      "visual_cues": [
+        "Kiosk with touchscreen mounted above comfortable seated reach",
+        "ATM on raised platform with no ramp",
+        "Self-checkout terminal with no clear floor space for wheelchair",
+        "Payment terminal mounted too high on pole or stand"
+      ],
+      "common_contexts": [
+        "Bank ATMs",
+        "Transit fare machines",
+        "Self-checkout stations",
+        "Check-in kiosks at hotels and airports",
+        "Parking payment machines"
+      ],
       "needs_measurement": true,
       "false_positive_notes": "Many modern ATMs are designed to be accessible. A kiosk may appear too high but actually have operable parts within reach range. Check if an alternative accessible kiosk exists at the same location."
     }
@@ -2190,7 +2832,7 @@
         "title": "Clear Width",
         "requirement": "Same 36-inch minimum width requirement. CBC does not allow the ADA's 32-inch constriction exception, making all queue sections require 36 inches minimum."
       },
-      "sf_local": null
+      "local_codes": {}
     },
     "severity": "medium",
     "legal_risk": "Inaccessible queues force wheelchair users to bypass lines, creating unequal service. Under the Unruh Act, $4,000+ per occurrence. Stanchion-based queues that are too narrow or have tight switchbacks are common violators.",
@@ -2217,10 +2859,21 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["Narrow stanchion queue lanes", "Queue with tight switchback turns", "Rope barriers creating paths too narrow for wheelchair", "Queue involving steps or level changes"],
-      "common_contexts": ["Bank lobbies", "Restaurant waiting areas", "Box office and ticket counter areas", "Government service centers", "Retail checkout areas"],
+      "visual_cues": [
+        "Narrow stanchion queue lanes",
+        "Queue with tight switchback turns",
+        "Rope barriers creating paths too narrow for wheelchair",
+        "Queue involving steps or level changes"
+      ],
+      "common_contexts": [
+        "Bank lobbies",
+        "Restaurant waiting areas",
+        "Box office and ticket counter areas",
+        "Government service centers",
+        "Retail checkout areas"
+      ],
       "needs_measurement": true,
-      "false_positive_notes": "Stanchion-based queues can be easily reconfigured — the current photo may show a non-accessible setup that could be different at other times. Staff may provide queue bypass for wheelchair users (though this is not a substitute for an accessible queue)."
+      "false_positive_notes": "Stanchion-based queues can be easily reconfigured \u2014 the current photo may show a non-accessible setup that could be different at other times. Staff may provide queue bypass for wheelchair users (though this is not a substitute for an accessible queue)."
     }
   },
   "inaccessible_dining_surface": {
@@ -2239,7 +2892,7 @@
         "title": "Dining Surfaces and Work Surfaces",
         "requirement": "Same height and clearance requirements as ADA. CBC requires that accessible seating be distributed throughout the dining area, not clustered in one location."
       },
-      "sf_local": null
+      "local_codes": {}
     },
     "severity": "medium",
     "legal_risk": "Inaccessible dining surfaces prevent wheelchair users from eating at restaurants or using work tables. Under the Unruh Act, $4,000+ per occurrence. Restaurant dining accessibility is actively litigated in San Francisco.",
@@ -2267,8 +2920,18 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["All dining seating is fixed booths with no wheelchair-accessible tables", "Tables with center pedestals blocking knee clearance", "High bar-height tables only", "Closely spaced tables without wheelchair circulation room"],
-      "common_contexts": ["Fast-food restaurants with fixed seating", "Cafes with high-top tables", "Bars with only bar-height seating", "Food courts with attached seating"],
+      "visual_cues": [
+        "All dining seating is fixed booths with no wheelchair-accessible tables",
+        "Tables with center pedestals blocking knee clearance",
+        "High bar-height tables only",
+        "Closely spaced tables without wheelchair circulation room"
+      ],
+      "common_contexts": [
+        "Fast-food restaurants with fixed seating",
+        "Cafes with high-top tables",
+        "Bars with only bar-height seating",
+        "Food courts with attached seating"
+      ],
       "needs_measurement": true,
       "false_positive_notes": "Standard table height (29-30 inches) typically complies with the 28-34 inch requirement. Movable chairs can usually be removed to create wheelchair space. At least one accessible table is often present even if not obvious in photos."
     }
@@ -2289,10 +2952,17 @@
         "title": "Path of Travel Requirements",
         "requirement": "When alterations, structural repairs, or additions are made, an accessible path of travel to the altered area is required. Cost limited to 20% of adjusted construction cost. For projects exceeding the valuation threshold ($209,208 in 2026), full compliance may be required unless unreasonable hardship is demonstrated."
       },
-      "sf_local": {
-        "section": "SF Building Code",
-        "title": "Accessibility Upgrades for Alterations",
-        "requirement": "SF DBI enforces CBC path of travel requirements. Projects exceeding the valuation threshold must demonstrate unreasonable hardship to limit path of travel compliance. All TI projects require accessibility review."
+      "local_codes": {
+        "sf": {
+          "section": "SF Building Code",
+          "title": "Accessibility Upgrades for Alterations",
+          "requirement": "SF DBI enforces CBC path of travel requirements. Projects exceeding the valuation threshold must demonstrate unreasonable hardship to limit path of travel compliance. All TI projects require accessibility review."
+        },
+        "san_jose": {
+          "section": "San Jose Building Division Policy",
+          "title": "Enhanced Path-of-Travel Enforcement",
+          "requirement": "San Jose Building Division conducts enhanced path-of-travel enforcement during permit review. All alteration permits are evaluated for CBC path-of-travel triggers with mandatory accessibility upgrade documentation."
+        }
       }
     },
     "severity": "high",
@@ -2322,10 +2992,20 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction. Path of travel expenses are part of the renovation cost basis."
     },
     "detection": {
-      "visual_cues": ["Active renovation or construction at building", "Construction permits visible in window", "Recently completed renovation with no accessibility improvements visible", "Modernized interior with outdated or inaccessible entrance"],
-      "common_contexts": ["Tenant improvement projects", "Building renovations and remodels", "Restaurant build-outs in existing spaces", "Office modernization projects"],
+      "visual_cues": [
+        "Active renovation or construction at building",
+        "Construction permits visible in window",
+        "Recently completed renovation with no accessibility improvements visible",
+        "Modernized interior with outdated or inaccessible entrance"
+      ],
+      "common_contexts": [
+        "Tenant improvement projects",
+        "Building renovations and remodels",
+        "Restaurant build-outs in existing spaces",
+        "Office modernization projects"
+      ],
       "needs_measurement": false,
-      "false_positive_notes": "Not all renovations trigger path of travel requirements — only alterations to primary function areas. Cosmetic changes (paint, carpet, fixtures) may not trigger requirements. The 20% cost limitation provides some protection for small renovations."
+      "false_positive_notes": "Not all renovations trigger path of travel requirements \u2014 only alterations to primary function areas. Cosmetic changes (paint, carpet, fixtures) may not trigger requirements. The 20% cost limitation provides some protection for small renovations."
     }
   },
   "missing_casp_inspection": {
@@ -2336,14 +3016,16 @@
     "codes": {
       "federal_ada": null,
       "cbc_title24": {
-        "section": "Bus. & Prof. Code §4459.5",
+        "section": "Bus. & Prof. Code \u00a74459.5",
         "title": "Certified Access Specialist Program",
         "requirement": "California SB 1608 created the CASp program. A CASp inspection provides qualified defendant status in construction-related accessibility claims, requiring early court evaluation of compliance and 90-day stay for correction."
       },
-      "sf_local": {
-        "section": "SF ABE Program",
-        "title": "CASp Requirement",
-        "requirement": "SF Accessible Business Entrance program requires CASp inspection or licensed architect/engineer review for certain building categories. CASp reports are filed with SF DBI."
+      "local_codes": {
+        "sf": {
+          "section": "SF ABE Program",
+          "title": "CASp Requirement",
+          "requirement": "SF Accessible Business Entrance program requires CASp inspection or licensed architect/engineer review for certain building categories. CASp reports are filed with SF DBI."
+        }
       }
     },
     "severity": "medium",
@@ -2373,8 +3055,16 @@
       "notes": "CASp inspection costs are eligible for IRS Section 44 Disabled Access Credit (small businesses) and Section 190 Barrier Removal Deduction. The inspection itself is a deductible business expense."
     },
     "detection": {
-      "visual_cues": ["No CASp inspection certificate posted in window or entry", "Multiple visible accessibility violations suggesting no professional review", "Building with no accessibility improvements despite being in business"],
-      "common_contexts": ["Small businesses unaware of CASp program", "New businesses that did not conduct pre-opening accessibility review", "Businesses in older buildings with no recent renovations"],
+      "visual_cues": [
+        "No CASp inspection certificate posted in window or entry",
+        "Multiple visible accessibility violations suggesting no professional review",
+        "Building with no accessibility improvements despite being in business"
+      ],
+      "common_contexts": [
+        "Small businesses unaware of CASp program",
+        "New businesses that did not conduct pre-opening accessibility review",
+        "Businesses in older buildings with no recent renovations"
+      ],
       "needs_measurement": false,
       "false_positive_notes": "A CASp inspection may have been completed but the certificate is not visible in the photo. Some businesses display certificates inside rather than in the window. The absence of visible violations does not mean a CASp inspection was conducted, and vice versa."
     }
@@ -2395,10 +3085,12 @@
         "title": "Entrances",
         "requirement": "CBC requires accessible entrances with the primary entrance being accessible when technically feasible."
       },
-      "sf_local": {
-        "section": "SF Ordinance 51-16 / 22-25",
-        "title": "Accessible Business Entrance Program",
-        "requirement": "All primary entrances to places of public accommodation must be accessible. Property owners must: obtain inspection, submit compliance checklist, apply for permits within 90 days of checklist submission, and complete improvements by category deadline."
+      "local_codes": {
+        "sf": {
+          "section": "SF Ordinance 51-16 / 22-25",
+          "title": "Accessible Business Entrance Program",
+          "requirement": "All primary entrances to places of public accommodation must be accessible. Property owners must: obtain inspection, submit compliance checklist, apply for permits within 90 days of checklist submission, and complete improvements by category deadline."
+        }
       }
     },
     "severity": "high",
@@ -2427,8 +3119,19 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["Steps at primary business entrance with no ramp", "Narrow door at main entrance", "Non-compliant threshold at primary entrance", "No ABE compliance documentation visible", "Business in older building with no entrance accessibility improvements"],
-      "common_contexts": ["Storefronts in San Francisco's older commercial districts", "Businesses in Victorian or Edwardian-era buildings", "Restaurants and retail in hilly neighborhoods", "New businesses in un-renovated spaces"],
+      "visual_cues": [
+        "Steps at primary business entrance with no ramp",
+        "Narrow door at main entrance",
+        "Non-compliant threshold at primary entrance",
+        "No ABE compliance documentation visible",
+        "Business in older building with no entrance accessibility improvements"
+      ],
+      "common_contexts": [
+        "Storefronts in San Francisco's older commercial districts",
+        "Businesses in Victorian or Edwardian-era buildings",
+        "Restaurants and retail in hilly neighborhoods",
+        "New businesses in un-renovated spaces"
+      ],
       "needs_measurement": false,
       "false_positive_notes": "Some buildings may have received hardship exemptions from SF DBI. Technical infeasibility determinations may allow alternative compliance measures. A building may be in an approved compliance timeline with work pending."
     }
@@ -2449,10 +3152,12 @@
         "title": "Qualified Historical Buildings and Facilities",
         "requirement": "CBC allows alternative compliance methods for qualified historical buildings when standard compliance would threaten the historical significance. Must use alternative compliance per California Historical Building Code (CHBC). State Historic Preservation Officer consultation may be required."
       },
-      "sf_local": {
-        "section": "SF Planning Code Art. 10/11",
-        "title": "Historic Preservation",
-        "requirement": "SF landmarks and buildings in historic districts may qualify for alternative compliance. Must coordinate with SF Planning Department Historic Preservation Commission and SF DBI."
+      "local_codes": {
+        "sf": {
+          "section": "SF Planning Code Art. 10/11",
+          "title": "Historic Preservation",
+          "requirement": "SF landmarks and buildings in historic districts may qualify for alternative compliance. Must coordinate with SF Planning Department Historic Preservation Commission and SF DBI."
+        }
       }
     },
     "severity": "medium",
@@ -2483,8 +3188,17 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction. Historic Rehabilitation Tax Credits (federal and state) may also apply if building is income-producing."
     },
     "detection": {
-      "visual_cues": ["Clearly historic building (Victorian, Edwardian, Art Deco architecture) with no accessibility features", "Historic plaque or designation visible with no accessible entrance", "Ornate entrance with steps and no ramp or alternative access"],
-      "common_contexts": ["San Francisco Victorian and Edwardian buildings", "Buildings in historic districts (Jackson Square, Civic Center)", "National Register-listed buildings", "Local landmarks"],
+      "visual_cues": [
+        "Clearly historic building (Victorian, Edwardian, Art Deco architecture) with no accessibility features",
+        "Historic plaque or designation visible with no accessible entrance",
+        "Ornate entrance with steps and no ramp or alternative access"
+      ],
+      "common_contexts": [
+        "San Francisco Victorian and Edwardian buildings",
+        "Buildings in historic districts (Jackson Square, Civic Center)",
+        "National Register-listed buildings",
+        "Local landmarks"
+      ],
       "needs_measurement": false,
       "false_positive_notes": "Not all old buildings are designated historic. A building must be formally qualified as historic to use alternative compliance. Modern buildings designed to look historic do not qualify. Some historic buildings have made full ADA compliance without alternative methods."
     }
@@ -2505,7 +3219,7 @@
         "title": "Slope",
         "requirement": "CBC does NOT allow the ADA exceptions for steeper slopes in existing buildings. All ramps in California must meet the 1:12 maximum running slope regardless of when they were constructed. This makes CBC significantly stricter for existing buildings."
       },
-      "sf_local": null
+      "local_codes": {}
     },
     "severity": "medium",
     "legal_risk": "In California, meeting ADA but not CBC creates full legal exposure under the Unruh Act ($4,000+ per occurrence). Courts apply the stricter CBC standard. Business owners who believe their ramp is 'ADA compliant' may be surprised by California's stricter requirements.",
@@ -2534,10 +3248,18 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
     },
     "detection": {
-      "visual_cues": ["Existing ramp that appears moderately steep (steeper than 1:12 but not extreme)", "Short ramp covering noticeable height change", "Ramp at existing/older building that may have been built to older ADA exception standards"],
-      "common_contexts": ["Older buildings with ramps built before CBC tightened requirements", "Ramps designed by out-of-state firms applying federal ADA only", "Retrofits that used ADA's existing building exceptions"],
+      "visual_cues": [
+        "Existing ramp that appears moderately steep (steeper than 1:12 but not extreme)",
+        "Short ramp covering noticeable height change",
+        "Ramp at existing/older building that may have been built to older ADA exception standards"
+      ],
+      "common_contexts": [
+        "Older buildings with ramps built before CBC tightened requirements",
+        "Ramps designed by out-of-state firms applying federal ADA only",
+        "Retrofits that used ADA's existing building exceptions"
+      ],
       "needs_measurement": true,
-      "false_positive_notes": "Ramps at or below 1:12 (8.33%) comply with both ADA and CBC. This violation is specifically about ramps between 1:12 and 1:8 slope that would pass ADA but fail CBC. Precise measurement is essential — visual assessment cannot reliably distinguish 1:12 from 1:10 slope."
+      "false_positive_notes": "Ramps at or below 1:12 (8.33%) comply with both ADA and CBC. This violation is specifically about ramps between 1:12 and 1:8 slope that would pass ADA but fail CBC. Precise measurement is essential \u2014 visual assessment cannot reliably distinguish 1:12 from 1:10 slope."
     }
   },
   "tenant_improvement_trigger": {
@@ -2556,10 +3278,12 @@
         "title": "Path of Travel Requirements",
         "requirement": "Tenant improvements (TIs) that alter primary function areas trigger path of travel upgrades. The scope includes: primary entrance, route to altered area, restrooms serving the area, drinking fountains, and signage. The 20% cost cap applies, but projects exceeding the valuation threshold may require full compliance."
       },
-      "sf_local": {
-        "section": "SF DBI Policy",
-        "title": "Tenant Improvement Accessibility Review",
-        "requirement": "SF DBI reviews all TI permit applications for accessibility trigger compliance. Plans must show path of travel upgrades or provide cost documentation for the 20% limitation. CASp review recommended for complex projects."
+      "local_codes": {
+        "sf": {
+          "section": "SF DBI Policy",
+          "title": "Tenant Improvement Accessibility Review",
+          "requirement": "SF DBI reviews all TI permit applications for accessibility trigger compliance. Plans must show path of travel upgrades or provide cost documentation for the 20% limitation. CASp review recommended for complex projects."
+        }
       }
     },
     "severity": "high",
@@ -2590,8 +3314,18 @@
       "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction. Accessibility costs are part of the TI cost basis for depreciation."
     },
     "detection": {
-      "visual_cues": ["Recently renovated interior with outdated/inaccessible entrance", "New storefront build-out in older building shell", "Modern fixtures inside with original non-compliant doors/ramps", "Construction permits visible for interior renovation"],
-      "common_contexts": ["Restaurant build-outs in existing retail spaces", "Office tenant improvements", "Retail store renovations", "Medical/dental office fit-outs in commercial buildings"],
+      "visual_cues": [
+        "Recently renovated interior with outdated/inaccessible entrance",
+        "New storefront build-out in older building shell",
+        "Modern fixtures inside with original non-compliant doors/ramps",
+        "Construction permits visible for interior renovation"
+      ],
+      "common_contexts": [
+        "Restaurant build-outs in existing retail spaces",
+        "Office tenant improvements",
+        "Retail store renovations",
+        "Medical/dental office fit-outs in commercial buildings"
+      ],
       "needs_measurement": false,
       "false_positive_notes": "Not all interior work triggers path of travel requirements. Cosmetic changes (paint, wallpaper, carpet) are typically not alterations affecting primary function areas. Mechanical, electrical, or plumbing work in non-public areas may not trigger requirements."
     }
