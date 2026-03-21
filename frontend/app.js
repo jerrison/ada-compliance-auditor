@@ -18,6 +18,11 @@ var downloadPdfBtn = document.getElementById('download-pdf-btn');
 var newScanBtn = document.getElementById('new-scan-btn');
 var historyList = document.getElementById('history-list');
 var historyEmpty = document.getElementById('history-empty');
+var complianceBanner = document.getElementById('compliance-banner');
+var complianceIcon = document.getElementById('compliance-icon');
+var complianceLabel = document.getElementById('compliance-label');
+var complianceSublabel = document.getElementById('compliance-sublabel');
+var positiveCount = document.getElementById('positive-count');
 
 var selectedFile = null;
 var currentPdfUrl = null;
@@ -310,14 +315,58 @@ function renderResults(data) {
   // PDF button
   if (currentPdfUrl) { downloadPdfBtn.classList.remove('hidden'); } else { downloadPdfBtn.classList.add('hidden'); }
 
+  // Compliance banner
+  var isCompliant = violations.length === 0;
+  var hasPositives = data.positive_features && data.positive_features.length > 0;
+  if (complianceBanner) {
+    complianceBanner.classList.remove('hidden');
+    if (isCompliant) {
+      complianceBanner.className = 'rounded-2xl p-5 border border-emerald-900/40 bg-emerald-950/20 text-center';
+      complianceIcon.className = 'mx-auto w-12 h-12 rounded-full flex items-center justify-center mb-3 bg-emerald-900/50';
+      complianceIcon.textContent = '\u2713';
+      complianceIcon.style.cssText = 'color:#34d399;font-size:24px;font-weight:bold';
+      complianceLabel.textContent = 'No Violations Detected';
+      complianceLabel.className = 'text-lg font-bold mb-1 text-emerald-300';
+      complianceSublabel.textContent = hasPositives
+        ? data.positive_features.length + ' compliant feature' + (data.positive_features.length !== 1 ? 's' : '') + ' identified'
+        : 'This space appears to meet accessibility standards based on visual inspection';
+      complianceSublabel.className = 'text-sm text-emerald-400/70';
+    } else if (hasPositives) {
+      complianceBanner.className = 'rounded-2xl p-5 border border-slate-800 bg-slate-900/50 text-center';
+      complianceIcon.className = 'mx-auto w-12 h-12 rounded-full flex items-center justify-center mb-3 bg-slate-800';
+      complianceIcon.textContent = '\u00B1';
+      complianceIcon.style.cssText = 'color:#94a3b8;font-size:24px;font-weight:bold';
+      complianceLabel.textContent = 'Partial Compliance';
+      complianceLabel.className = 'text-lg font-bold mb-1 text-slate-300';
+      complianceSublabel.textContent = data.positive_features.length + ' compliant feature' + (data.positive_features.length !== 1 ? 's' : '') + ' alongside ' + violations.length + ' violation' + (violations.length !== 1 ? 's' : '');
+      complianceSublabel.className = 'text-sm text-slate-400';
+    } else {
+      complianceBanner.classList.add('hidden');
+    }
+  }
+
   // Positive features
   clearChildren(positiveList);
-  if (data.positive_features && data.positive_features.length > 0) {
+  if (hasPositives) {
     positiveSection.classList.remove('hidden');
+    if (positiveCount) positiveCount.textContent = data.positive_features.length + ' found';
     data.positive_features.forEach(function(f) {
       var li = document.createElement('li');
-      li.className = 'flex items-start gap-2 text-sm text-emerald-300';
-      li.innerHTML = '<svg class="w-4 h-4 mt-0.5 shrink-0 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg><span>' + escHtml(f) + '</span>';
+      li.className = 'flex items-start gap-3 text-sm';
+
+      var iconWrap = document.createElement('div');
+      iconWrap.className = 'w-6 h-6 rounded-full bg-emerald-900/50 flex items-center justify-center shrink-0 mt-0.5';
+      iconWrap.textContent = '\u2713';
+      iconWrap.style.cssText = 'color:#34d399;font-size:12px;font-weight:bold';
+
+      var textWrap = document.createElement('div');
+      var featureText = document.createElement('p');
+      featureText.className = 'text-emerald-300';
+      featureText.textContent = f;
+      textWrap.appendChild(featureText);
+
+      li.appendChild(iconWrap);
+      li.appendChild(textWrap);
       positiveList.appendChild(li);
     });
   } else { positiveSection.classList.add('hidden'); }
@@ -601,6 +650,7 @@ newScanBtn.addEventListener('click', function() {
   resultsEl.classList.add('hidden');
   progressEl.classList.add('hidden');
   downloadPdfBtn.classList.add('hidden');
+  if (complianceBanner) complianceBanner.classList.add('hidden');
   clearChildren(violationsList);
   clearChildren(positiveList);
   clearChildren(followupList);
@@ -628,7 +678,9 @@ async function saveToHistory(report) {
       thumbnail: thumbnail,
       location: locationField.value.trim() || 'Unknown location',
       spaceType: report.space_type || '',
-      riskLevel: report.overall_risk || 'unknown',
+      riskLevel: violations.length === 0 ? 'none' : (report.overall_risk || 'unknown'),
+      isCompliant: violations.length === 0,
+      positiveCount: (report.positive_features || []).length,
       confirmedCount: violations.filter(function(v){return (v.confidence||0)>=0.7;}).length,
       potentialCount: violations.filter(function(v){return (v.confidence||0)<0.7;}).length,
       violationCount: violations.length,
@@ -642,7 +694,11 @@ async function saveToHistory(report) {
 async function loadHistory(filter) {
   try {
     var reports = await getAllReports();
-    if (filter && filter !== 'all') reports = reports.filter(function(r){return r.riskLevel===filter;});
+    if (filter === 'compliant') {
+      reports = reports.filter(function(r) { return r.isCompliant || r.riskLevel === 'none'; });
+    } else if (filter && filter !== 'all') {
+      reports = reports.filter(function(r) { return r.riskLevel === filter; });
+    }
     clearChildren(historyList);
     if (reports.length === 0) { historyEmpty.classList.remove('hidden'); return; }
     historyEmpty.classList.add('hidden');
@@ -658,16 +714,20 @@ async function loadHistory(filter) {
       }
       var info = document.createElement('div');
       info.className = 'flex-1 min-w-0';
+      var badgeClass = r.isCompliant ? 'risk-none' : 'risk-' + (r.riskLevel||'unknown');
+      var badgeText = r.isCompliant ? 'COMPLIANT' : (r.riskLevel||'?').toUpperCase();
+      var metaLine = r.isCompliant
+        ? '<span class="text-emerald-400">' + (r.positiveCount||0) + ' compliant features</span>'
+        : '<span>' + (r.violationCount||0) + ' violations</span>' +
+          (r.costRange && r.costRange!=='$0' ? '<span class="text-amber-400">' + r.costRange + '</span>' : '');
+
       info.innerHTML =
         '<div class="flex items-center justify-between mb-0.5">' +
           '<p class="text-sm font-medium text-slate-200 truncate">' + escHtml(r.location||'Unknown') + '</p>' +
-          '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold risk-' + (r.riskLevel||'unknown') + ' shrink-0 ml-2">' + (r.riskLevel||'?').toUpperCase() + '</span>' +
+          '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold ' + badgeClass + ' shrink-0 ml-2">' + badgeText + '</span>' +
         '</div>' +
         '<p class="text-[10px] text-slate-500 font-mono">' + new Date(r.date).toLocaleDateString() + '</p>' +
-        '<div class="flex gap-3 mt-0.5 text-[10px] text-slate-500">' +
-          '<span>' + (r.violationCount||0) + ' violations</span>' +
-          (r.costRange && r.costRange!=='$0' ? '<span class="text-amber-400">' + r.costRange + '</span>' : '') +
-        '</div>';
+        '<div class="flex gap-3 mt-0.5 text-[10px] text-slate-500">' + metaLine + '</div>';
       card.appendChild(info);
       historyList.appendChild(card);
     });

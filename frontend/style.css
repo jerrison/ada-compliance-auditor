@@ -20,7 +20,7 @@ body { font-family: 'DM Sans', system-ui, sans-serif; }
 .risk-high   { background-color: #881337; color: #fda4af; }
 .risk-medium { background-color: #78350f; color: #fcd34d; }
 .risk-low    { background-color: #14532d; color: #86efac; }
-.risk-none   { background-color: #1e293b; color: #94a3b8; }
+.risk-none   { background-color: #064e3b; color: #6ee7b7; }
 
 /* ── Screen navigation ────────────────────────────────── */
 .screen { display: none; }

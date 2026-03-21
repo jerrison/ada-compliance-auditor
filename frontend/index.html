@@ -154,10 +154,21 @@
         </button>
       </div>
 
+      <!-- Compliance Status Banner -->
+      <div id="compliance-banner" class="hidden rounded-2xl p-5 border text-center">
+        <div id="compliance-icon" class="mx-auto w-12 h-12 rounded-full flex items-center justify-center mb-3"></div>
+        <p id="compliance-label" class="text-lg font-bold mb-1"></p>
+        <p id="compliance-sublabel" class="text-sm"></p>
+      </div>
+
       <!-- Compliant Features -->
       <div id="positive-section" class="hidden rounded-2xl p-5 border border-emerald-900/40 bg-emerald-950/20">
-        <h3 class="text-sm font-bold text-emerald-400 uppercase tracking-wide mb-3 font-mono">Compliant Features Detected</h3>
-        <ul id="positive-list" class="space-y-1.5"></ul>
+        <div class="flex items-center gap-2 mb-3">
+          <h3 class="text-sm font-bold text-emerald-400 uppercase tracking-wide font-mono">Compliant Features Detected</h3>
+          <div class="flex-1 h-px bg-emerald-900/30"></div>
+          <span id="positive-count" class="text-xs font-mono text-emerald-400/60"></span>
+        </div>
+        <ul id="positive-list" class="space-y-2"></ul>
       </div>
 
       <!-- ====== VIOLATION CARDS ====== -->
@@ -223,6 +234,7 @@
     <!-- Filter -->
     <div id="history-filter" class="flex gap-2 mb-4 overflow-x-auto pb-1">
       <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="compliant">Compliant</button>
       <button class="filter-btn" data-filter="high">High Risk</button>
       <button class="filter-btn" data-filter="medium">Medium</button>
       <button class="filter-btn" data-filter="low">Low</button>
