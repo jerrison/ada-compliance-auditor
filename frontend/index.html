@@ -2,88 +2,196 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#2563EB" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>ADA Compliance Auditor</title>
+  <link rel="manifest" href="/static/manifest.json" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="/static/style.css" />
 </head>
-<body class="bg-gray-950 text-gray-100 min-h-screen">
-  <div class="max-w-4xl mx-auto px-4 py-8">
+<body class="bg-gray-950 text-gray-100 min-h-screen pb-20">
+
+  <!-- ========== SCAN SCREEN ========== -->
+  <div id="scan-screen" class="screen active max-w-2xl mx-auto px-4 py-6">
 
     <!-- Header -->
-    <header class="text-center mb-10">
-      <h1 class="text-4xl font-bold text-white mb-2">ADA Compliance Auditor</h1>
-      <p class="text-gray-400 text-lg">Upload a photo of any building or public space for instant accessibility analysis</p>
-      <p class="text-xs text-gray-600 mt-1">Powered by Gemini Vision &middot; RocketRide Pipeline</p>
+    <header class="text-center mb-6">
+      <h1 class="text-2xl font-bold text-white">ADA Auditor</h1>
+      <p class="text-gray-500 text-xs mt-1">California Building Code + Federal ADA</p>
     </header>
 
     <!-- Upload Area -->
     <div id="upload-area"
-         class="border-2 border-dashed border-gray-700 rounded-2xl p-12 text-center cursor-pointer hover:border-blue-500 hover:bg-gray-900 transition-all duration-200 mb-8">
+         class="border-2 border-dashed border-gray-700 rounded-2xl p-8 text-center cursor-pointer hover:border-blue-500 hover:bg-gray-900 transition-all duration-200 mb-4">
       <div id="upload-content">
-        <svg class="mx-auto h-16 w-16 text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="mx-auto h-12 w-12 text-gray-600 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
         </svg>
-        <p class="text-gray-400 text-lg mb-2">Drop a photo here or click to upload</p>
-        <p class="text-gray-600 text-sm">JPG, PNG, WEBP up to 10MB</p>
+        <p class="text-gray-400 text-base mb-1">Tap to take a photo</p>
+        <p class="text-gray-600 text-xs">or drop an image here &middot; JPG, PNG, WEBP</p>
       </div>
-      <img id="preview" class="hidden max-h-80 mx-auto rounded-lg" />
-      <input type="file" id="file-input" accept="image/*" class="hidden" />
+      <img id="preview" class="hidden max-h-60 mx-auto rounded-lg" alt="Preview" />
+      <input type="file" id="file-input" accept="image/*" capture="environment" class="hidden" />
+    </div>
+
+    <!-- Location Input -->
+    <div id="location-input" class="mb-4">
+      <input type="text" id="location-field"
+             placeholder="Address or location (optional)"
+             class="w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-blue-500 transition" />
     </div>
 
     <!-- Analyze Button -->
-    <div class="text-center mb-8">
+    <div class="text-center mb-6">
       <button id="analyze-btn" disabled
-              class="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white font-semibold py-3 px-10 rounded-xl text-lg transition-all duration-200">
+              class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-800 disabled:text-gray-600 disabled:cursor-not-allowed text-white font-semibold py-3.5 rounded-xl text-base transition-all duration-200">
         Analyze for ADA Compliance
       </button>
     </div>
 
-    <!-- Loading -->
-    <div id="loading" class="hidden text-center py-12">
-      <div class="inline-block h-10 w-10 animate-spin rounded-full border-4 border-blue-500 border-r-transparent"></div>
-      <p class="text-gray-400 mt-4">Analyzing image for accessibility violations...</p>
+    <!-- Progress Steps -->
+    <div id="progress" class="hidden mb-6 rounded-xl bg-gray-900 border border-gray-800 p-4 space-y-3">
+      <div class="step-indicator flex items-center gap-3" data-step="1">
+        <div class="step-icon w-7 h-7 rounded-full bg-gray-800 flex items-center justify-center text-gray-500 font-bold text-xs shrink-0">1</div>
+        <div>
+          <p class="text-sm text-gray-400">Scene Classification</p>
+          <p class="step-label text-xs text-gray-600"></p>
+        </div>
+      </div>
+      <div class="step-indicator flex items-center gap-3" data-step="2">
+        <div class="step-icon w-7 h-7 rounded-full bg-gray-800 flex items-center justify-center text-gray-500 font-bold text-xs shrink-0">2</div>
+        <div>
+          <p class="text-sm text-gray-400">Violation Detection</p>
+          <p class="step-label text-xs text-gray-600"></p>
+        </div>
+      </div>
+      <div class="step-indicator flex items-center gap-3" data-step="3">
+        <div class="step-icon w-7 h-7 rounded-full bg-gray-800 flex items-center justify-center text-gray-500 font-bold text-xs shrink-0">3</div>
+        <div>
+          <p class="text-sm text-gray-400">Report Generation</p>
+          <p class="step-label text-xs text-gray-600"></p>
+        </div>
+      </div>
     </div>
 
     <!-- Results -->
-    <div id="results" class="hidden space-y-6">
+    <div id="results" class="hidden space-y-4">
 
       <!-- Summary Card -->
-      <div id="summary-card" class="rounded-2xl p-6 border border-gray-800 bg-gray-900">
-        <div class="flex items-center justify-between mb-4">
-          <h2 class="text-2xl font-bold">Audit Results</h2>
-          <span id="risk-badge" class="px-4 py-1.5 rounded-full text-sm font-semibold"></span>
+      <div id="summary-card" class="rounded-2xl p-5 border border-gray-800 bg-gray-900">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-xl font-bold">Audit Results</h2>
+          <span id="risk-badge" class="px-3 py-1 rounded-full text-xs font-semibold"></span>
         </div>
-        <p id="summary-text" class="text-gray-300 mb-4"></p>
-        <div class="grid grid-cols-2 gap-4">
-          <div class="bg-gray-800 rounded-xl p-4">
-            <p class="text-gray-500 text-sm">Violations Found</p>
-            <p id="violation-count" class="text-3xl font-bold text-red-400"></p>
+        <p id="summary-text" class="text-gray-300 text-sm mb-4"></p>
+        <div class="grid grid-cols-3 gap-3">
+          <div class="bg-gray-800 rounded-xl p-3 text-center">
+            <p class="text-gray-500 text-xs">Confirmed</p>
+            <p id="confirmed-count" class="text-2xl font-bold text-red-400">0</p>
           </div>
-          <div class="bg-gray-800 rounded-xl p-4">
-            <p class="text-gray-500 text-sm">Est. Remediation Cost</p>
-            <p id="total-cost" class="text-3xl font-bold text-amber-400"></p>
+          <div class="bg-gray-800 rounded-xl p-3 text-center">
+            <p class="text-gray-500 text-xs">Potential</p>
+            <p id="potential-count" class="text-2xl font-bold text-amber-400">0</p>
+          </div>
+          <div class="bg-gray-800 rounded-xl p-3 text-center">
+            <p class="text-gray-500 text-xs">Est. Cost</p>
+            <p id="total-cost" class="text-lg font-bold text-amber-400">$0</p>
           </div>
         </div>
       </div>
 
+      <!-- PDF Download -->
+      <button id="download-pdf-btn" class="hidden w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl text-sm transition-all duration-200">
+        Download PDF Report
+      </button>
+
       <!-- Positive Features -->
-      <div id="positive-section" class="hidden rounded-2xl p-6 border border-green-900/50 bg-green-950/30">
-        <h3 class="text-lg font-semibold text-green-400 mb-3">Compliant Features Detected</h3>
+      <div id="positive-section" class="hidden rounded-2xl p-5 border border-green-900/50 bg-green-950/30">
+        <h3 class="text-base font-semibold text-green-400 mb-2">Compliant Features Detected</h3>
         <ul id="positive-list" class="space-y-1"></ul>
       </div>
 
-      <!-- Violations List -->
+      <!-- Violations -->
       <div id="violations-list" class="space-y-4"></div>
 
+      <!-- Follow-up Suggestions -->
+      <div id="followup-section" class="hidden rounded-2xl p-5 border border-blue-900/50 bg-blue-950/30">
+        <h3 class="text-base font-semibold text-blue-400 mb-2">Recommended Follow-Up</h3>
+        <ul id="followup-list" class="space-y-1"></ul>
+      </div>
+
       <!-- Disclaimer -->
-      <div class="rounded-xl p-4 bg-gray-900 border border-gray-800 text-sm text-gray-500">
+      <div class="rounded-xl p-4 bg-gray-900 border border-gray-800 text-xs text-gray-500">
         <p id="disclaimer"></p>
       </div>
+
+      <!-- New Scan -->
+      <div class="text-center pt-2 pb-4">
+        <button id="new-scan-btn"
+                class="text-blue-400 hover:text-blue-300 text-sm font-medium transition">
+          Start New Scan
+        </button>
+      </div>
     </div>
+
   </div>
 
+  <!-- ========== HISTORY SCREEN ========== -->
+  <div id="history-screen" class="screen max-w-2xl mx-auto px-4 py-6">
+
+    <header class="text-center mb-6">
+      <h1 class="text-2xl font-bold text-white">Report History</h1>
+    </header>
+
+    <!-- Filter -->
+    <div id="history-filter" class="flex gap-2 mb-4 overflow-x-auto pb-1">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="high">High</button>
+      <button class="filter-btn" data-filter="medium">Medium</button>
+      <button class="filter-btn" data-filter="low">Low</button>
+    </div>
+
+    <!-- History List -->
+    <div id="history-list" class="space-y-3"></div>
+
+    <!-- Empty State -->
+    <div id="history-empty" class="hidden text-center py-16">
+      <svg class="mx-auto h-12 w-12 text-gray-700 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <p class="text-gray-500 text-sm">No reports yet</p>
+      <p class="text-gray-600 text-xs mt-1">Completed audits will appear here</p>
+    </div>
+
+  </div>
+
+  <!-- ========== BOTTOM NAV ========== -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-gray-900 border-t border-gray-800 flex z-50">
+    <button class="nav-btn active" data-screen="scan-screen">
+      <svg class="mx-auto h-5 w-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+      <span class="text-xs">Scan</span>
+    </button>
+    <button class="nav-btn" data-screen="history-screen">
+      <svg class="mx-auto h-5 w-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <span class="text-xs">History</span>
+    </button>
+  </nav>
+
+  <script src="/static/db.js"></script>
   <script src="/static/app.js"></script>
 </body>
 </html>
