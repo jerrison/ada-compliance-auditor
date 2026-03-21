@@ -2334,13 +2334,9 @@
     "title": "Missing CASp Inspection",
     "description": "Business has not obtained a Certified Access Specialist (CASp) inspection as recommended or required by California law.",
     "codes": {
-      "federal_ada": {
-        "section": "N/A",
-        "title": "Not Applicable",
-        "requirement": "CASp is a California-specific program. Federal ADA does not require or reference CASp inspections."
-      },
+      "federal_ada": null,
       "cbc_title24": {
-        "section": "SB 1608 / AB 1379",
+        "section": "Bus. & Prof. Code §4459.5",
         "title": "Certified Access Specialist Program",
         "requirement": "California SB 1608 created the CASp program. A CASp inspection provides qualified defendant status in construction-related accessibility claims, requiring early court evaluation of compliance and 90-day stay for correction."
       },
@@ -2444,9 +2440,9 @@
     "description": "Qualified historic building has not established an alternative compliance plan for accessibility.",
     "codes": {
       "federal_ada": {
-        "section": "4.1.7",
-        "title": "Accessible Buildings: Historic Preservation",
-        "requirement": "Alterations to qualified historic buildings must comply with ADA to the maximum extent feasible. When full compliance would threaten or destroy historical significance, alternative methods of access may be used."
+        "section": "202.5",
+        "title": "Alterations to Qualified Historic Buildings",
+        "requirement": "Alterations to qualified historic buildings must comply with 2010 ADA Standards to the maximum extent feasible. When full compliance would threaten or destroy historical significance, alternative methods of access may be used."
       },
       "cbc_title24": {
         "section": "11B-202.5",
