@@ -21,7 +21,7 @@ MOCK_VIOLATIONS_RESPONSE = json.dumps({
     "summary": "Missing ramp at entrance.",
 })
 MOCK_CONSISTENCY_RESPONSE = json.dumps({
-    "violations": [
+    "verified_violations": [
         {
             "violation_type": "missing_ramp",
             "description": "No ramp at entrance",
@@ -32,25 +32,23 @@ MOCK_CONSISTENCY_RESPONSE = json.dumps({
             "needs_measurement": False,
         }
     ],
-    "removed": [],
+    "removed_violations": [],
     "follow_up_suggestions": ["Photograph the parking area"],
 })
 
-def _mock_gemini_call(responses):
+def _mock_call_gemini(responses):
+    """Mock _call_gemini to return responses in sequence."""
     call_count = {"n": 0}
     def side_effect(*args, **kwargs):
-        resp = MagicMock()
-        resp.text = responses[call_count["n"]]
+        result = json.loads(responses[call_count["n"]])
         call_count["n"] += 1
-        return resp
+        return result
     return side_effect
 
 @pytest.mark.asyncio
-@patch("backend.gemini_pipeline.GenerativeModel")
-async def test_pipeline_returns_three_passes(mock_model_cls):
-    mock_model = MagicMock()
-    mock_model.generate_content = _mock_gemini_call([MOCK_SCENE_RESPONSE, MOCK_VIOLATIONS_RESPONSE, MOCK_CONSISTENCY_RESPONSE])
-    mock_model_cls.return_value = mock_model
+@patch("backend.gemini_pipeline._call_gemini")
+async def test_pipeline_returns_three_passes(mock_call):
+    mock_call.side_effect = _mock_call_gemini([MOCK_SCENE_RESPONSE, MOCK_VIOLATIONS_RESPONSE, MOCK_CONSISTENCY_RESPONSE])
     results = []
     async for pass_result in run_analysis_pipeline(b"fake_image", "image/jpeg"):
         results.append(pass_result)
@@ -60,22 +58,18 @@ async def test_pipeline_returns_three_passes(mock_model_cls):
     assert results[2].pass_name == "consistency_check"
 
 @pytest.mark.asyncio
-@patch("backend.gemini_pipeline.GenerativeModel")
-async def test_pipeline_scene_classification(mock_model_cls):
-    mock_model = MagicMock()
-    mock_model.generate_content = _mock_gemini_call([MOCK_SCENE_RESPONSE, MOCK_VIOLATIONS_RESPONSE, MOCK_CONSISTENCY_RESPONSE])
-    mock_model_cls.return_value = mock_model
+@patch("backend.gemini_pipeline._call_gemini")
+async def test_pipeline_scene_classification(mock_call):
+    mock_call.side_effect = _mock_call_gemini([MOCK_SCENE_RESPONSE, MOCK_VIOLATIONS_RESPONSE, MOCK_CONSISTENCY_RESPONSE])
     results = []
     async for pass_result in run_analysis_pipeline(b"fake_image", "image/jpeg"):
         results.append(pass_result)
     assert results[0].data["space_type"] == "entrance"
 
 @pytest.mark.asyncio
-@patch("backend.gemini_pipeline.GenerativeModel")
-async def test_pipeline_final_result_has_follow_up(mock_model_cls):
-    mock_model = MagicMock()
-    mock_model.generate_content = _mock_gemini_call([MOCK_SCENE_RESPONSE, MOCK_VIOLATIONS_RESPONSE, MOCK_CONSISTENCY_RESPONSE])
-    mock_model_cls.return_value = mock_model
+@patch("backend.gemini_pipeline._call_gemini")
+async def test_pipeline_final_result_has_follow_up(mock_call):
+    mock_call.side_effect = _mock_call_gemini([MOCK_SCENE_RESPONSE, MOCK_VIOLATIONS_RESPONSE, MOCK_CONSISTENCY_RESPONSE])
     results = []
     async for pass_result in run_analysis_pipeline(b"fake_image", "image/jpeg"):
         results.append(pass_result)
