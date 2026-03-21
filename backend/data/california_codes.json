@@ -1,0 +1,146 @@
+{
+  "missing_ramp": {
+    "cbc_section": "11B-405.2",
+    "title": "Ramps — California Requirements",
+    "description": "Ramps along accessible routes must have a running slope no steeper than 1:12 and a minimum clear width of 48 inches between handrails.",
+    "requirement": "CBC requires a 48-inch minimum clear width for ramps (vs. federal 36-inch). Ramps must include edge protection on both sides.",
+    "stricter_than_federal": true,
+    "stricter_note": "California requires 48-inch minimum ramp width between handrails, compared to the federal 36-inch minimum."
+  },
+  "missing_handrail": {
+    "cbc_section": "11B-405.8",
+    "title": "Handrails on Ramps — California Requirements",
+    "description": "Ramps with a rise greater than 6 inches must have handrails on both sides complying with CBC Section 11B-505.",
+    "requirement": "Handrails must be 34–38 inches above the ramp surface and extend 12 inches beyond the top and bottom of the ramp run.",
+    "stricter_than_federal": false,
+    "stricter_note": null
+  },
+  "narrow_doorway": {
+    "cbc_section": "11B-404.2.3",
+    "title": "Door Clear Width — California Requirements",
+    "description": "Doorways must provide a minimum clear opening width of 32 inches. Path-of-travel alteration triggers may require 36-inch minimum clear width.",
+    "requirement": "When alterations trigger path-of-travel requirements, a 36-inch clear opening width may be required. Measured between the face of the door and the opposite stop at 90 degrees open.",
+    "stricter_than_federal": true,
+    "stricter_note": "California path-of-travel triggers may require 36-inch clear door width, exceeding the federal 32-inch minimum."
+  },
+  "round_door_knob": {
+    "cbc_section": "11B-404.2.7",
+    "title": "Door Hardware — California Requirements",
+    "description": "Door hardware must be operable with one hand without tight grasping, pinching, or twisting of the wrist.",
+    "requirement": "Lever handles, push-type mechanisms, or U-shaped handles are compliant. Round knobs are prohibited on doors along accessible routes.",
+    "stricter_than_federal": false,
+    "stricter_note": null
+  },
+  "missing_accessible_parking_sign": {
+    "cbc_section": "11B-502.6",
+    "title": "Accessible Parking Signage — California Requirements",
+    "description": "Accessible parking spaces must be identified by signs with the ISA mounted at a minimum of 80 inches above the ground. Signs must display the applicable fine amount for illegal use.",
+    "requirement": "Signs must be 80 inches minimum above the ground (vs. federal 60 inches). Each sign must include the maximum fine amount for unauthorized parking (CVC 22507.8). Van-accessible spaces must include 'Van Accessible' designation.",
+    "stricter_than_federal": true,
+    "stricter_note": "California requires 80-inch sign mounting height (vs. federal 60-inch) and mandatory display of the fine amount for illegal parking."
+  },
+  "missing_parking_striping": {
+    "cbc_section": "11B-502.3",
+    "title": "Accessible Parking Access Aisle — California Requirements",
+    "description": "Access aisles must be marked with blue paint and include a blue International Symbol of Accessibility (ISA) painted on the pavement surface.",
+    "requirement": "Access aisles require blue-painted borders and a blue ISA ground marking on the pavement. The access aisle must be 60 inches wide minimum (96 inches for van-accessible).",
+    "stricter_than_federal": true,
+    "stricter_note": "California requires blue paint on access aisle borders and a blue ISA marking on the pavement surface, which are not required federally."
+  },
+  "missing_curb_cut": {
+    "cbc_section": "11B-406",
+    "title": "Curb Ramps — California Requirements",
+    "description": "Curb ramps must be provided wherever an accessible route crosses a curb. Detectable warning surfaces are required.",
+    "requirement": "Curb ramps must have a maximum running slope of 1:12, a minimum width of 48 inches, and detectable warning surfaces with truncated domes.",
+    "stricter_than_federal": false,
+    "stricter_note": null
+  },
+  "missing_tactile_signage": {
+    "cbc_section": "11B-703.2",
+    "title": "Raised Characters, Braille, and Geometric Symbols — California Requirements",
+    "description": "Signs identifying rooms and spaces must include raised characters, Grade 2 Braille, and geometric symbols for restroom identification (triangle for men, circle for women, triangle overlapping circle for unisex).",
+    "requirement": "Restroom signs must include geometric symbols: an equilateral triangle (point up) for men, a circle for women, and a triangle-within-circle for unisex facilities. Signs mounted 48–60 inches above floor on the latch side of the door.",
+    "stricter_than_federal": true,
+    "stricter_note": "California requires geometric symbols (triangle/circle) on restroom signage in addition to standard raised characters and Braille."
+  },
+  "missing_grab_bars": {
+    "cbc_section": "11B-604.5",
+    "title": "Grab Bars in Toilet Rooms — California Requirements",
+    "description": "Grab bars must be provided on the side wall and rear wall closest to the toilet in accessible toilet compartments.",
+    "requirement": "Side grab bar: 42 inches minimum length. Rear grab bar: 36 inches minimum length. Mounted 33–36 inches above the finished floor.",
+    "stricter_than_federal": false,
+    "stricter_note": null
+  },
+  "blocked_accessible_route": {
+    "cbc_section": "11B-402",
+    "title": "Accessible Routes — California Requirements",
+    "description": "Accessible routes must be continuous, unobstructed paths connecting all accessible elements. California's path-of-travel requirements impose a 20% spending trigger for alterations.",
+    "requirement": "Minimum clear width of 36 inches (44 inches for corridors). When a building alteration is made, up to 20% of the total alteration cost must be spent on making the path of travel accessible.",
+    "stricter_than_federal": true,
+    "stricter_note": "California enforces a 20% path-of-travel spending trigger: when an area is altered, up to 20% of the alteration cost must be spent on accessible path-of-travel improvements."
+  },
+  "no_accessible_entrance": {
+    "cbc_section": "11B-206.4",
+    "title": "Accessible Entrances — California Requirements",
+    "description": "At least 60% of all public entrances must be accessible and on an accessible route.",
+    "requirement": "Accessible entrances must be connected to accessible routes and identified with the ISA if not all entrances are accessible. Signage must direct users to the nearest accessible entrance.",
+    "stricter_than_federal": false,
+    "stricter_note": null
+  },
+  "step_only_entrance": {
+    "cbc_section": "11B-404.2.5",
+    "title": "Thresholds at Doorways — California Requirements",
+    "description": "Thresholds at doorways must not exceed 1/2 inch in height. California's path-of-travel trigger applies when alterations are made.",
+    "requirement": "Changes in level greater than 1/2 inch require a ramp or other accessible means. When alterations trigger path-of-travel requirements, step-only entrances must be remediated as part of the 20% spending obligation.",
+    "stricter_than_federal": true,
+    "stricter_note": "California's path-of-travel trigger for alterations requires step-only entrances to be addressed as part of the 20% alteration spending obligation."
+  },
+  "protruding_objects": {
+    "cbc_section": "11B-307",
+    "title": "Protruding Objects — California Requirements",
+    "description": "Objects on walls or posts must not protrude more than 4 inches into circulation paths if mounted between 27 and 80 inches above the floor.",
+    "requirement": "Objects below 27 inches can protrude any amount. Objects above 80 inches are not restricted. Cane-detectable barriers are required beneath protruding objects.",
+    "stricter_than_federal": false,
+    "stricter_note": null
+  },
+  "inaccessible_counter": {
+    "cbc_section": "11B-904.4",
+    "title": "Sales and Service Counters — California Requirements",
+    "description": "A portion of the counter must be 36 inches maximum above the floor and 36 inches minimum in length, with knee and toe clearance provided.",
+    "requirement": "The lowered counter section must provide knee and toe clearance complying with CBC 11B-306. This is required in addition to the height and length requirements.",
+    "stricter_than_federal": true,
+    "stricter_note": "California requires knee and toe clearance at lowered counter sections, which is not explicitly mandated under federal ADA standards."
+  },
+  "missing_directional_signage": {
+    "cbc_section": "11B-703.5",
+    "title": "Directional and Informational Signs — California Requirements",
+    "description": "Signs providing directions to accessible features must include the International Symbol of Accessibility and be placed at decision points.",
+    "requirement": "Directional signage must be placed at decision points along accessible routes and must include the ISA where applicable.",
+    "stricter_than_federal": false,
+    "stricter_note": null
+  },
+  "steep_ramp": {
+    "cbc_section": "11B-405.2",
+    "title": "Ramp Slope — California Requirements",
+    "description": "Ramp running slope must not exceed 1:12 (8.33%). Cross slope must not exceed 1:48.",
+    "requirement": "Maximum running slope of 1:12. Rise for any ramp run must be 30 inches maximum. Landings required at top, bottom, and every 30 inches of rise.",
+    "stricter_than_federal": false,
+    "stricter_note": null
+  },
+  "missing_detectable_warnings": {
+    "cbc_section": "11B-705",
+    "title": "Detectable Warning Surfaces — California Requirements",
+    "description": "Truncated dome surfaces must be provided at curb ramps, transit platform edges, and hazardous vehicular areas. California specifically requires yellow-colored detectable warnings.",
+    "requirement": "Detectable warning surfaces must be yellow in color (federal ADA only requires visual contrast). Domes must be applied at curb ramps, hazardous vehicular areas, and transit platforms.",
+    "stricter_than_federal": true,
+    "stricter_note": "California specifically requires yellow-colored detectable warning surfaces, whereas federal ADA only requires visual contrast with adjacent surfaces."
+  },
+  "inaccessible_restroom": {
+    "cbc_section": "11B-603",
+    "title": "Toilet and Bathing Rooms — California Requirements",
+    "description": "At least one of each type of toilet room must be accessible and on an accessible route. Doors must display geometric symbols identifying the restroom type.",
+    "requirement": "Accessible restrooms must include 60-inch turning space, accessible fixtures, grab bars, and proper signage with geometric symbols (triangle for men, circle for women, overlapping triangle-circle for unisex) on the door.",
+    "stricter_than_federal": true,
+    "stricter_note": "California requires geometric symbols on restroom doors (triangle for men, circle for women) in addition to standard accessible signage."
+  }
+}

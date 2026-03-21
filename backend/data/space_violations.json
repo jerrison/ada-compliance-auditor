@@ -1,0 +1,57 @@
+{
+  "entrance": [
+    "missing_ramp",
+    "missing_handrail",
+    "narrow_doorway",
+    "round_door_knob",
+    "missing_tactile_signage",
+    "no_accessible_entrance",
+    "step_only_entrance",
+    "protruding_objects",
+    "blocked_accessible_route",
+    "steep_ramp",
+    "missing_directional_signage"
+  ],
+  "parking_lot": [
+    "missing_accessible_parking_sign",
+    "missing_parking_striping",
+    "missing_curb_cut",
+    "missing_detectable_warnings",
+    "blocked_accessible_route",
+    "missing_directional_signage"
+  ],
+  "interior": [
+    "narrow_doorway",
+    "round_door_knob",
+    "blocked_accessible_route",
+    "protruding_objects",
+    "inaccessible_counter",
+    "missing_tactile_signage",
+    "missing_directional_signage"
+  ],
+  "restroom": [
+    "missing_grab_bars",
+    "inaccessible_restroom",
+    "narrow_doorway",
+    "round_door_knob",
+    "missing_tactile_signage",
+    "blocked_accessible_route"
+  ],
+  "sidewalk_path": [
+    "missing_curb_cut",
+    "missing_detectable_warnings",
+    "blocked_accessible_route",
+    "protruding_objects",
+    "steep_ramp",
+    "missing_ramp",
+    "missing_handrail",
+    "missing_directional_signage"
+  ],
+  "counter_service_area": [
+    "inaccessible_counter",
+    "narrow_doorway",
+    "blocked_accessible_route",
+    "missing_directional_signage",
+    "protruding_objects"
+  ]
+}
