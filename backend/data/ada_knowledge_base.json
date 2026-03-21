@@ -1,0 +1,2603 @@
+{
+  "missing_ramp": {
+    "id": "missing_ramp",
+    "category": "entrances",
+    "title": "Missing Ramp at Entrance",
+    "description": "No ramp provided at entrance with a level change greater than 1/2 inch.",
+    "codes": {
+      "federal_ada": {
+        "section": "405",
+        "title": "Ramps",
+        "requirement": "An accessible route with a ramp must be provided where there is a change in level greater than 1/2 inch. Ramps must have a running slope no steeper than 1:12 and a minimum clear width of 36 inches."
+      },
+      "cbc_title24": {
+        "section": "11B-405",
+        "title": "Ramps",
+        "requirement": "CBC mirrors ADA 405 but has no exception for employee work areas. Ramps must comply regardless of occupancy classification."
+      },
+      "sf_local": {
+        "section": "SF ABE Program",
+        "title": "Accessible Business Entrance",
+        "requirement": "SF Ordinance 51-16 requires all primary business entrances to be accessible. Building owners must submit compliance checklists and obtain permits for ramp installation."
+      }
+    },
+    "severity": "high",
+    "legal_risk": "Under the California Unruh Civil Rights Act, each visit to an inaccessible entrance can trigger $4,000+ in statutory damages plus attorney fees. Missing ramps are among the most commonly litigated ADA violations in California.",
+    "estimated_cost": 15000,
+    "cost_unit": "per ramp",
+    "cost_note": "SF market rate for concrete ramp installation including permitting. Aluminum modular ramps may cost less ($5,000-$8,000) but may not meet SF DBI standards for permanent installations.",
+    "remediation": {
+      "summary": "Install ADA-compliant ramp with proper slope, width, landings, and handrails.",
+      "steps": [
+        "1. Measure existing grade change to determine required ramp run length (1:12 slope ratio)",
+        "2. Engage licensed architect or CASp to design ramp compliant with ADA 405 and CBC 11B-405",
+        "3. Apply for SF DBI building permit (alterations permit required)",
+        "4. Construct ramp with 36-inch minimum clear width, 1:12 maximum slope",
+        "5. Install handrails on both sides if rise exceeds 6 inches",
+        "6. Add level landings at top, bottom, and every 30 inches of rise",
+        "7. Install edge protection along ramp sides",
+        "8. Apply non-slip surface finish",
+        "9. Schedule final inspection with SF DBI"
+      ],
+      "contractor_type": "Licensed general contractor with ADA experience",
+      "permit_required": true,
+      "permit_type": "SF DBI Alterations Permit",
+      "timeline": "4-8 weeks including permitting"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit (up to $5,000 for small businesses) and Section 190 Barrier Removal Deduction (up to $15,000 for any business)."
+    },
+    "detection": {
+      "visual_cues": ["Steps at entrance with no adjacent ramp", "Level change at doorway threshold", "Stairs as only means of entry", "Portable or temporary ramp indicating permanent solution needed"],
+      "common_contexts": ["Older commercial buildings", "Historic storefronts", "Buildings with raised first floors", "Sidewalk-level entrances with interior steps"],
+      "needs_measurement": true,
+      "false_positive_notes": "A ramp may exist at an alternate entrance. Check for directional signage to accessible entrance before flagging. Interior level changes visible through glass may not represent the primary entrance condition."
+    }
+  },
+  "no_accessible_entrance": {
+    "id": "no_accessible_entrance",
+    "category": "entrances",
+    "title": "No Accessible Entrance to Building",
+    "description": "Building lacks any accessible entrance for persons with mobility disabilities.",
+    "codes": {
+      "federal_ada": {
+        "section": "206.4",
+        "title": "Accessible Entrances",
+        "requirement": "At least 60% of all public entrances must be accessible. Accessible entrances must be connected to accessible routes and identified with the ISA if not all entrances are accessible."
+      },
+      "cbc_title24": {
+        "section": "11B-206.4",
+        "title": "Entrances",
+        "requirement": "CBC requires the same 60% minimum but additionally requires that the primary entrance be accessible whenever technically feasible."
+      },
+      "sf_local": {
+        "section": "SF Ordinance 51-16",
+        "title": "Accessible Business Entrance Program",
+        "requirement": "All primary entrances to places of public accommodation must be accessible. Building owners must complete the ABE compliance process by their category deadline."
+      }
+    },
+    "severity": "high",
+    "legal_risk": "Complete lack of accessible entrance is a high-priority target for serial ADA litigation in California. Under the Unruh Civil Rights Act, plaintiffs can claim $4,000+ per occurrence. Courts have awarded damages for each separate visit to an inaccessible business.",
+    "estimated_cost": 18000,
+    "cost_unit": "per entrance",
+    "cost_note": "SF market rate includes ramp construction, door modifications, signage, and permitting. Complex sites with significant grade changes or structural constraints may exceed $25,000.",
+    "remediation": {
+      "summary": "Create at least one fully accessible entrance with ramp, compliant door, and signage.",
+      "steps": [
+        "1. Hire CASp inspector to evaluate all entrances and identify best candidate for accessible conversion",
+        "2. Engage licensed architect to design accessible entrance (ramp, door width, threshold, hardware)",
+        "3. Apply for SF DBI building permit",
+        "4. Construct accessible path from public way to entrance",
+        "5. Install or modify door to meet 32-inch clear width minimum with compliant hardware",
+        "6. Add ISA signage at accessible entrance and directional signs at non-accessible entrances",
+        "7. Ensure threshold does not exceed 1/2 inch",
+        "8. Schedule SF DBI final inspection"
+      ],
+      "contractor_type": "Licensed general contractor with ADA/accessibility specialization",
+      "permit_required": true,
+      "permit_type": "SF DBI Alterations Permit",
+      "timeline": "6-12 weeks including permitting and construction"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction. May also qualify for California state tax incentives for accessibility improvements."
+    },
+    "detection": {
+      "visual_cues": ["All visible entrances have steps with no ramps", "No ISA signage visible anywhere on building exterior", "Narrow doorways at all entrances", "Heavy manual doors with no automatic openers at any entrance"],
+      "common_contexts": ["Pre-ADA buildings (built before 1992)", "Multi-story buildings without ground-floor access", "Historic buildings in older neighborhoods", "Converted residential buildings"],
+      "needs_measurement": false,
+      "false_positive_notes": "An accessible entrance may exist on a different facade not visible in the photo. Look for directional signage indicating an accessible entrance elsewhere. Rear or side entrances may be accessible."
+    }
+  },
+  "step_only_entrance": {
+    "id": "step_only_entrance",
+    "category": "entrances",
+    "title": "Steps-Only Entrance",
+    "description": "Entrance accessible only via steps with no ramp, lift, or alternative accessible route.",
+    "codes": {
+      "federal_ada": {
+        "section": "404.2.5",
+        "title": "Thresholds at Doorways",
+        "requirement": "Thresholds at doorways must not exceed 1/2 inch in height (3/4 inch for sliding doors). Changes in level greater than 1/2 inch require a ramp or other accessible means of entry."
+      },
+      "cbc_title24": {
+        "section": "11B-404.2.5",
+        "title": "Thresholds at Doorways",
+        "requirement": "Thresholds at doorways shall be 1/2 inch maximum in height. Raised thresholds and changes in level at doorways shall be identified with a visually contrasting stripe."
+      },
+      "sf_local": {
+        "section": "SF ABE Program",
+        "title": "Accessible Business Entrance",
+        "requirement": "Primary business entrances must provide step-free access. Property owners must remediate step-only entrances per the ABE compliance timeline."
+      }
+    },
+    "severity": "high",
+    "legal_risk": "Step-only entrances completely exclude wheelchair users and are a primary target for Unruh Act litigation ($4,000+ per occurrence). In California, plaintiffs' attorneys actively survey commercial districts for this violation.",
+    "estimated_cost": 12000,
+    "cost_unit": "per entrance",
+    "cost_note": "SF market rate for adding ramp or platform lift at stepped entrance. Single-step entrances may cost as little as $3,000 for a small ramp; multi-step entrances requiring platform lifts can exceed $20,000.",
+    "remediation": {
+      "summary": "Add ramp, platform lift, or re-grade entrance to eliminate steps as the only means of access.",
+      "steps": [
+        "1. Measure step height and available space for ramp run",
+        "2. Determine solution: ramp (preferred), platform lift, or re-grading",
+        "3. If ramp: ensure 1:12 slope ratio with adequate landing space",
+        "4. If platform lift: select model meeting ASME A18.1 standards",
+        "5. Apply for SF DBI permit (building permit for ramp; elevator permit for lift)",
+        "6. Construct solution with compliant handrails and edge protection",
+        "7. Install directional signage if accessible route differs from main entrance path",
+        "8. Schedule final inspection"
+      ],
+      "contractor_type": "Licensed general contractor; elevator contractor if platform lift",
+      "permit_required": true,
+      "permit_type": "SF DBI Building Permit or Elevator Permit",
+      "timeline": "4-10 weeks depending on solution type"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["One or more steps at entrance with no ramp visible", "Stairs leading to door with no alternative path", "Small step or raised threshold at doorway", "Portable ramp leaning against wall (indicates awareness but no permanent fix)"],
+      "common_contexts": ["Older storefronts with raised floors", "Buildings on sloped streets", "Entrances with single step that owners overlook", "Basement or below-grade businesses"],
+      "needs_measurement": true,
+      "false_positive_notes": "A single step less than 1/2 inch may be a threshold issue rather than a step-only entrance. Verify the height of the level change. Also check if a ramp exists out of frame."
+    }
+  },
+  "narrow_doorway": {
+    "id": "narrow_doorway",
+    "category": "entrances",
+    "title": "Narrow Doorway",
+    "description": "Door clear opening width is less than the required 32-inch minimum.",
+    "codes": {
+      "federal_ada": {
+        "section": "404.2.3",
+        "title": "Clear Width",
+        "requirement": "Doorways must provide a minimum clear opening width of 32 inches, measured between the face of the door and the opposite stop when the door is open 90 degrees."
+      },
+      "cbc_title24": {
+        "section": "11B-404.2.3",
+        "title": "Clear Width",
+        "requirement": "Same 32-inch minimum clear width requirement. CBC additionally requires that the clear opening width be maintained for the full height of the doorway."
+      },
+      "sf_local": null
+    },
+    "severity": "high",
+    "legal_risk": "Narrow doorways that prevent wheelchair access are a frequent basis for Unruh Act claims ($4,000+ per occurrence). This is particularly litigated for restroom doors and primary entrances in San Francisco.",
+    "estimated_cost": 2500,
+    "cost_unit": "per door",
+    "cost_note": "SF market rate for door widening including frame replacement and finish work. Load-bearing walls may increase cost to $5,000+. Includes SF DBI permit fees.",
+    "remediation": {
+      "summary": "Widen doorway to achieve minimum 32-inch clear opening width.",
+      "steps": [
+        "1. Measure existing clear opening width with door open 90 degrees",
+        "2. Determine if wall is load-bearing (structural engineer may be needed)",
+        "3. Apply for SF DBI alterations permit",
+        "4. Remove existing door frame and enlarge opening",
+        "5. Install new frame and door providing 32-inch minimum clear width (36-inch door leaf recommended)",
+        "6. Install compliant hardware (lever handles, not knobs)",
+        "7. Repair wall finishes and ensure threshold compliance",
+        "8. Schedule inspection"
+      ],
+      "contractor_type": "Licensed general contractor",
+      "permit_required": true,
+      "permit_type": "SF DBI Alterations Permit",
+      "timeline": "2-4 weeks"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["Visibly narrow door opening", "Door appears significantly narrower than standard width", "Person or wheelchair would clearly not fit through opening", "Non-standard or residential-size door in commercial setting"],
+      "common_contexts": ["Older buildings with original narrow doorframes", "Restroom entrances", "Interior office doors", "Storage areas converted to public spaces"],
+      "needs_measurement": true,
+      "false_positive_notes": "Standard residential doors (30 inches) may appear narrow but could meet requirements if the door opens fully. The 32-inch measurement is of the clear opening, not the door leaf width. A 36-inch door leaf typically provides 32+ inches of clear width."
+    }
+  },
+  "round_door_knob": {
+    "id": "round_door_knob",
+    "category": "entrances",
+    "title": "Non-Compliant Door Hardware (Round Knob)",
+    "description": "Door has round knob hardware requiring tight grasping and wrist twisting to operate.",
+    "codes": {
+      "federal_ada": {
+        "section": "404.2.7",
+        "title": "Door and Gate Hardware",
+        "requirement": "Handles, pulls, latches, locks, and other operable parts on doors must be operable with one hand and not require tight grasping, pinching, or twisting of the wrist. Lever handles, push-type, and U-shaped handles are compliant. Round knobs are not."
+      },
+      "cbc_title24": {
+        "section": "11B-404.2.7",
+        "title": "Door Hardware",
+        "requirement": "Same requirement as ADA. Hardware shall have a shape that is easy to grasp with one hand and does not require tight grasping, pinching, or twisting of the wrist to operate."
+      },
+      "sf_local": null
+    },
+    "severity": "medium",
+    "legal_risk": "Non-compliant door hardware is a common, easily documented violation. Under the Unruh Act, each door with a round knob can constitute a separate violation ($4,000+ each). Plaintiffs often cite multiple doors in a single lawsuit.",
+    "estimated_cost": 250,
+    "cost_unit": "per door",
+    "cost_note": "SF market rate for commercial-grade lever handle replacement including labor. High-security or specialty locks may cost more. No permit typically required for hardware-only replacement.",
+    "remediation": {
+      "summary": "Replace round knobs with lever handles or other ADA-compliant hardware.",
+      "steps": [
+        "1. Inventory all doors with non-compliant hardware",
+        "2. Select lever-style handles compatible with existing lock mechanisms",
+        "3. Replace round knobs with lever handles",
+        "4. Verify hardware operates with one hand without tight grasping or twisting",
+        "5. Ensure mounting height is 34-48 inches above finished floor"
+      ],
+      "contractor_type": "Locksmith or general handyman",
+      "permit_required": false,
+      "permit_type": "",
+      "timeline": "1-2 days"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction. Low cost makes this an excellent quick-win for compliance."
+    },
+    "detection": {
+      "visual_cues": ["Round door knob visible on door", "Spherical handle shape", "Knob-style hardware on commercial doors", "Twist-type lock mechanisms"],
+      "common_contexts": ["Older commercial buildings with original hardware", "Interior office doors", "Restroom doors", "Storage or utility room doors open to public"],
+      "needs_measurement": false,
+      "false_positive_notes": "Some round-looking handles may actually be compliant push-pull or paddle-style hardware. Look carefully at the grip mechanism. Decorative round rosettes with lever handles beneath are compliant."
+    }
+  },
+  "missing_automatic_door": {
+    "id": "missing_automatic_door",
+    "category": "entrances",
+    "title": "Missing Automatic Door Opener",
+    "description": "High-traffic public entrance lacks automatic door opener where one is required by California code.",
+    "codes": {
+      "federal_ada": {
+        "section": "404.3",
+        "title": "Automatic and Power-Assisted Doors",
+        "requirement": "ADA does not universally require automatic doors but sets standards for them when installed. Automatic doors must comply with BHMA A156.10 and remain open for a minimum of 20 seconds."
+      },
+      "cbc_title24": {
+        "section": "11B-404.2.9",
+        "title": "Automatic Door Openers",
+        "requirement": "CBC requires power-assisted or automatic doors at primary entrances to buildings with high public traffic (medical facilities, government buildings, certain commercial occupancies). Door openers must have accessible activation controls."
+      },
+      "sf_local": {
+        "section": "SF ABE Program",
+        "title": "Accessible Business Entrance",
+        "requirement": "SF ABE program may require automatic door openers as part of accessible entrance compliance for qualifying businesses."
+      }
+    },
+    "severity": "medium",
+    "legal_risk": "While ADA does not universally mandate automatic doors, CBC requirements are stricter. Under the Unruh Act, failure to meet CBC standards can result in $4,000+ per occurrence in statutory damages.",
+    "estimated_cost": 4500,
+    "cost_unit": "per door",
+    "cost_note": "SF market rate for commercial automatic door operator installation including electrical work and activation controls. Includes SF DBI permit fees for electrical work.",
+    "remediation": {
+      "summary": "Install automatic or power-assisted door operator with accessible activation controls.",
+      "steps": [
+        "1. Evaluate door type and determine compatible automatic opener system",
+        "2. Select operator compliant with BHMA A156.19 for power-assisted doors",
+        "3. Apply for SF DBI electrical permit",
+        "4. Install door operator with push-button or motion-sensor activation",
+        "5. Mount activation button at 34-48 inches above floor, within reach range",
+        "6. Adjust opening speed and hold-open time (minimum 20 seconds)",
+        "7. Test safety sensors and breakout features",
+        "8. Schedule electrical inspection"
+      ],
+      "contractor_type": "Automatic door installer or licensed electrician",
+      "permit_required": true,
+      "permit_type": "SF DBI Electrical Permit",
+      "timeline": "2-4 weeks"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["Heavy manual door at primary entrance", "No push-button or sensor visible near door", "No automatic door operator hardware visible on door frame", "People struggling to open heavy entrance door"],
+      "common_contexts": ["Medical facilities and clinics", "Government offices", "High-traffic retail entrances", "Buildings with heavy fire-rated doors"],
+      "needs_measurement": false,
+      "false_positive_notes": "Not all buildings require automatic doors under ADA. Check the building type — this is primarily a CBC requirement for certain occupancies. An existing push-button may be hidden from the camera angle."
+    }
+  },
+  "insufficient_door_clearance": {
+    "id": "insufficient_door_clearance",
+    "category": "entrances",
+    "title": "Insufficient Door Maneuvering Clearance",
+    "description": "Inadequate floor space on one or both sides of door for wheelchair maneuvering.",
+    "codes": {
+      "federal_ada": {
+        "section": "404.2.4",
+        "title": "Maneuvering Clearances",
+        "requirement": "Minimum maneuvering clearances at doors must be provided based on approach direction and door type. Front approach pull side requires 60 inches depth and 18 inches on latch side."
+      },
+      "cbc_title24": {
+        "section": "11B-404.2.4",
+        "title": "Maneuvering Clearances",
+        "requirement": "Same maneuvering clearance requirements as ADA. CBC additionally requires that maneuvering clearances be level (1:48 maximum slope) and free of obstructions."
+      },
+      "sf_local": null
+    },
+    "severity": "medium",
+    "legal_risk": "Insufficient maneuvering clearance effectively prevents independent wheelchair access through doors. Unruh Act statutory damages of $4,000+ per occurrence apply. This is often cited alongside other door-related violations.",
+    "estimated_cost": 5000,
+    "cost_unit": "per door",
+    "cost_note": "SF market rate for modifying wall or floor layout to achieve maneuvering clearance. May involve relocating walls, removing built-in furniture, or re-grading floor areas.",
+    "remediation": {
+      "summary": "Modify surrounding area to provide required maneuvering clearance at door.",
+      "steps": [
+        "1. Measure existing clearances on both sides of door for each approach direction",
+        "2. Identify which clearance dimension is deficient",
+        "3. Determine solution: relocate obstructions, remove built-ins, widen corridor, or change door swing",
+        "4. If structural changes needed, apply for SF DBI alterations permit",
+        "5. Execute modifications to achieve required clearances",
+        "6. Verify clearance is level (1:48 maximum slope)",
+        "7. Consider adding automatic door opener if clearance cannot be fully achieved"
+      ],
+      "contractor_type": "Licensed general contractor",
+      "permit_required": true,
+      "permit_type": "SF DBI Alterations Permit",
+      "timeline": "3-6 weeks"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["Walls, furniture, or fixtures very close to door on latch side", "Narrow hallway or alcove around door", "Objects blocking floor space near door", "Door opens into cramped space"],
+      "common_contexts": ["Interior doors in older buildings", "Restroom entries in tight spaces", "Doors at end of narrow corridors", "Doors adjacent to perpendicular walls"],
+      "needs_measurement": true,
+      "false_positive_notes": "Required clearance varies by approach direction (front, side, latch side). A tight-looking space may actually meet requirements for the applicable approach. Automatic doors have reduced clearance requirements."
+    }
+  },
+  "excessive_door_force": {
+    "id": "excessive_door_force",
+    "category": "entrances",
+    "title": "Excessive Door Opening Force",
+    "description": "Interior door requires more than 5 pounds of force to open.",
+    "codes": {
+      "federal_ada": {
+        "section": "404.2.9",
+        "title": "Door and Gate Opening Force",
+        "requirement": "Interior hinged doors must require no more than 5 pounds of force to open. Fire doors may have higher force per local fire code but must have minimum force necessary. Sliding and folding doors: 5 lbs maximum."
+      },
+      "cbc_title24": {
+        "section": "11B-404.2.9",
+        "title": "Door and Gate Opening Force",
+        "requirement": "Same 5 lbs maximum for interior doors. CBC also specifies that exterior doors shall have the minimum opening force allowable by the applicable fire code. Door closers must be adjusted to the minimum force necessary."
+      },
+      "sf_local": null
+    },
+    "severity": "medium",
+    "legal_risk": "Excessive door force prevents access for persons with limited upper body strength. Under the Unruh Act, $4,000+ statutory damages per occurrence. This is a measurable, objective standard easily proven in court.",
+    "estimated_cost": 400,
+    "cost_unit": "per door",
+    "cost_note": "SF market rate for door closer adjustment or replacement. Simple adjustment may cost as little as $100. New commercial closer installation runs $250-$500.",
+    "remediation": {
+      "summary": "Adjust or replace door closer to reduce opening force to 5 pounds or less.",
+      "steps": [
+        "1. Measure door opening force with a door pressure gauge",
+        "2. Adjust existing door closer tension to achieve 5 lbs or less",
+        "3. If adjustment insufficient, replace door closer with adjustable commercial model",
+        "4. For fire doors, consult with fire marshal on minimum acceptable force",
+        "5. Re-measure force after adjustment to verify compliance",
+        "6. Consider power-assist door operator for doors that cannot meet 5 lb requirement"
+      ],
+      "contractor_type": "Door hardware specialist or general handyman",
+      "permit_required": false,
+      "permit_type": "",
+      "timeline": "1-2 days"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction. Very low cost quick-win."
+    },
+    "detection": {
+      "visual_cues": ["Heavy-looking commercial door closer mechanism", "Person visibly struggling to push door open", "Fire-rated door with heavy closure hardware", "Self-closing door that slams shut quickly"],
+      "common_contexts": ["Interior doors with spring-loaded closers", "Fire-rated doors", "Exterior doors with wind resistance", "Restroom doors"],
+      "needs_measurement": true,
+      "false_positive_notes": "Cannot accurately assess door force from a photo alone. This detection relies on visual cues like heavy closer hardware. Fire doors may legitimately require higher force — check with fire code requirements. Exterior doors are exempt from the 5 lb requirement."
+    }
+  },
+  "steep_ramp": {
+    "id": "steep_ramp",
+    "category": "ramps",
+    "title": "Excessive Ramp Slope",
+    "description": "Ramp running slope exceeds the maximum 1:12 (8.33%) ratio.",
+    "codes": {
+      "federal_ada": {
+        "section": "405.2",
+        "title": "Ramp Slope",
+        "requirement": "Ramp running slope must not exceed 1:12 (8.33%). Cross slope must not exceed 1:48 (2.08%). Rise for any single ramp run must be 30 inches maximum."
+      },
+      "cbc_title24": {
+        "section": "11B-405.2",
+        "title": "Slope",
+        "requirement": "Same 1:12 maximum running slope. CBC does not allow the ADA exception for existing sites to use steeper slopes (1:10 for 6-inch max rise or 1:8 for 3-inch max rise), making CBC stricter for existing buildings."
+      },
+      "sf_local": null
+    },
+    "severity": "high",
+    "legal_risk": "Steep ramps create safety hazards and inaccessibility for wheelchair users. Under the Unruh Act, $4,000+ per occurrence. A ramp that exists but doesn't comply is still a violation — not a defense against litigation.",
+    "estimated_cost": 15000,
+    "cost_unit": "per ramp",
+    "cost_note": "SF market rate for demolishing and rebuilding a ramp to proper slope. Includes new concrete work, handrails, and permitting. May be higher if site conditions require retaining walls or significant grading.",
+    "remediation": {
+      "summary": "Rebuild ramp to achieve maximum 1:12 running slope with compliant landings.",
+      "steps": [
+        "1. Measure existing ramp slope with digital level or smart level app",
+        "2. Calculate required ramp run length based on total rise (rise x 12 = minimum run)",
+        "3. Engage architect to redesign ramp if run length requires switchback configuration",
+        "4. Apply for SF DBI alterations permit",
+        "5. Demolish existing non-compliant ramp",
+        "6. Construct new ramp with 1:12 maximum slope and 1:48 maximum cross slope",
+        "7. Install compliant handrails, landings, and edge protection",
+        "8. Apply non-slip surface treatment",
+        "9. Schedule final inspection"
+      ],
+      "contractor_type": "Licensed general contractor with concrete/accessibility experience",
+      "permit_required": true,
+      "permit_type": "SF DBI Alterations Permit",
+      "timeline": "4-8 weeks"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["Ramp that appears visually steep", "Short ramp covering significant height change", "Ramp surface that looks like it exceeds 8% grade", "Wheelchair user would need significant effort or assistance"],
+      "common_contexts": ["Retrofit ramps added without proper design", "Ramps on steep San Francisco streets", "Temporary ramps that became permanent", "DIY ramp installations"],
+      "needs_measurement": true,
+      "false_positive_notes": "Visual assessment of slope can be misleading, especially on San Francisco hills where surrounding terrain skews perception. A ramp on a steep street may appear steeper than it is relative to the building floor. Measurement is essential."
+    }
+  },
+  "missing_handrail": {
+    "id": "missing_handrail",
+    "category": "ramps",
+    "title": "Missing Handrails on Ramp",
+    "description": "Ramp with a rise greater than 6 inches lacks required handrails on both sides.",
+    "codes": {
+      "federal_ada": {
+        "section": "405.8",
+        "title": "Handrails",
+        "requirement": "Ramps with a rise greater than 6 inches must have handrails on both sides. Handrails must be 34-38 inches above the ramp surface and comply with Section 505."
+      },
+      "cbc_title24": {
+        "section": "11B-405.8",
+        "title": "Handrails",
+        "requirement": "Same requirement as ADA. CBC is stricter in that it does not exempt employee work areas and requires handrails on all ramps with rise greater than 6 inches regardless of location."
+      },
+      "sf_local": null
+    },
+    "severity": "high",
+    "legal_risk": "Missing handrails create fall hazards and prevent safe ramp use. Under the Unruh Act, $4,000+ per occurrence. Combined with steep ramp violations, damages can multiply.",
+    "estimated_cost": 2000,
+    "cost_unit": "per side",
+    "cost_note": "SF market rate for commercial handrail installation on one side of a ramp. Includes materials (stainless steel or aluminum), mounting hardware, and labor. Both sides typically needed ($4,000 total).",
+    "remediation": {
+      "summary": "Install handrails on both sides of the ramp compliant with ADA 505 and CBC 11B-505.",
+      "steps": [
+        "1. Measure ramp rise to confirm handrails are required (rise > 6 inches)",
+        "2. Select handrail material and profile compliant with gripping requirements (1.25-2 inch diameter)",
+        "3. Install handrails on both sides at 34-38 inches above ramp surface",
+        "4. Extend handrails 12 inches minimum beyond top and bottom of ramp",
+        "5. Ensure handrails are continuous and return to wall, post, or floor at ends",
+        "6. Verify handrails can withstand 250 lbs of force",
+        "7. No permit typically required for handrail-only installation on existing ramp"
+      ],
+      "contractor_type": "Metal fabricator or licensed general contractor",
+      "permit_required": false,
+      "permit_type": "",
+      "timeline": "1-2 weeks"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["Ramp with no handrails on either side", "Ramp with handrail on only one side", "Ramp with non-graspable top rail only (no separate handrail)", "Short ramp that clearly rises more than 6 inches without rails"],
+      "common_contexts": ["Exterior ramps at building entrances", "Retrofit ramps added without full compliance", "Interior ramps between floor levels", "Parking structure ramps to building entries"],
+      "needs_measurement": false,
+      "false_positive_notes": "Ramps with less than 6 inches of rise are exempt from handrail requirements. Curb ramps are also exempt. A guard rail or decorative railing may not meet graspability requirements even if present."
+    }
+  },
+  "missing_ramp_landing": {
+    "id": "missing_ramp_landing",
+    "category": "ramps",
+    "title": "Missing Ramp Landing",
+    "description": "Ramp lacks required level landings at top, bottom, or at changes in direction.",
+    "codes": {
+      "federal_ada": {
+        "section": "405.7",
+        "title": "Landings",
+        "requirement": "Ramps must have landings at the top and bottom of each ramp run. Landings must be at least 60 inches long and as wide as the ramp. Where ramps change direction, the landing must be 60 x 60 inches minimum."
+      },
+      "cbc_title24": {
+        "section": "11B-405.7",
+        "title": "Landings",
+        "requirement": "Same 60-inch minimum landing length. CBC additionally requires that landings be level with a maximum slope of 1:48 in any direction."
+      },
+      "sf_local": null
+    },
+    "severity": "medium",
+    "legal_risk": "Missing landings create safety hazards where wheelchair users cannot safely stop or turn. Under the Unruh Act, $4,000+ per occurrence. Often cited alongside slope and handrail violations.",
+    "estimated_cost": 5000,
+    "cost_unit": "per landing",
+    "cost_note": "SF market rate for adding a level landing to an existing ramp. Includes concrete work, potential ramp reconfiguration, and finishing. Cost increases significantly if ramp must be extended to accommodate landing.",
+    "remediation": {
+      "summary": "Add level landings at top, bottom, and direction changes of ramp.",
+      "steps": [
+        "1. Identify all locations requiring landings (top, bottom, direction changes, every 30 inches of rise)",
+        "2. Design landing areas 60 inches minimum in length and ramp width",
+        "3. Apply for SF DBI permit if structural modifications needed",
+        "4. Construct level landing platforms (1:48 maximum slope)",
+        "5. Integrate landings with existing ramp structure",
+        "6. Ensure continuous handrails through landing areas",
+        "7. Apply non-slip surface treatment to landings"
+      ],
+      "contractor_type": "Licensed general contractor",
+      "permit_required": true,
+      "permit_type": "SF DBI Alterations Permit",
+      "timeline": "3-6 weeks"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["Ramp that transitions directly to floor or ground without flat area", "Ramp that changes direction without level platform", "Long ramp run without intermediate flat sections", "Door opening directly onto sloped ramp surface"],
+      "common_contexts": ["Retrofit ramps with space constraints", "Switchback ramps at building entrances", "Interior ramps between levels", "Ramps connecting to doorway thresholds"],
+      "needs_measurement": true,
+      "false_positive_notes": "Short ramps with less than 6 inches of rise may have reduced landing requirements. The landing must be truly level (1:48 max) — a slightly sloped area may look flat but not comply."
+    }
+  },
+  "missing_edge_protection": {
+    "id": "missing_edge_protection",
+    "category": "ramps",
+    "title": "Missing Ramp Edge Protection",
+    "description": "Ramp sides lack curbs, walls, or barriers to prevent wheelchairs from rolling off edges.",
+    "codes": {
+      "federal_ada": {
+        "section": "405.9",
+        "title": "Edge Protection",
+        "requirement": "Edge protection must be provided on each side of ramp runs and at each side of ramp landings. Options include curbs, walls, railings, or extended floor surfaces."
+      },
+      "cbc_title24": {
+        "section": "11B-405.9",
+        "title": "Edge Protection",
+        "requirement": "CBC requires either a curb or a barrier for edge protection. CBC does not recognize the extended floor or ground surface option permitted by ADA, making CBC stricter."
+      },
+      "sf_local": null
+    },
+    "severity": "medium",
+    "legal_risk": "Missing edge protection creates fall hazards for wheelchair users. Under the Unruh Act, $4,000+ per occurrence. If an injury results from missing edge protection, premises liability claims may apply in addition.",
+    "estimated_cost": 1500,
+    "cost_unit": "per ramp",
+    "cost_note": "SF market rate for installing curb edges or barriers on both sides of a ramp. Includes materials and labor for concrete curbs or metal barriers.",
+    "remediation": {
+      "summary": "Install curbs, walls, or barriers along ramp edges to prevent wheelchair rolloff.",
+      "steps": [
+        "1. Assess existing ramp edges for protection gaps",
+        "2. Select edge protection type: 4-inch minimum curb (preferred in CBC), wall extension, or railing with bottom rail",
+        "3. Install edge protection on both sides of ramp run and landings",
+        "4. Ensure edge protection extends full length of ramp",
+        "5. Verify curb height is 4 inches minimum above ramp surface"
+      ],
+      "contractor_type": "Licensed general contractor or metal fabricator",
+      "permit_required": false,
+      "permit_type": "",
+      "timeline": "1-2 weeks"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["Ramp with open edges and no curbs or barriers", "Ramp surface that drops off at sides", "Gap between ramp edge and adjacent surface", "Ramp without bottom rail or curb along sides"],
+      "common_contexts": ["Exterior ramps without curbs", "Elevated ramps and walkways", "Ramps adjacent to landscaping or grade changes", "Wooden deck ramps"],
+      "needs_measurement": false,
+      "false_positive_notes": "A ramp with walls on both sides inherently has edge protection. Ramps at grade (flush with surrounding surface) may not need edge protection. Check if the ramp edge is actually elevated above adjacent ground."
+    }
+  },
+  "missing_handrail_extensions": {
+    "id": "missing_handrail_extensions",
+    "category": "ramps",
+    "title": "Missing Handrail Extensions",
+    "description": "Handrails on ramp do not extend the required 12 inches beyond top and bottom of ramp run.",
+    "codes": {
+      "federal_ada": {
+        "section": "505.10",
+        "title": "Handrail Extensions",
+        "requirement": "Handrails must extend horizontally 12 inches minimum beyond the top and bottom of ramp runs. Extensions must return to a wall, post, or floor, or be continuous to handrail of adjacent ramp run."
+      },
+      "cbc_title24": {
+        "section": "11B-505.10",
+        "title": "Handrail Extensions",
+        "requirement": "Same 12-inch extension requirement. CBC 11B-505.10.3 has stricter requirements for bottom extensions at stairs than ADA."
+      },
+      "sf_local": null
+    },
+    "severity": "low",
+    "legal_risk": "While less severe than missing handrails entirely, non-compliant extensions are still actionable under the Unruh Act ($4,000+ per occurrence). Often cited as part of a bundle of ramp violations.",
+    "estimated_cost": 800,
+    "cost_unit": "per ramp",
+    "cost_note": "SF market rate for modifying existing handrails to add compliant extensions on both sides. Includes material, fabrication, and installation.",
+    "remediation": {
+      "summary": "Extend existing handrails 12 inches beyond top and bottom of ramp with proper returns.",
+      "steps": [
+        "1. Measure existing handrail termination points",
+        "2. Fabricate or obtain extension pieces matching existing handrail profile",
+        "3. Extend handrails 12 inches horizontally beyond top and bottom of ramp",
+        "4. Add returns to wall, post, or floor at extension ends",
+        "5. Ensure extensions do not create a hazard in the circulation path",
+        "6. Verify continuous gripping surface through extension"
+      ],
+      "contractor_type": "Metal fabricator or general contractor",
+      "permit_required": false,
+      "permit_type": "",
+      "timeline": "3-5 days"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["Handrails that end abruptly at top or bottom of ramp", "Handrails that do not extend past the ramp slope", "Handrail ends that are not returned to wall or floor", "Handrails cut flush with end of ramp"],
+      "common_contexts": ["Existing ramps with retrofit handrails", "Handrails that terminate at wall corners", "Ramps where space constraints limited handrail installation"],
+      "needs_measurement": true,
+      "false_positive_notes": "Extensions may be present but not clearly visible in the photo angle. Handrails that return to a wall immediately at the ramp end may still comply if the return is at the correct location."
+    }
+  },
+  "excessive_ramp_rise": {
+    "id": "excessive_ramp_rise",
+    "category": "ramps",
+    "title": "Excessive Ramp Rise Without Landing",
+    "description": "Single ramp run exceeds 30 inches of rise without an intermediate landing.",
+    "codes": {
+      "federal_ada": {
+        "section": "405.6",
+        "title": "Rise",
+        "requirement": "The rise for any single ramp run must not exceed 30 inches (760 mm). Ramps with greater total rise must have intermediate landings."
+      },
+      "cbc_title24": {
+        "section": "11B-405.6",
+        "title": "Rise",
+        "requirement": "Same 30-inch maximum rise per run. At 1:12 slope, this means a maximum run length of 30 feet before a landing is required."
+      },
+      "sf_local": null
+    },
+    "severity": "medium",
+    "legal_risk": "Excessive continuous rise creates fatigue and safety hazards for wheelchair users. Under the Unruh Act, $4,000+ per occurrence. Often combined with missing landing violations.",
+    "estimated_cost": 8000,
+    "cost_unit": "per ramp",
+    "cost_note": "SF market rate for reconfiguring a ramp to add intermediate landings. May require significant reconstruction including switchback design if space is limited.",
+    "remediation": {
+      "summary": "Add intermediate landings to break ramp into runs of 30 inches or less rise each.",
+      "steps": [
+        "1. Measure total rise of existing ramp",
+        "2. Calculate number of intermediate landings needed (one per 30 inches of rise)",
+        "3. Design ramp configuration with landings (may require switchback layout)",
+        "4. Apply for SF DBI alterations permit",
+        "5. Reconstruct ramp with compliant runs and 60-inch minimum landings",
+        "6. Install or modify handrails for continuous run through landings",
+        "7. Schedule final inspection"
+      ],
+      "contractor_type": "Licensed general contractor",
+      "permit_required": true,
+      "permit_type": "SF DBI Alterations Permit",
+      "timeline": "4-8 weeks"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["Very long ramp run without any flat sections", "Ramp that covers more than approximately 2.5 feet of height in one run", "Ramp that appears to go on for more than 30 feet without a break", "Switchback ramp with runs that appear excessively long"],
+      "common_contexts": ["Buildings with significant grade changes", "Hillside construction in San Francisco", "Parking structure ramps", "Multi-level access ramps"],
+      "needs_measurement": true,
+      "false_positive_notes": "Estimating 30 inches of rise from a photo is difficult. A ramp that looks long may have a gentle slope and not exceed 30 inches of rise. Measurement or dimensional reference in the photo is needed."
+    }
+  },
+  "missing_accessible_parking_sign": {
+    "id": "missing_accessible_parking_sign",
+    "category": "parking",
+    "title": "Missing Accessible Parking Sign",
+    "description": "Accessible parking space lacks required International Symbol of Accessibility signage.",
+    "codes": {
+      "federal_ada": {
+        "section": "502.6",
+        "title": "Identification",
+        "requirement": "Accessible parking spaces must be identified by signs with the International Symbol of Accessibility (ISA). Signs must be 60 inches minimum above the ground, measured to the bottom of the sign."
+      },
+      "cbc_title24": {
+        "section": "11B-502.6",
+        "title": "Identification",
+        "requirement": "CBC requires ISA signs at 80 inches minimum above ground (stricter than ADA's 60 inches). Signs must include 'Minimum Fine $250' text and tow-away warning per California Vehicle Code 22511.8."
+      },
+      "sf_local": null
+    },
+    "severity": "medium",
+    "legal_risk": "Missing signage is a clearly documented, easily photographed violation. Under the Unruh Act, $4,000+ per occurrence. Each unmarked space can be a separate violation. Parking violations are among the most frequently litigated ADA claims in California.",
+    "estimated_cost": 200,
+    "cost_unit": "per sign",
+    "cost_note": "SF market rate for California-compliant accessible parking sign including post installation. Must include ISA symbol, fine warning, and tow-away text per CBC requirements.",
+    "remediation": {
+      "summary": "Install California-compliant ISA parking sign at each accessible space.",
+      "steps": [
+        "1. Purchase California-compliant accessible parking signs (ISA symbol, 'Minimum Fine $250', tow-away warning)",
+        "2. Install sign post at each accessible parking space",
+        "3. Mount sign at 80 inches minimum above ground (CBC requirement, stricter than ADA's 60 inches)",
+        "4. Add 'Van Accessible' designation to van-accessible spaces",
+        "5. Ensure signs are visible and not obstructed"
+      ],
+      "contractor_type": "Sign installer or general handyman",
+      "permit_required": false,
+      "permit_type": "",
+      "timeline": "1-3 days"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction. Very low cost quick-win."
+    },
+    "detection": {
+      "visual_cues": ["Blue-painted parking space without sign post", "Accessible space markings on pavement but no vertical sign", "Sign post without ISA sign attached", "Low-mounted sign below 60 inches"],
+      "common_contexts": ["Surface parking lots", "Parking garages", "Street-level commercial parking", "Shopping center parking areas"],
+      "needs_measurement": false,
+      "false_positive_notes": "A sign may exist but be obscured by trees, vehicles, or structures. Check for signs mounted on walls or overhead. Some jurisdictions use pavement markings in addition to signs but pavement markings alone do not meet the requirement."
+    }
+  },
+  "missing_parking_striping": {
+    "id": "missing_parking_striping",
+    "category": "parking",
+    "title": "Missing Parking Access Aisle Striping",
+    "description": "Accessible parking space lacks required painted access aisle markings.",
+    "codes": {
+      "federal_ada": {
+        "section": "502.3",
+        "title": "Access Aisle",
+        "requirement": "Access aisles must be marked to discourage parking in them. Standard access aisles must be 60 inches wide minimum. Van-accessible aisles must be 96 inches wide minimum."
+      },
+      "cbc_title24": {
+        "section": "11B-502.3",
+        "title": "Access Aisle",
+        "requirement": "CBC requires access aisles with blue border striping and diagonal hatch marks. 'NO PARKING' must be painted within the access aisle. Van-accessible aisles must be 96 inches minimum width."
+      },
+      "sf_local": null
+    },
+    "severity": "medium",
+    "legal_risk": "Unmarked access aisles lead to parking encroachment that blocks wheelchair access. Under the Unruh Act, $4,000+ per occurrence. Easily documented and photographed violation.",
+    "estimated_cost": 500,
+    "cost_unit": "per space",
+    "cost_note": "SF market rate for professional parking lot striping including blue border, diagonal hatch marks, ISA symbol, and 'NO PARKING' text. Includes surface preparation and traffic-rated paint.",
+    "remediation": {
+      "summary": "Paint compliant access aisle striping adjacent to accessible parking spaces.",
+      "steps": [
+        "1. Clean and prepare pavement surface",
+        "2. Layout access aisle dimensions (60 inches minimum; 96 inches for van-accessible)",
+        "3. Paint blue border lines around access aisle perimeter",
+        "4. Paint diagonal blue hatch marks within access aisle",
+        "5. Stencil 'NO PARKING' in white within the access aisle",
+        "6. Paint ISA symbol in the parking space",
+        "7. Allow paint to cure before opening to traffic"
+      ],
+      "contractor_type": "Parking lot striping contractor",
+      "permit_required": false,
+      "permit_type": "",
+      "timeline": "1-2 days"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction. Low cost, quick implementation."
+    },
+    "detection": {
+      "visual_cues": ["Accessible parking space without adjacent striped aisle", "Faded or missing blue hatch marks next to accessible space", "Access aisle area without 'NO PARKING' text", "Cars parked in what should be the access aisle area"],
+      "common_contexts": ["Aging parking lots with faded markings", "Recently resurfaced lots without restriping", "Small parking areas behind buildings", "Street-level parking"],
+      "needs_measurement": false,
+      "false_positive_notes": "Faded but still visible striping may technically comply. New asphalt may be awaiting restriping. Some lots use alternative marking methods (raised markers, different paint colors) that may be compliant."
+    }
+  },
+  "insufficient_accessible_spaces": {
+    "id": "insufficient_accessible_spaces",
+    "category": "parking",
+    "title": "Insufficient Accessible Parking Spaces",
+    "description": "Parking facility does not provide the required minimum number of accessible spaces based on total capacity.",
+    "codes": {
+      "federal_ada": {
+        "section": "208.2",
+        "title": "Minimum Number",
+        "requirement": "Required accessible spaces: 1-25 total spaces = 1 accessible; 26-50 = 2; 51-75 = 3; 76-100 = 4; 101-150 = 5; 151-200 = 6; 201-300 = 7; 301-400 = 8; 401-500 = 9; 501-1000 = 2% of total; over 1000 = 20 plus 1 per 100 over 1000."
+      },
+      "cbc_title24": {
+        "section": "11B-208.2",
+        "title": "Minimum Number",
+        "requirement": "CBC follows the same ratio table as ADA. However, CBC requires additional accessible spaces for medical facilities and outpatient units (10% of total must be accessible)."
+      },
+      "sf_local": null
+    },
+    "severity": "high",
+    "legal_risk": "Insufficient accessible parking is a systemic violation affecting every visitor. Under the Unruh Act, $4,000+ per occurrence per visit. Parking violations are the single most litigated category of ADA claims in California.",
+    "estimated_cost": 3000,
+    "cost_unit": "per additional space",
+    "cost_note": "SF market rate for converting a standard parking space to accessible, including restriping, signage, and access aisle. Does not include surface repairs if pavement is damaged.",
+    "remediation": {
+      "summary": "Add accessible parking spaces to meet required minimum based on total lot capacity.",
+      "steps": [
+        "1. Count total parking spaces in the facility",
+        "2. Calculate required number of accessible spaces per ADA 208.2 table",
+        "3. Identify optimal locations closest to accessible building entrance",
+        "4. Restripe selected spaces with accessible parking markings and access aisles",
+        "5. Install California-compliant signage at each new accessible space",
+        "6. Ensure accessible route from parking to building entrance",
+        "7. Designate required van-accessible spaces (1 per 6 accessible spaces)"
+      ],
+      "contractor_type": "Parking lot striping contractor and sign installer",
+      "permit_required": false,
+      "permit_type": "",
+      "timeline": "1-2 weeks"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["Large parking lot with very few or no visible accessible spaces", "Accessible spaces far from building entrance", "Parking lot with no blue-painted spaces visible", "Only one accessible space in a large commercial lot"],
+      "common_contexts": ["Shopping centers", "Large office parking lots", "Apartment and condo complexes", "Entertainment venues"],
+      "needs_measurement": false,
+      "false_positive_notes": "May not be able to count total spaces from a single photo. Some accessible spaces may be out of frame. Multi-level garages may have accessible spaces on different levels. Count must include the entire facility, not just what's visible."
+    }
+  },
+  "missing_van_accessible_space": {
+    "id": "missing_van_accessible_space",
+    "category": "parking",
+    "title": "Missing Van-Accessible Parking Space",
+    "description": "No van-accessible parking space with 96-inch wide access aisle and 98-inch minimum vertical clearance.",
+    "codes": {
+      "federal_ada": {
+        "section": "502.2",
+        "title": "Vehicle Spaces",
+        "requirement": "At least one of every six accessible parking spaces (or fraction thereof) must be van-accessible with a minimum 132-inch wide space or standard space with 96-inch access aisle, and 98-inch minimum vertical clearance."
+      },
+      "cbc_title24": {
+        "section": "11B-502.2",
+        "title": "Vehicle Spaces",
+        "requirement": "Same van-accessible ratios as ADA. CBC additionally requires that van-accessible spaces be located on the shortest accessible route to the building entrance."
+      },
+      "sf_local": null
+    },
+    "severity": "medium",
+    "legal_risk": "Missing van-accessible spaces exclude wheelchair van users entirely. Under the Unruh Act, $4,000+ per occurrence. Van users are often the most motivated and organized plaintiffs in ADA litigation.",
+    "estimated_cost": 3500,
+    "cost_unit": "per space",
+    "cost_note": "SF market rate for converting a standard accessible space to van-accessible, including wider access aisle restriping, 'Van Accessible' signage, and vertical clearance verification.",
+    "remediation": {
+      "summary": "Designate and mark at least one van-accessible space with wider access aisle and appropriate signage.",
+      "steps": [
+        "1. Calculate required number of van-accessible spaces (1 per 6 accessible spaces)",
+        "2. Select location closest to accessible entrance with adequate vertical clearance (98 inches minimum)",
+        "3. Restripe space with 96-inch minimum access aisle",
+        "4. Install 'Van Accessible' sign below ISA sign",
+        "5. Verify 98-inch minimum vertical clearance on route from entry to space",
+        "6. Ensure accessible route from space to building entrance"
+      ],
+      "contractor_type": "Parking lot striping contractor and sign installer",
+      "permit_required": false,
+      "permit_type": "",
+      "timeline": "1-3 days"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["Accessible parking spaces with standard-width (60-inch) access aisles only", "No 'Van Accessible' signage visible at any accessible space", "Parking structure with low clearance at accessible spaces", "All accessible spaces appear to be standard width"],
+      "common_contexts": ["Parking garages with height restrictions", "Small parking lots with minimal accessible spaces", "Older facilities that predate van-accessible requirements"],
+      "needs_measurement": true,
+      "false_positive_notes": "Van-accessible spaces may exist in a different area of the lot not visible in the photo. Vertical clearance issues are common in garages but may not be obvious from exterior photos."
+    }
+  },
+  "damaged_parking_surface": {
+    "id": "damaged_parking_surface",
+    "category": "parking",
+    "title": "Damaged Accessible Parking Surface",
+    "description": "Accessible parking space or access aisle has surface cracks, heaving, or deterioration creating barriers.",
+    "codes": {
+      "federal_ada": {
+        "section": "502.4",
+        "title": "Floor or Ground Surfaces",
+        "requirement": "Parking spaces and access aisles must have surface slopes not steeper than 1:48 in all directions. Surfaces must be stable, firm, and slip-resistant per Section 302."
+      },
+      "cbc_title24": {
+        "section": "11B-502.4",
+        "title": "Floor or Ground Surfaces",
+        "requirement": "Same slope and surface requirements as ADA. CBC requires that surfaces be maintained to remain compliant — deterioration that creates level changes or unstable surfaces is a violation."
+      },
+      "sf_local": null
+    },
+    "severity": "medium",
+    "legal_risk": "Damaged surfaces can trap wheelchair casters, cause falls, and prevent van lift deployment. Under the Unruh Act, $4,000+ per occurrence. Maintenance failures are not a defense — ongoing compliance is required.",
+    "estimated_cost": 4000,
+    "cost_unit": "per space",
+    "cost_note": "SF market rate for resurfacing an accessible parking space and access aisle. Includes removal of damaged surface, base repair, new asphalt or concrete, and restriping.",
+    "remediation": {
+      "summary": "Repair or resurface accessible parking space and access aisle to provide stable, level surface.",
+      "steps": [
+        "1. Assess extent of surface damage (cracks, heaving, potholes, settlement)",
+        "2. Determine repair method: patching, overlay, or full replacement",
+        "3. Remove damaged surface material",
+        "4. Repair base course if needed",
+        "5. Install new surface ensuring 1:48 maximum slope in all directions",
+        "6. Restripe accessible parking markings and access aisle",
+        "7. Allow proper cure time before opening to traffic"
+      ],
+      "contractor_type": "Paving contractor",
+      "permit_required": false,
+      "permit_type": "",
+      "timeline": "1-2 weeks"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["Visible cracks or heaving in accessible parking area", "Pothole or settlement in access aisle", "Crumbling pavement edges around accessible space", "Standing water indicating uneven surface", "Tree root damage lifting pavement"],
+      "common_contexts": ["Aging parking lots", "Areas with heavy vehicle traffic", "Spaces near trees with invasive roots", "Freeze-thaw climate zones"],
+      "needs_measurement": true,
+      "false_positive_notes": "Minor surface imperfections (hairline cracks, small texture variations) may not constitute a violation. The key question is whether the surface creates level changes greater than 1/4 inch or is unstable for wheelchair use."
+    }
+  },
+  "blocked_accessible_route": {
+    "id": "blocked_accessible_route",
+    "category": "routes",
+    "title": "Blocked Accessible Route",
+    "description": "Obstruction in an accessible route prevents clear passage for wheelchair users.",
+    "codes": {
+      "federal_ada": {
+        "section": "402",
+        "title": "Accessible Routes",
+        "requirement": "Accessible routes must be continuous, unobstructed paths connecting all accessible elements and spaces. Minimum clear width of 36 inches (44 inches for corridors with frequent use)."
+      },
+      "cbc_title24": {
+        "section": "11B-402",
+        "title": "Accessible Routes",
+        "requirement": "Same continuous path requirements. CBC additionally requires that accessible routes be maintained free of obstructions at all times, including temporary obstructions."
+      },
+      "sf_local": {
+        "section": "SF Public Works Code",
+        "title": "Sidewalk Maintenance",
+        "requirement": "Property owners are responsible for maintaining sidewalks and accessible routes adjacent to their property free from obstructions per SF Public Works Code Article 706."
+      }
+    },
+    "severity": "high",
+    "legal_risk": "Blocked routes completely prevent access. Under the Unruh Act, $4,000+ per occurrence per visit. Even temporary obstructions (merchandise displays, A-frame signs) can trigger liability if they are recurring.",
+    "estimated_cost": 500,
+    "cost_unit": "per obstruction",
+    "cost_note": "SF market rate for removing or relocating obstructions. Cost varies widely from near-zero (moving a sign) to several thousand (relocating permanent fixtures). Ongoing management may require staff training.",
+    "remediation": {
+      "summary": "Remove or relocate obstructions to restore minimum 36-inch clear width along accessible route.",
+      "steps": [
+        "1. Identify all obstructions along accessible route (furniture, signs, displays, planters, equipment)",
+        "2. Relocate movable items outside the accessible path of travel",
+        "3. For permanent obstructions, evaluate relocation or rerouting options",
+        "4. Mark accessible route boundaries if needed to prevent future encroachment",
+        "5. Train staff on maintaining clear accessible routes",
+        "6. Establish regular inspection schedule to prevent recurrence"
+      ],
+      "contractor_type": "Business owner or general contractor for permanent fixtures",
+      "permit_required": false,
+      "permit_type": "",
+      "timeline": "1-3 days for movable obstructions; 1-4 weeks for permanent fixtures"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction if permanent modifications are made."
+    },
+    "detection": {
+      "visual_cues": ["Objects blocking sidewalk or pathway", "Merchandise displays narrowing walkway", "A-frame signs in middle of sidewalk", "Planters or furniture reducing clear width below 36 inches", "Construction materials or equipment in path", "Parked bicycles or scooters blocking route"],
+      "common_contexts": ["Retail storefronts with outdoor displays", "Restaurant sidewalk seating areas", "Construction zones", "Building entries with deliveries or trash bins"],
+      "needs_measurement": false,
+      "false_positive_notes": "A route may appear blocked but still maintain 36 inches of clear width. Multiple accessible routes may exist — blocking one route is still a violation only if it is a designated accessible route. Temporary construction with proper detour signage may be compliant."
+    }
+  },
+  "missing_curb_cut": {
+    "id": "missing_curb_cut",
+    "category": "routes",
+    "title": "Missing Curb Ramp",
+    "description": "No curb ramp provided where an accessible route crosses a curb.",
+    "codes": {
+      "federal_ada": {
+        "section": "406",
+        "title": "Curb Ramps",
+        "requirement": "Curb ramps must be provided wherever an accessible route crosses a curb. Maximum running slope of 1:12. Must have detectable warning surfaces (truncated domes). Flared sides with maximum 1:10 slope."
+      },
+      "cbc_title24": {
+        "section": "11B-406",
+        "title": "Curb Ramps",
+        "requirement": "Same requirements as ADA. CBC additionally requires that curb ramps have a 48-inch minimum landing at the top and be aligned with the crosswalk direction."
+      },
+      "sf_local": {
+        "section": "SF Public Works",
+        "title": "Curb Ramp Program",
+        "requirement": "SF Department of Public Works manages curb ramp installation citywide. Property owners can request curb ramps through 311 or DPW. SF has allocated $86M over 10 years for ADA curb ramp installation."
+      }
+    },
+    "severity": "high",
+    "legal_risk": "Missing curb cuts strand wheelchair users at intersections. Under the Unruh Act, $4,000+ per occurrence. Municipalities and property owners can both be liable. SF has faced class-action lawsuits over missing curb ramps.",
+    "estimated_cost": 4500,
+    "cost_unit": "per curb ramp",
+    "cost_note": "SF market rate for concrete curb ramp installation including detectable warning surface, drainage modifications, and permitting. SF DPW installations may be funded through the city's ADA transition plan.",
+    "remediation": {
+      "summary": "Install compliant curb ramp with detectable warnings where accessible route meets curb.",
+      "steps": [
+        "1. Determine if curb ramp is responsibility of property owner or SF DPW (public right-of-way)",
+        "2. If public ROW, request curb ramp through SF 311 or DPW website",
+        "3. If private property, engage civil engineer to design compliant curb ramp",
+        "4. Apply for SF DPW encroachment permit (public) or SF DBI permit (private)",
+        "5. Saw-cut and remove existing curb section",
+        "6. Construct curb ramp with 1:12 maximum slope and flared sides",
+        "7. Install truncated dome detectable warning surface",
+        "8. Ensure proper drainage",
+        "9. Schedule inspection"
+      ],
+      "contractor_type": "Concrete contractor with accessibility experience",
+      "permit_required": true,
+      "permit_type": "SF DPW Encroachment Permit or SF DBI Permit",
+      "timeline": "6-12 weeks including permitting"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction for private property. Public ROW curb ramps may be city-funded."
+    },
+    "detection": {
+      "visual_cues": ["Curb with no ramp at pedestrian crossing", "Sidewalk ending at street level with vertical curb face", "Wheelchair user would need to navigate off curb into street", "Intersection corner without visible curb cut"],
+      "common_contexts": ["Older neighborhoods with original curbs", "Mid-block crossings", "Driveway entrances used as pedestrian routes", "Corners near public transit stops"],
+      "needs_measurement": false,
+      "false_positive_notes": "A curb ramp may exist at a nearby location (adjacent corner or mid-block). Driveway aprons are sometimes used as informal curb ramps but may not meet ADA standards. Some modern curbs are flush with the street, eliminating the need for a ramp."
+    }
+  },
+  "surface_gaps_or_cracks": {
+    "id": "surface_gaps_or_cracks",
+    "category": "routes",
+    "title": "Surface Gaps or Cracks in Accessible Route",
+    "description": "Openings or gaps in the walking surface exceed 1/2 inch, creating barriers for wheelchair users.",
+    "codes": {
+      "federal_ada": {
+        "section": "302.3",
+        "title": "Openings",
+        "requirement": "Openings in floor or ground surfaces shall not allow passage of a sphere more than 1/2 inch (13 mm) in diameter. Elongated openings must be placed perpendicular to the dominant direction of travel."
+      },
+      "cbc_title24": {
+        "section": "11B-302.3",
+        "title": "Openings",
+        "requirement": "Same 1/2-inch maximum opening size. CBC additionally requires that grate openings in accessible routes be no greater than 1/2 inch in the direction of travel."
+      },
+      "sf_local": {
+        "section": "SF Public Works Code Art. 706",
+        "title": "Sidewalk Maintenance",
+        "requirement": "Property owners responsible for maintaining sidewalks in safe condition. Cracks or gaps that create trip hazards or accessibility barriers must be repaired."
+      }
+    },
+    "severity": "medium",
+    "legal_risk": "Surface gaps trap wheelchair casters and cane tips, creating fall hazards. Under the Unruh Act, $4,000+ per occurrence. Property owners are liable for sidewalk conditions adjacent to their property in San Francisco.",
+    "estimated_cost": 2000,
+    "cost_unit": "per repair area",
+    "cost_note": "SF market rate for concrete sidewalk repair or patching. Tree root-caused damage may require root pruning or barrier installation, increasing cost. Large-area replacements can exceed $5,000.",
+    "remediation": {
+      "summary": "Repair or replace walking surface to eliminate gaps exceeding 1/2 inch.",
+      "steps": [
+        "1. Survey accessible route for all gaps, cracks, and openings exceeding 1/2 inch",
+        "2. For minor cracks: fill with concrete crack filler or epoxy compound",
+        "3. For larger gaps: saw-cut and replace damaged concrete sections",
+        "4. For tree root damage: coordinate with SF Bureau of Urban Forestry for root pruning",
+        "5. For grates/drains: replace with ADA-compliant grates (1/2-inch max openings perpendicular to travel)",
+        "6. Ensure repaired surface is flush with surrounding pavement (maximum 1/4-inch level change)",
+        "7. Apply for SF DPW sidewalk repair permit if in public ROW"
+      ],
+      "contractor_type": "Concrete contractor",
+      "permit_required": true,
+      "permit_type": "SF DPW Sidewalk Repair Permit",
+      "timeline": "2-4 weeks"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction for private property repairs."
+    },
+    "detection": {
+      "visual_cues": ["Visible cracks wider than 1/2 inch in sidewalk or walkway", "Gaps between concrete panels", "Broken or displaced pavement sections", "Tree root uplift causing pavement separation", "Drainage grates with wide openings parallel to travel direction"],
+      "common_contexts": ["Aging concrete sidewalks", "Areas near trees", "Brick or paver walkways with loose joints", "Transition points between different surface materials"],
+      "needs_measurement": true,
+      "false_positive_notes": "Narrow hairline cracks (less than 1/2 inch) do not violate this standard. Control joints in concrete are typically less than 1/2 inch and are compliant. Expansion joints with proper filler are acceptable."
+    }
+  },
+  "excessive_cross_slope": {
+    "id": "excessive_cross_slope",
+    "category": "routes",
+    "title": "Excessive Cross Slope on Accessible Route",
+    "description": "Walking surface cross slope exceeds 1:48 (2.08%), causing wheelchair drift.",
+    "codes": {
+      "federal_ada": {
+        "section": "403.3",
+        "title": "Slope",
+        "requirement": "The cross slope of walking surfaces must not exceed 1:48 (2.08%). Running slope of accessible routes must not exceed 1:20 (5%) unless designed as a ramp."
+      },
+      "cbc_title24": {
+        "section": "11B-403.3",
+        "title": "Slope",
+        "requirement": "Same 1:48 maximum cross slope. CBC does not provide exceptions for existing conditions — all accessible routes must meet this standard regardless of construction date."
+      },
+      "sf_local": null
+    },
+    "severity": "medium",
+    "legal_risk": "Excessive cross slope causes wheelchair drift toward traffic or hazards, creating safety risks. Under the Unruh Act, $4,000+ per occurrence. On San Francisco's hilly terrain, this is a commonly encountered but often overlooked violation.",
+    "estimated_cost": 6000,
+    "cost_unit": "per section",
+    "cost_note": "SF market rate for regrading a section of walkway to correct cross slope. Cost varies significantly based on length and existing conditions. SF's hilly terrain can make corrections particularly expensive.",
+    "remediation": {
+      "summary": "Regrade walking surface to achieve maximum 1:48 cross slope.",
+      "steps": [
+        "1. Measure cross slope along entire accessible route using digital level",
+        "2. Identify all sections exceeding 1:48 cross slope",
+        "3. Design regrading plan maintaining positive drainage while achieving compliant slope",
+        "4. Apply for SF DPW or DBI permit as applicable",
+        "5. Remove existing surface material in non-compliant sections",
+        "6. Regrade base to achieve 1:48 maximum cross slope",
+        "7. Install new surface material",
+        "8. Verify compliance with measurements",
+        "9. Ensure drainage is maintained"
+      ],
+      "contractor_type": "Concrete or paving contractor",
+      "permit_required": true,
+      "permit_type": "SF DPW Sidewalk Repair Permit or SF DBI Alterations Permit",
+      "timeline": "4-8 weeks"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["Sidewalk visibly tilting to one side", "Water pooling on one side of walkway indicating slope", "Walkway following a hillside with visible lateral tilt", "Wheelchair user leaning to compensate for slope"],
+      "common_contexts": ["Sidewalks on San Francisco hills", "Walkways near driveways with cross-slope transitions", "Parking lot paths between rows", "Outdoor walkways with drainage grades"],
+      "needs_measurement": true,
+      "false_positive_notes": "Cross slope is very difficult to assess visually. A walkway may appear level but exceed 1:48, or appear sloped but be within limits. Measurement with a digital level is essential. San Francisco's hilly streets can make photos misleading about actual cross slopes."
+    }
+  },
+  "insufficient_route_width": {
+    "id": "insufficient_route_width",
+    "category": "routes",
+    "title": "Insufficient Accessible Route Width",
+    "description": "Accessible route width is less than the required 36-inch minimum.",
+    "codes": {
+      "federal_ada": {
+        "section": "403.5.1",
+        "title": "Clear Width",
+        "requirement": "The clear width of accessible routes must be 36 inches minimum. At 180-degree turns, the clear width must be 48 inches minimum at the turn or 36 inches minimum with a 60-inch turning space."
+      },
+      "cbc_title24": {
+        "section": "11B-403.5.1",
+        "title": "Clear Width",
+        "requirement": "Same 36-inch minimum clear width. CBC does not allow the ADA exception for a 32-inch minimum width at constrictions up to 24 inches long."
+      },
+      "sf_local": null
+    },
+    "severity": "medium",
+    "legal_risk": "Narrow routes prevent wheelchair passage entirely. Under the Unruh Act, $4,000+ per occurrence. Frequently cited in lawsuits involving interior commercial spaces with cluttered aisles.",
+    "estimated_cost": 3000,
+    "cost_unit": "per section",
+    "cost_note": "SF market rate for widening an accessible route section. Cost depends on whether walls need relocation (higher) or if furniture/fixtures simply need rearranging (lower).",
+    "remediation": {
+      "summary": "Widen accessible route to achieve minimum 36-inch clear width throughout.",
+      "steps": [
+        "1. Measure clear width of accessible route at all points, especially narrow sections",
+        "2. Identify obstructions reducing width below 36 inches",
+        "3. Remove or relocate movable obstructions (furniture, displays, equipment)",
+        "4. For structural narrowing, evaluate wall relocation or alternative route",
+        "5. If structural work needed, apply for SF DBI alterations permit",
+        "6. Execute widening modifications",
+        "7. Mark or protect route boundaries to prevent future encroachment"
+      ],
+      "contractor_type": "Licensed general contractor for structural work; facility management for furniture relocation",
+      "permit_required": false,
+      "permit_type": "",
+      "timeline": "1 day to 4 weeks depending on scope"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["Narrow corridor or walkway", "Path squeezed between walls, furniture, or fixtures", "Person in wheelchair would clearly not fit through passage", "Display racks or merchandise narrowing aisle"],
+      "common_contexts": ["Retail store aisles", "Interior corridors in older buildings", "Restaurant seating areas", "Narrow hallways leading to restrooms"],
+      "needs_measurement": true,
+      "false_positive_notes": "A 36-inch clear width is narrower than many people estimate. A standard wheelchair is about 26 inches wide. What appears narrow may actually comply. Measure the clear width between fixed elements, not including temporary items."
+    }
+  },
+  "changes_in_level": {
+    "id": "changes_in_level",
+    "category": "routes",
+    "title": "Abrupt Changes in Level",
+    "description": "Walking surface has level changes exceeding 1/4 inch without beveling or ramping.",
+    "codes": {
+      "federal_ada": {
+        "section": "303",
+        "title": "Changes in Level",
+        "requirement": "Changes in level up to 1/4 inch may be vertical. Changes between 1/4 inch and 1/2 inch must be beveled at 1:2 maximum slope. Changes greater than 1/2 inch must be ramped (Section 405) or use a curb ramp (Section 406)."
+      },
+      "cbc_title24": {
+        "section": "11B-303",
+        "title": "Changes in Level",
+        "requirement": "Same thresholds as ADA. CBC additionally requires that level changes be identified with visual contrast where they occur in the accessible route."
+      },
+      "sf_local": null
+    },
+    "severity": "medium",
+    "legal_risk": "Abrupt level changes cause wheelchair tipping and tripping hazards. Under the Unruh Act, $4,000+ per occurrence. This is a common, easily documented violation in older buildings and sidewalks.",
+    "estimated_cost": 1500,
+    "cost_unit": "per location",
+    "cost_note": "SF market rate for grinding, beveling, or ramping a level change. Simple grinding or beveling may cost as little as $200. Creating a small ramp section costs more.",
+    "remediation": {
+      "summary": "Eliminate or reduce level changes to compliant thresholds with beveling or ramping.",
+      "steps": [
+        "1. Identify and measure all level changes along the accessible route",
+        "2. For changes 1/4 to 1/2 inch: bevel the transition at 1:2 slope",
+        "3. For changes greater than 1/2 inch: install ramp or regrade surface",
+        "4. For concrete: use grinding to create beveled transitions",
+        "5. For thresholds at doors: install ADA-compliant threshold ramp",
+        "6. Apply visual contrast marking at level changes per CBC",
+        "7. Verify repaired transitions with measurements"
+      ],
+      "contractor_type": "Concrete contractor or general handyman for minor repairs",
+      "permit_required": false,
+      "permit_type": "",
+      "timeline": "1-5 days"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["Visible lip or step between surface sections", "Cracked or heaved concrete creating an edge", "Threshold at doorway that appears raised", "Transition between floor materials with visible height difference", "Sidewalk panel raised above adjacent panel"],
+      "common_contexts": ["Sidewalk panel joints", "Doorway thresholds", "Transitions between indoor and outdoor surfaces", "Elevator landings", "Expansion joints in concrete"],
+      "needs_measurement": true,
+      "false_positive_notes": "Level changes of 1/4 inch or less are permitted without treatment. Beveled transitions may appear as level changes but could be compliant. Door thresholds up to 1/2 inch (3/4 inch for sliding doors) with proper bevel are acceptable."
+    }
+  },
+  "unstable_ground_surface": {
+    "id": "unstable_ground_surface",
+    "category": "routes",
+    "title": "Unstable Ground Surface on Accessible Route",
+    "description": "Walking surface consists of loose material (gravel, sand, mulch) that is not stable, firm, or slip-resistant.",
+    "codes": {
+      "federal_ada": {
+        "section": "302.1",
+        "title": "General Ground Surfaces",
+        "requirement": "Floor or ground surfaces along accessible routes must be stable, firm, and slip-resistant. Carpet pile height must not exceed 1/2 inch."
+      },
+      "cbc_title24": {
+        "section": "11B-302.1",
+        "title": "General",
+        "requirement": "Same requirement for stable, firm, slip-resistant surfaces. CBC requires surfaces to be maintained in compliant condition — deterioration over time does not excuse non-compliance."
+      },
+      "sf_local": null
+    },
+    "severity": "medium",
+    "legal_risk": "Unstable surfaces prevent wheelchair travel and create fall hazards for mobility-impaired individuals. Under the Unruh Act, $4,000+ per occurrence. Garden paths, courtyards, and outdoor dining areas are common sources of violations.",
+    "estimated_cost": 5000,
+    "cost_unit": "per route section",
+    "cost_note": "SF market rate for replacing loose-surface path with firm, stable material (concrete, pavers, or compacted surface). Cost varies with area and material choice.",
+    "remediation": {
+      "summary": "Replace loose surface material with stable, firm, slip-resistant surface along accessible route.",
+      "steps": [
+        "1. Survey all accessible route surfaces for unstable, loose, or non-firm materials",
+        "2. Determine replacement surface material (concrete, pavers, compacted decomposed granite, rubber)",
+        "3. Remove loose surface material and prepare base",
+        "4. Install stable, firm surface material meeting ADA 302.1",
+        "5. Ensure proper drainage to prevent water pooling",
+        "6. If using compacted materials, establish maintenance schedule for re-compaction",
+        "7. Apply for permit if work is in public right-of-way"
+      ],
+      "contractor_type": "Landscape contractor or concrete contractor",
+      "permit_required": false,
+      "permit_type": "",
+      "timeline": "1-3 weeks"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["Gravel or crushed stone pathway", "Mulch or wood chip surface on route", "Sand or loose dirt path", "Grass or lawn used as accessible route", "Deep carpet or thick mat that would impede wheels"],
+      "common_contexts": ["Garden or courtyard paths", "Outdoor event spaces", "Parking lot connections through landscaping", "Paths to outdoor dining areas", "Park trails designated as accessible routes"],
+      "needs_measurement": false,
+      "false_positive_notes": "Properly compacted decomposed granite (DG) with stabilizer binder can be ADA-compliant. Not all natural-looking surfaces are non-compliant. Rubber playground surfaces and poured-in-place rubber are typically compliant. Pavers with tight joints are acceptable."
+    }
+  },
+  "protruding_objects": {
+    "id": "protruding_objects",
+    "category": "routes",
+    "title": "Protruding Objects",
+    "description": "Objects mounted between 27 and 80 inches above floor protrude more than 4 inches into accessible route.",
+    "codes": {
+      "federal_ada": {
+        "section": "307",
+        "title": "Protruding Objects",
+        "requirement": "Objects mounted on walls with leading edges between 27 and 80 inches above floor must not protrude more than 4 inches horizontally into circulation paths. Objects below 27 inches can protrude any amount (detectable by cane). Objects above 80 inches are unrestricted."
+      },
+      "cbc_title24": {
+        "section": "11B-307",
+        "title": "Protruding Objects",
+        "requirement": "Same 4-inch maximum protrusion between 27 and 80 inches. CBC additionally requires that protruding objects not reduce the clear width of accessible routes below 36 inches."
+      },
+      "sf_local": null
+    },
+    "severity": "medium",
+    "legal_risk": "Protruding objects are hazardous to visually impaired persons who cannot detect them with a cane above 27 inches. Under the Unruh Act, $4,000+ per occurrence. Fire extinguisher cabinets, display cases, and signs are common violators.",
+    "estimated_cost": 800,
+    "cost_unit": "per object",
+    "cost_note": "SF market rate for relocating, recessing, or adding a cane-detectable barrier below a protruding object. Simple barrier addition is cheapest; recessing into wall is most expensive.",
+    "remediation": {
+      "summary": "Recess, relocate, or add cane-detectable barriers below protruding objects.",
+      "steps": [
+        "1. Survey circulation paths for objects protruding more than 4 inches between 27-80 inches height",
+        "2. For each violating object, choose solution: recess into wall, relocate, lower below 27 inches, or add cane-detectable barrier",
+        "3. For cane-detectable barrier: install permanent element below object within 27 inches of floor",
+        "4. Ensure barrier is within the footprint of the protruding object",
+        "5. Verify that modifications do not reduce route width below 36 inches",
+        "6. No permit typically required for surface-mounted modifications"
+      ],
+      "contractor_type": "General contractor or handyman",
+      "permit_required": false,
+      "permit_type": "",
+      "timeline": "1-5 days"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["Wall-mounted fire extinguisher cabinet protruding into hallway", "Shelving or display case jutting out from wall", "Wall-mounted TV or monitor at head height", "Drinking fountain with front protruding more than 4 inches", "Signs or light fixtures on brackets extending from wall", "Open stairway underside without cane-detectable barrier"],
+      "common_contexts": ["Corridors and hallways", "Lobby areas", "Near restroom entries", "Commercial display areas", "Under open staircases"],
+      "needs_measurement": true,
+      "false_positive_notes": "Objects below 27 inches are exempt (cane-detectable). Objects above 80 inches are exempt. Objects recessed into alcoves may not protrude into the circulation path. Wall-mounted objects flush with the wall surface are compliant regardless of height."
+    }
+  },
+  "missing_tactile_signage": {
+    "id": "missing_tactile_signage",
+    "category": "signage",
+    "title": "Missing Tactile Signage (Braille/Raised Characters)",
+    "description": "Room or space identification sign lacks required raised characters and Grade 2 Braille.",
+    "codes": {
+      "federal_ada": {
+        "section": "703.2",
+        "title": "Raised Characters",
+        "requirement": "Signs identifying permanent rooms and spaces must include raised characters (1/32 inch minimum height) and Grade 2 Braille. Characters must be sans serif, uppercase, and between 5/8 and 2 inches high."
+      },
+      "cbc_title24": {
+        "section": "11B-703.2",
+        "title": "Raised Characters",
+        "requirement": "Same requirements as ADA. CBC additionally specifies California Grade 2 Braille and requires that Braille dots be domed or rounded."
+      },
+      "sf_local": null
+    },
+    "severity": "medium",
+    "legal_risk": "Missing tactile signage denies wayfinding to visually impaired persons. Under the Unruh Act, $4,000+ per occurrence per sign. Every room without a tactile sign can be a separate violation. High volume of potential claims in large buildings.",
+    "estimated_cost": 150,
+    "cost_unit": "per sign",
+    "cost_note": "SF market rate for custom ADA-compliant tactile sign with raised characters and Braille. Bulk orders for multiple rooms reduce per-sign cost. Installation labor typically $50-100 per sign.",
+    "remediation": {
+      "summary": "Install ADA-compliant tactile signs with raised characters and Braille at all permanent rooms.",
+      "steps": [
+        "1. Inventory all permanent rooms and spaces requiring identification signs",
+        "2. Order ADA-compliant signs with raised characters and Grade 2 Braille",
+        "3. Signs must use sans serif, uppercase characters, 5/8 to 2 inches high",
+        "4. Mount signs on wall on latch side of door",
+        "5. Center of sign at 60 inches above floor (ADA) — note CBC specifies 48-60 inches",
+        "6. Provide 18 inches minimum by 18 inches minimum clear floor space centered on sign for tactile reading",
+        "7. Signs must have non-glare finish with contrast between characters and background"
+      ],
+      "contractor_type": "Sign company specializing in ADA signage",
+      "permit_required": false,
+      "permit_type": "",
+      "timeline": "1-2 weeks including fabrication"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction. Low cost per unit makes this a high-value compliance action."
+    },
+    "detection": {
+      "visual_cues": ["Room identification sign without visible raised text or Braille", "Flat-printed signs on doors or walls", "Handwritten or paper signs identifying rooms", "No sign present at room entrance", "Sign with only visual text, no tactile elements"],
+      "common_contexts": ["Office suites and conference rooms", "Restroom doors", "Stairwell entries", "Elevator lobbies", "Hotel room doors"],
+      "needs_measurement": false,
+      "false_positive_notes": "Braille and raised characters may not be visible in photos taken from a distance. Directional and informational signs do not require tactile elements — only permanent room/space identification signs do. Temporary signs (event names, personnel names) are exempt."
+    }
+  },
+  "missing_directional_signage": {
+    "id": "missing_directional_signage",
+    "category": "signage",
+    "title": "Missing Directional Signage to Accessible Features",
+    "description": "No directional signs guiding to accessible entrances, restrooms, or other accessible features.",
+    "codes": {
+      "federal_ada": {
+        "section": "703.5",
+        "title": "Visual Characters",
+        "requirement": "Signs providing directions to or information about accessible features must include the International Symbol of Accessibility. Must be placed at decision points along accessible routes."
+      },
+      "cbc_title24": {
+        "section": "11B-703.5",
+        "title": "Visual Characters",
+        "requirement": "Same ISA requirement on directional signs. CBC additionally requires directional signs at inaccessible entrances pointing to the nearest accessible entrance."
+      },
+      "sf_local": null
+    },
+    "severity": "low",
+    "legal_risk": "Missing directional signage forces persons with disabilities to search for accessible features. Under the Unruh Act, $4,000+ per occurrence. Often cited alongside the underlying accessibility barrier it should direct to.",
+    "estimated_cost": 150,
+    "cost_unit": "per sign",
+    "cost_note": "SF market rate for directional sign with ISA symbol. Includes fabrication and installation. Multiple signs may be needed for complex buildings.",
+    "remediation": {
+      "summary": "Install directional signs with ISA symbol at decision points leading to accessible features.",
+      "steps": [
+        "1. Map all accessible features (entrances, restrooms, elevators, parking)",
+        "2. Identify decision points where directional guidance is needed",
+        "3. Install directional signs with ISA symbol at each decision point",
+        "4. Signs at non-accessible entrances must direct to nearest accessible entrance",
+        "5. Use high-contrast, non-glare finish",
+        "6. Mount at consistent height visible to both standing and seated persons"
+      ],
+      "contractor_type": "Sign company",
+      "permit_required": false,
+      "permit_type": "",
+      "timeline": "1-2 weeks"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["Non-accessible entrance without sign pointing to accessible entrance", "Building with multiple entrances but no ISA directional signs", "Complex building layout with no wayfinding for accessibility", "Accessible restroom exists but no signs directing to it"],
+      "common_contexts": ["Buildings with accessible entrance on a different facade", "Large commercial buildings with multiple entries", "Campuses and multi-building complexes", "Buildings where accessible route differs from main path"],
+      "needs_measurement": false,
+      "false_positive_notes": "If all entrances are accessible, directional signage to an accessible entrance is not required. Small buildings with a single entrance may not need directional signs. Signs may exist inside the building or out of camera view."
+    }
+  },
+  "missing_detectable_warnings": {
+    "id": "missing_detectable_warnings",
+    "category": "signage",
+    "title": "Missing Detectable Warning Surfaces",
+    "description": "No truncated dome surface at curb ramps, transit platforms, or other hazardous vehicular areas.",
+    "codes": {
+      "federal_ada": {
+        "section": "705",
+        "title": "Detectable Warning Surfaces",
+        "requirement": "Truncated dome detectable warning surfaces must be provided at curb ramps, transit platform edges, and hazardous vehicular areas. Domes must contrast visually with adjacent surfaces (light-on-dark or dark-on-light)."
+      },
+      "cbc_title24": {
+        "section": "11B-705",
+        "title": "Detectable Warnings",
+        "requirement": "Same requirement as ADA. CBC specifies bright yellow as the required color for detectable warnings in California, unlike ADA which only requires visual contrast."
+      },
+      "sf_local": null
+    },
+    "severity": "medium",
+    "legal_risk": "Missing detectable warnings endanger visually impaired persons at vehicular boundaries. Under the Unruh Act, $4,000+ per occurrence. Transit-related violations can also involve additional federal claims.",
+    "estimated_cost": 600,
+    "cost_unit": "per location",
+    "cost_note": "SF market rate for installing truncated dome detectable warning surface. Adhesive-applied tiles are least expensive; cast-in-place concrete with integral domes costs more but is more durable.",
+    "remediation": {
+      "summary": "Install truncated dome detectable warning surfaces at all required locations.",
+      "steps": [
+        "1. Identify all locations requiring detectable warnings (curb ramps, transit platforms, vehicular crossings)",
+        "2. Select detectable warning product (surface-applied tiles, cast-in-place, or retrofit)",
+        "3. Prepare surface — clean and level the installation area",
+        "4. Install detectable warning surface with bright yellow color (CBC requirement)",
+        "5. Ensure visual contrast with adjacent walking surface",
+        "6. Truncated domes must be 0.2 inch diameter, 0.9 inch center-to-center spacing",
+        "7. Warning surface must extend 24 inches minimum in direction of travel"
+      ],
+      "contractor_type": "Concrete contractor or accessibility product installer",
+      "permit_required": false,
+      "permit_type": "",
+      "timeline": "1-3 days per location"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["Curb ramp without raised dome surface", "Smooth concrete at curb ramp base", "Transit platform edge without tactile strip", "Driveway crossing without warning surface", "Faded or worn detectable warning with domes missing"],
+      "common_contexts": ["Curb ramps at intersections", "Transit platform edges", "Parking garage pedestrian crossings", "Loading dock areas", "Driveways crossing sidewalks"],
+      "needs_measurement": false,
+      "false_positive_notes": "In California, detectable warnings must be bright yellow. Other colors may indicate non-compliant warnings. Textured concrete that is not truncated domes does not comply. Some older installations use non-standard patterns that may not meet current requirements."
+    }
+  },
+  "missing_exit_signage": {
+    "id": "missing_exit_signage",
+    "category": "signage",
+    "title": "Missing Accessible Exit Signage",
+    "description": "Exit route not identified with accessible exit signs including tactile characters and directional information.",
+    "codes": {
+      "federal_ada": {
+        "section": "216.4",
+        "title": "Means of Egress",
+        "requirement": "Signs identifying accessible means of egress must comply with Section 703. Directional signs indicating the accessible means of egress must be provided at exits where not all exits are accessible."
+      },
+      "cbc_title24": {
+        "section": "11B-216.4",
+        "title": "Means of Egress",
+        "requirement": "Same requirements as ADA. CBC coordinates with California Fire Code requirements for exit signage, including illuminated exit signs and accessible evacuation route identification."
+      },
+      "sf_local": null
+    },
+    "severity": "medium",
+    "legal_risk": "Missing exit signage endangers persons with disabilities during emergencies. Under the Unruh Act, $4,000+ per occurrence. Fire code violations may compound liability.",
+    "estimated_cost": 350,
+    "cost_unit": "per sign",
+    "cost_note": "SF market rate for illuminated accessible exit sign with tactile elements. Includes electrical connection and installation. May require coordination with fire alarm system.",
+    "remediation": {
+      "summary": "Install accessible exit signs with tactile elements and directional information at all required locations.",
+      "steps": [
+        "1. Review means of egress plan with fire safety consultant",
+        "2. Identify all exit locations and which are accessible",
+        "3. Install tactile exit signs at accessible exits",
+        "4. Install directional signs at non-accessible exits pointing to accessible exits",
+        "5. Ensure illuminated exit signs meet California Fire Code requirements",
+        "6. Coordinate with fire alarm and emergency lighting systems",
+        "7. Apply for SF DBI electrical permit if new electrical connections needed"
+      ],
+      "contractor_type": "Licensed electrician and sign installer",
+      "permit_required": true,
+      "permit_type": "SF DBI Electrical Permit",
+      "timeline": "2-4 weeks"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["Exit door without illuminated exit sign", "Exit sign without tactile characters or Braille", "No directional exit signage in corridors", "Accessible exit not differentiated from non-accessible exits"],
+      "common_contexts": ["Multi-story commercial buildings", "Buildings with stair-only exits", "Older buildings without updated exit signage", "Assembly occupancies (theaters, restaurants)"],
+      "needs_measurement": false,
+      "false_positive_notes": "Standard illuminated EXIT signs may comply with fire code but not ADA tactile requirements. The issue is often missing Braille/raised characters on exit identification signs, not the illuminated sign itself."
+    }
+  },
+  "missing_isa_symbol": {
+    "id": "missing_isa_symbol",
+    "category": "signage",
+    "title": "Missing International Symbol of Accessibility",
+    "description": "Required ISA symbol not displayed at accessible features or on required signs.",
+    "codes": {
+      "federal_ada": {
+        "section": "703.7",
+        "title": "Symbols of Accessibility",
+        "requirement": "The International Symbol of Accessibility must be displayed at accessible entrances (when not all are accessible), accessible parking spaces, accessible restrooms, and other accessible features that are not universally provided."
+      },
+      "cbc_title24": {
+        "section": "11B-703.7",
+        "title": "Symbols of Accessibility",
+        "requirement": "Same ISA display requirements. CBC requires the ISA symbol to be white on a blue background for maximum visibility and standardization."
+      },
+      "sf_local": null
+    },
+    "severity": "low",
+    "legal_risk": "Missing ISA symbols make it difficult for persons with disabilities to identify accessible features. Under the Unruh Act, $4,000+ per occurrence. Low severity but easy to document and claim.",
+    "estimated_cost": 100,
+    "cost_unit": "per sign",
+    "cost_note": "SF market rate for ISA symbol sign or decal. Very low cost item — primarily labor for proper placement.",
+    "remediation": {
+      "summary": "Install ISA symbol signs at all required accessible features.",
+      "steps": [
+        "1. Identify all locations requiring ISA symbol (accessible entrances, parking, restrooms, elevators)",
+        "2. Purchase ISA symbol signs or decals (white on blue background)",
+        "3. Install at designated locations per ADA mounting requirements",
+        "4. Ensure visibility from primary approach direction"
+      ],
+      "contractor_type": "Sign installer or building maintenance",
+      "permit_required": false,
+      "permit_type": "",
+      "timeline": "1-2 days"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction. Minimal cost — among the easiest compliance wins."
+    },
+    "detection": {
+      "visual_cues": ["Accessible entrance without wheelchair symbol", "Accessible restroom without ISA sign", "Accessible parking without ISA on sign", "Elevator without ISA identification"],
+      "common_contexts": ["Buildings with mixed accessible and non-accessible entrances", "Multi-restroom facilities", "Parking facilities", "Buildings with accessible features on different floors"],
+      "needs_measurement": false,
+      "false_positive_notes": "ISA symbol is not required if all features of that type are accessible (e.g., if all entrances are accessible, ISA is not required at entrances). The symbol may be present on another side of the sign or door not visible in the photo."
+    }
+  },
+  "non_compliant_sign_mounting": {
+    "id": "non_compliant_sign_mounting",
+    "category": "signage",
+    "title": "Non-Compliant Sign Mounting Height/Location",
+    "description": "Tactile sign mounted at wrong height or location relative to the door it identifies.",
+    "codes": {
+      "federal_ada": {
+        "section": "703.4",
+        "title": "Installation Height and Location",
+        "requirement": "Tactile signs identifying rooms must be mounted on the wall adjacent to the latch side of the door, with the baseline of the lowest tactile character at 48 inches minimum and the baseline of the highest character at 60 inches maximum above the floor."
+      },
+      "cbc_title24": {
+        "section": "11B-703.4",
+        "title": "Installation Height and Location",
+        "requirement": "CBC specifies signs shall be located so the centerline is at 60 inches above the finished floor. Sign must be on the latch side of the door with 18 x 18 inch clear floor space for reading."
+      },
+      "sf_local": null
+    },
+    "severity": "low",
+    "legal_risk": "Incorrectly mounted signs cannot be found by visually impaired persons who rely on consistent placement conventions. Under the Unruh Act, $4,000+ per occurrence. Often included as part of a bundle of signage violations.",
+    "estimated_cost": 200,
+    "cost_unit": "per sign",
+    "cost_note": "SF market rate for relocating an existing sign to the correct position. May require patching holes from previous mounting location.",
+    "remediation": {
+      "summary": "Relocate sign to correct height and position on latch side of door.",
+      "steps": [
+        "1. Identify which door side is the latch side (where the handle/lock is)",
+        "2. Remove sign from current location",
+        "3. Patch any holes from previous mounting",
+        "4. Remount sign on wall on latch side of door",
+        "5. Position so centerline is at 60 inches above finished floor (CBC standard)",
+        "6. Ensure 18 x 18 inch clear floor space centered on sign for tactile reading",
+        "7. If double doors with no wall space, mount on nearest adjacent wall"
+      ],
+      "contractor_type": "Building maintenance or handyman",
+      "permit_required": false,
+      "permit_type": "",
+      "timeline": "1 day"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["Tactile sign mounted on door instead of adjacent wall", "Sign mounted too high or too low on wall", "Sign mounted on hinge side of door instead of latch side", "Sign centered on door frame rather than offset to latch side"],
+      "common_contexts": ["Restroom signs mounted on doors", "Office signs at incorrect heights", "Signs on wrong side of door", "Signs mounted on glass partitions"],
+      "needs_measurement": true,
+      "false_positive_notes": "Directional and informational signs do not have the same mounting requirements as room identification signs. Only permanent room/space identification signs with tactile elements must be at specific heights on the latch side."
+    }
+  },
+  "inaccessible_restroom": {
+    "id": "inaccessible_restroom",
+    "category": "restrooms",
+    "title": "Generally Inaccessible Restroom",
+    "description": "Restroom fails to meet multiple accessibility requirements making it unusable for persons with disabilities.",
+    "codes": {
+      "federal_ada": {
+        "section": "603",
+        "title": "Toilet and Bathing Rooms",
+        "requirement": "At least one of each type of toilet room provided must be accessible. Must include 60-inch turning space, accessible fixtures, proper signage, and be on an accessible route. All components must comply with respective standards."
+      },
+      "cbc_title24": {
+        "section": "11B-603",
+        "title": "Toilet and Bathing Rooms",
+        "requirement": "Same requirements as ADA. CBC additionally requires that accessible restrooms have visual contrast on door hardware and that emergency call systems be provided in single-user accessible restrooms."
+      },
+      "sf_local": null
+    },
+    "severity": "high",
+    "legal_risk": "Inaccessible restrooms are among the most commonly litigated ADA violations. Under the Unruh Act, $4,000+ per occurrence per visit. Restroom violations often involve multiple sub-violations (grab bars, clearances, fixtures), each potentially a separate claim.",
+    "estimated_cost": 18000,
+    "cost_unit": "per restroom",
+    "cost_note": "SF market rate for full restroom renovation to ADA compliance. Includes plumbing, fixture replacement, grab bars, door modifications, and finish work. Minor fixes (grab bars only) may cost as little as $1,000.",
+    "remediation": {
+      "summary": "Renovate restroom to meet all ADA accessibility requirements.",
+      "steps": [
+        "1. Conduct CASp inspection to identify all non-compliant elements",
+        "2. Develop remediation plan addressing: turning space, stall size, grab bars, fixture heights, door width, hardware",
+        "3. Apply for SF DBI plumbing and building permits",
+        "4. Widen doorway to 32-inch minimum clear width if needed",
+        "5. Replace round knobs with lever handles",
+        "6. Provide 60-inch turning space (may require stall reconfiguration)",
+        "7. Install grab bars per ADA 604.5",
+        "8. Adjust or replace toilet, sink, mirror, and dispensers to compliant heights",
+        "9. Install tactile signage with ISA symbol",
+        "10. Schedule final inspection"
+      ],
+      "contractor_type": "Licensed general contractor with plumber",
+      "permit_required": true,
+      "permit_type": "SF DBI Building and Plumbing Permits",
+      "timeline": "6-12 weeks"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction. Large projects may benefit from combining both credits."
+    },
+    "detection": {
+      "visual_cues": ["Narrow restroom door", "No grab bars visible", "Small restroom with no turning space", "Non-compliant fixtures visible through open door", "No ISA signage on restroom", "Round door knob on restroom door"],
+      "common_contexts": ["Older commercial buildings", "Small restaurants and cafes", "Retail stores with original construction restrooms", "Converted buildings"],
+      "needs_measurement": true,
+      "false_positive_notes": "A restroom may appear small but still meet minimum requirements. Single-user restrooms have different requirements than multi-stall. An accessible stall in a larger restroom may satisfy requirements even if the entire restroom doesn't appear accessible."
+    }
+  },
+  "missing_grab_bars": {
+    "id": "missing_grab_bars",
+    "category": "restrooms",
+    "title": "Missing Grab Bars",
+    "description": "Accessible toilet compartment lacks required grab bars on side wall and rear wall.",
+    "codes": {
+      "federal_ada": {
+        "section": "604.5",
+        "title": "Grab Bars",
+        "requirement": "Grab bars must be provided on the side wall and rear wall closest to the toilet. Side grab bar: 42 inches minimum, starting 12 inches from rear wall. Rear grab bar: 36 inches minimum. Mounted 33-36 inches above floor."
+      },
+      "cbc_title24": {
+        "section": "11B-604.5",
+        "title": "Grab Bars",
+        "requirement": "Same grab bar specifications as ADA. CBC additionally requires that grab bars have a 1-1/4 to 2-inch diameter and be able to support 250 lbs of force."
+      },
+      "sf_local": null
+    },
+    "severity": "high",
+    "legal_risk": "Missing grab bars prevent safe toilet transfers for wheelchair users. Under the Unruh Act, $4,000+ per occurrence. Grab bars are among the most commonly cited restroom violations and are inexpensive to fix, making non-compliance particularly indefensible.",
+    "estimated_cost": 500,
+    "cost_unit": "per restroom",
+    "cost_note": "SF market rate for installing both side and rear grab bars in one restroom stall. Includes stainless steel bars, wall reinforcement if needed (backing plates or blocking), and labor.",
+    "remediation": {
+      "summary": "Install compliant grab bars on side wall and rear wall of accessible toilet compartment.",
+      "steps": [
+        "1. Verify wall can support 250 lbs of force (add wood blocking behind drywall if needed)",
+        "2. Install side wall grab bar: 42 inches minimum length, 12 inches max from rear wall, extending 54 inches from rear wall",
+        "3. Install rear wall grab bar: 36 inches minimum length, centered on toilet or offset per ADA requirements",
+        "4. Mount both bars at 33-36 inches above finished floor",
+        "5. Use 1-1/4 to 2-inch diameter stainless steel grab bars",
+        "6. Maintain 1-1/2 inch clearance between bar and wall",
+        "7. Test load capacity (250 lbs minimum)"
+      ],
+      "contractor_type": "General contractor or handyman (may need carpenter for wall backing)",
+      "permit_required": false,
+      "permit_type": "",
+      "timeline": "1-2 days"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction. Very cost-effective compliance fix."
+    },
+    "detection": {
+      "visual_cues": ["Toilet without grab bars on adjacent walls", "Towel bars used in place of proper grab bars (not rated for 250 lbs)", "Grab bar on only one wall (missing second bar)", "Grab bar mounted at incorrect height or length"],
+      "common_contexts": ["Older restroom construction", "Recently renovated restrooms that overlooked accessibility", "Single-user restrooms in small businesses"],
+      "needs_measurement": true,
+      "false_positive_notes": "Decorative towel bars are not grab bars and do not meet strength requirements. Fold-down grab bars are acceptable if they meet length and strength requirements. Grab bars may exist but be partially hidden by the toilet or partition in photos."
+    }
+  },
+  "insufficient_stall_size": {
+    "id": "insufficient_stall_size",
+    "category": "restrooms",
+    "title": "Insufficient Accessible Stall Size",
+    "description": "Wheelchair-accessible toilet stall does not meet minimum width and depth requirements.",
+    "codes": {
+      "federal_ada": {
+        "section": "604.8",
+        "title": "Toilet Compartments",
+        "requirement": "Wheelchair-accessible compartments must be 60 inches wide minimum. Depth: 56 inches minimum for wall-hung toilets, 59 inches minimum for floor-mounted toilets. Door must provide 32-inch clear width and swing out."
+      },
+      "cbc_title24": {
+        "section": "11B-604.8",
+        "title": "Toilet Compartments",
+        "requirement": "Same minimum dimensions as ADA. CBC additionally requires that the door be self-closing and that the stall have a coat hook at 48 inches maximum height."
+      },
+      "sf_local": null
+    },
+    "severity": "high",
+    "legal_risk": "Undersized stalls prevent wheelchair users from entering, transferring, and using the toilet. Under the Unruh Act, $4,000+ per occurrence. Stall size violations typically require significant renovation to fix.",
+    "estimated_cost": 8000,
+    "cost_unit": "per stall",
+    "cost_note": "SF market rate for reconfiguring toilet stall partitions and potentially relocating fixtures to achieve compliant dimensions. May require reducing number of stalls.",
+    "remediation": {
+      "summary": "Reconfigure accessible stall to meet minimum 60-inch width and required depth.",
+      "steps": [
+        "1. Measure existing stall dimensions and identify deficiencies",
+        "2. Design reconfiguration plan — may involve combining two stalls or removing adjacent fixtures",
+        "3. Apply for SF DBI permit if plumbing relocation needed",
+        "4. Relocate partition walls to achieve 60-inch minimum width",
+        "5. Ensure depth meets requirements (56 or 59 inches depending on toilet type)",
+        "6. Install outward-swinging door with 32-inch minimum clear width",
+        "7. Install grab bars, coat hook, and other required accessories",
+        "8. Verify 60-inch turning space within stall or room"
+      ],
+      "contractor_type": "Licensed general contractor with plumber",
+      "permit_required": true,
+      "permit_type": "SF DBI Building Permit",
+      "timeline": "4-8 weeks"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["Accessible stall that appears too narrow for wheelchair", "Stall door that swings inward (reducing usable space)", "Toilet very close to side partition", "No visible turning space within stall"],
+      "common_contexts": ["Older restrooms with original partition layouts", "Restrooms in small commercial spaces", "Multi-stall restrooms where accessible stall was not properly designed"],
+      "needs_measurement": true,
+      "false_positive_notes": "Ambulatory accessible stalls (36 inches wide) are a different stall type than wheelchair accessible and have different size requirements. A stall may appear small in a photo but meet requirements. Floor-mounted vs. wall-hung toilets have different depth requirements."
+    }
+  },
+  "high_mirror": {
+    "id": "high_mirror",
+    "category": "restrooms",
+    "title": "Mirror Mounted Too High",
+    "description": "Restroom mirror bottom edge is higher than 40 inches above the floor, inaccessible to seated users.",
+    "codes": {
+      "federal_ada": {
+        "section": "603.3",
+        "title": "Mirrors",
+        "requirement": "Mirrors above lavatories must have the bottom edge of the reflecting surface 40 inches maximum above the finished floor. Full-length mirrors may be mounted at any height."
+      },
+      "cbc_title24": {
+        "section": "11B-603.3",
+        "title": "Mirrors",
+        "requirement": "Same 40-inch maximum height requirement. CBC specifies that mirrors must be mounted with the bottom edge of the reflecting surface at 40 inches maximum, not the bottom edge of the frame."
+      },
+      "sf_local": null
+    },
+    "severity": "low",
+    "legal_risk": "High-mounted mirrors deny equal access to seated persons. Under the Unruh Act, $4,000+ per occurrence. Easy to document and fix, making non-compliance hard to defend.",
+    "estimated_cost": 300,
+    "cost_unit": "per mirror",
+    "cost_note": "SF market rate for lowering or replacing a restroom mirror. Includes mirror, mounting hardware, and wall repair from previous mounting holes.",
+    "remediation": {
+      "summary": "Lower mirror so bottom edge of reflecting surface is at 40 inches or less above floor.",
+      "steps": [
+        "1. Measure current height of mirror's bottom reflecting edge above floor",
+        "2. If too high, remove mirror and lower mounting position",
+        "3. Alternatively, install a tilted mirror or full-length mirror",
+        "4. Patch and repaint wall from previous mounting holes",
+        "5. Verify bottom of reflecting surface (not frame) is at 40 inches maximum"
+      ],
+      "contractor_type": "Handyman or building maintenance",
+      "permit_required": false,
+      "permit_type": "",
+      "timeline": "1 day"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction. Very low cost."
+    },
+    "detection": {
+      "visual_cues": ["Mirror mounted high above sink with significant gap between counter and mirror bottom", "Mirror bottom edge visually above waist height of standing person", "Mirror that a seated person clearly could not use", "Mirror mounted at or near eye level for standing person only"],
+      "common_contexts": ["Commercial restrooms with mirrors above sinks", "Restrooms in restaurants, offices, and retail", "Gym locker rooms"],
+      "needs_measurement": true,
+      "false_positive_notes": "The measurement is to the bottom of the reflecting surface, not the frame. Tilted mirrors may have their bottom edge above 40 inches but still comply because the reflecting surface is angled to be usable. Full-length mirrors at any height are compliant."
+    }
+  },
+  "insufficient_sink_clearance": {
+    "id": "insufficient_sink_clearance",
+    "category": "restrooms",
+    "title": "Insufficient Sink Knee Clearance",
+    "description": "Sink does not provide adequate knee and toe clearance for wheelchair approach.",
+    "codes": {
+      "federal_ada": {
+        "section": "606.2",
+        "title": "Clear Floor Space",
+        "requirement": "A clear floor space complying with Section 305, positioned for forward approach, must be provided at sinks. Knee clearance: 27 inches minimum height, 8 inches minimum depth at 27 inches, 11 inches minimum depth at 9 inches above floor. Sink rim maximum 34 inches above floor."
+      },
+      "cbc_title24": {
+        "section": "11B-606.2",
+        "title": "Clear Floor Space",
+        "requirement": "Same clearance requirements as ADA. CBC additionally requires insulation or covering of exposed water supply and drain pipes to prevent contact burns and abrasion injuries."
+      },
+      "sf_local": null
+    },
+    "severity": "medium",
+    "legal_risk": "Insufficient sink clearance prevents wheelchair users from washing hands independently. Under the Unruh Act, $4,000+ per occurrence. Exposed pipes creating burn risks add premises liability exposure.",
+    "estimated_cost": 2500,
+    "cost_unit": "per sink",
+    "cost_note": "SF market rate for replacing or modifying a sink for wheelchair clearance. Includes wall-mount sink, plumbing modifications, pipe insulation, and finish work.",
+    "remediation": {
+      "summary": "Modify or replace sink to provide required knee and toe clearance with pipe protection.",
+      "steps": [
+        "1. Measure existing knee clearance under sink",
+        "2. If vanity/cabinet: remove cabinet and install wall-mounted sink at 34 inches maximum height",
+        "3. Ensure 27 inches minimum knee clearance height",
+        "4. Install pipe insulation on exposed supply and drain pipes (CBC requirement)",
+        "5. Provide clear floor space for forward wheelchair approach",
+        "6. Install lever-operated or sensor faucet",
+        "7. Apply for SF DBI plumbing permit if significant modifications needed"
+      ],
+      "contractor_type": "Licensed plumber and general contractor",
+      "permit_required": true,
+      "permit_type": "SF DBI Plumbing Permit",
+      "timeline": "2-4 weeks"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["Sink with vanity cabinet underneath blocking knee space", "Pedestal sink with wide base blocking approach", "Sink mounted too high for seated use", "Exposed hot water pipes without insulation under sink"],
+      "common_contexts": ["Restrooms with vanity cabinets", "Older restrooms with pedestal sinks", "Kitchenette areas in commercial spaces"],
+      "needs_measurement": true,
+      "false_positive_notes": "Wall-mounted sinks at proper height typically provide adequate clearance. The presence of a cabinet does not automatically mean non-compliance — some accessible vanities provide required clearance. An apron-front sink may look like it blocks clearance but could comply."
+    }
+  },
+  "non_compliant_toilet_height": {
+    "id": "non_compliant_toilet_height",
+    "category": "restrooms",
+    "title": "Non-Compliant Toilet Seat Height",
+    "description": "Toilet seat height is not within the required 17-19 inch range measured from floor to top of seat.",
+    "codes": {
+      "federal_ada": {
+        "section": "604.4",
+        "title": "Seat Height",
+        "requirement": "The top of the toilet seat must be 17 inches minimum and 19 inches maximum above the finished floor, measured to the top of the seat."
+      },
+      "cbc_title24": {
+        "section": "11B-604.4",
+        "title": "Seat Height",
+        "requirement": "Same 17-19 inch seat height requirement. CBC specifies measurement to top of seat in the down position."
+      },
+      "sf_local": null
+    },
+    "severity": "medium",
+    "legal_risk": "Non-standard toilet height prevents safe transfers from wheelchair. Under the Unruh Act, $4,000+ per occurrence. Often cited with other restroom violations in serial litigation.",
+    "estimated_cost": 800,
+    "cost_unit": "per toilet",
+    "cost_note": "SF market rate for replacing a toilet with a compliant-height model (comfort height/ADA toilet). Includes fixture, installation, and wax ring. Wall-hung toilet adjustment may cost more.",
+    "remediation": {
+      "summary": "Replace toilet with ADA-compliant height model (17-19 inches to top of seat).",
+      "steps": [
+        "1. Measure existing toilet seat height from floor to top of seat",
+        "2. If too low: install toilet riser or replace with comfort-height (ADA) toilet",
+        "3. If too high: replace with standard ADA-compliant toilet",
+        "4. Connect water supply and drain",
+        "5. Install new wax ring and verify no leaks",
+        "6. Measure final seat height to confirm 17-19 inch range",
+        "7. No permit typically required for fixture replacement on existing plumbing"
+      ],
+      "contractor_type": "Licensed plumber",
+      "permit_required": false,
+      "permit_type": "",
+      "timeline": "1-2 days"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["Toilet that appears noticeably low (standard residential height ~15 inches)", "Toilet with added riser indicating original was too low", "Toilet seat visibly below or above wheelchair seat level (~18 inches)"],
+      "common_contexts": ["Older restrooms with original residential-height toilets", "Recently renovated restrooms where contractor used standard (non-ADA) toilets"],
+      "needs_measurement": true,
+      "false_positive_notes": "Cannot reliably determine toilet height from photos without a reference measurement. 'Comfort height' toilets marketed for residential use are typically 17-19 inches and comply. The measurement includes the seat, not just the bowl rim."
+    }
+  },
+  "inaccessible_flush_control": {
+    "id": "inaccessible_flush_control",
+    "category": "restrooms",
+    "title": "Inaccessible Flush Control Placement",
+    "description": "Toilet flush control is mounted on the wrong side, requiring reach across the toilet.",
+    "codes": {
+      "federal_ada": {
+        "section": "604.6",
+        "title": "Flush Controls",
+        "requirement": "Flush controls must be hand-operated or automatic. Hand-operated controls must be on the open (transfer) side of the toilet and mounted 44 inches maximum above the floor. Must not require tight grasping, pinching, or twisting."
+      },
+      "cbc_title24": {
+        "section": "11B-604.6",
+        "title": "Flush Controls",
+        "requirement": "Same requirements as ADA. CBC allows automatic sensor-activated flush as an alternative to hand-operated controls on the open side."
+      },
+      "sf_local": null
+    },
+    "severity": "low",
+    "legal_risk": "Flush controls on the wall side require unsafe reaching across the toilet. Under the Unruh Act, $4,000+ per occurrence. Often cited as part of a bundle of restroom violations.",
+    "estimated_cost": 350,
+    "cost_unit": "per toilet",
+    "cost_note": "SF market rate for installing an automatic flush sensor (most cost-effective fix) or relocating flush handle to open side. Sensor installation avoids plumbing modifications.",
+    "remediation": {
+      "summary": "Relocate flush control to open side of toilet or install automatic flush sensor.",
+      "steps": [
+        "1. Identify the open (transfer) side of the toilet based on stall layout",
+        "2. Option A: Install automatic flush sensor (preferred — eliminates hand-operation requirement entirely)",
+        "3. Option B: Replace flush valve with one having handle on open side",
+        "4. If handle relocation requires plumbing changes, apply for SF DBI plumbing permit",
+        "5. Verify control operates without tight grasping, pinching, or twisting",
+        "6. Ensure control is 44 inches maximum above floor"
+      ],
+      "contractor_type": "Licensed plumber",
+      "permit_required": false,
+      "permit_type": "",
+      "timeline": "1-2 days"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["Flush handle on wall side of toilet (side closest to wall, not open stall area)", "Flush control requiring reach across or behind toilet", "No automatic flush sensor visible"],
+      "common_contexts": ["Standard toilet installations where plumber did not consider ADA transfer side", "Restrooms where stall layout was changed but toilet orientation wasn't"],
+      "needs_measurement": false,
+      "false_positive_notes": "The open side depends on the stall layout, which may not be fully visible in a photo. Left-hand and right-hand transfer configurations affect which side is the open side. Automatic flush sensors make handle placement moot."
+    }
+  },
+  "inaccessible_dispenser_placement": {
+    "id": "inaccessible_dispenser_placement",
+    "category": "restrooms",
+    "title": "Inaccessible Dispenser Placement",
+    "description": "Toilet paper, soap, or paper towel dispensers mounted too high or out of reach range.",
+    "codes": {
+      "federal_ada": {
+        "section": "603.5",
+        "title": "Dispensers",
+        "requirement": "Dispensers for toilet paper, soap, paper towels, and other items must be within reach range (15-48 inches above floor for forward reach, 15-46 inches for side reach). Must be operable with one hand without tight grasping."
+      },
+      "cbc_title24": {
+        "section": "11B-603.5",
+        "title": "Dispensers",
+        "requirement": "Same reach range requirements as ADA. CBC requires that toilet paper dispensers be mounted 19 inches minimum above floor and 36 inches maximum from the rear wall. Dispensers shall not be behind grab bars."
+      },
+      "sf_local": null
+    },
+    "severity": "low",
+    "legal_risk": "Inaccessible dispensers prevent independent restroom use. Under the Unruh Act, $4,000+ per occurrence per dispenser. Multiple dispensers in one restroom can mean multiple violations.",
+    "estimated_cost": 250,
+    "cost_unit": "per dispenser",
+    "cost_note": "SF market rate for relocating a dispenser to compliant height and reach range. Includes patching from old mounting holes and new installation.",
+    "remediation": {
+      "summary": "Relocate dispensers to within reach range and proper position.",
+      "steps": [
+        "1. Measure current height and position of all dispensers",
+        "2. Relocate toilet paper dispenser: 19 inches minimum above floor, 36 inches maximum from rear wall, not behind grab bar",
+        "3. Relocate soap dispensers: 44 inches maximum above floor for forward reach",
+        "4. Relocate paper towel/dryer: 44 inches maximum above floor for forward approach",
+        "5. Patch wall from previous mounting locations",
+        "6. Verify all dispensers operable with one hand"
+      ],
+      "contractor_type": "Building maintenance or handyman",
+      "permit_required": false,
+      "permit_type": "",
+      "timeline": "1 day"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["Paper towel dispenser mounted at head height or higher", "Soap dispenser above counter at high position", "Toilet paper dispenser behind grab bar or far from toilet", "Dispenser requiring significant reaching from seated position"],
+      "common_contexts": ["Commercial restrooms with wall-mounted dispensers", "Restrooms where dispensers were placed for standing users", "Recently renovated restrooms with improperly placed dispensers"],
+      "needs_measurement": true,
+      "false_positive_notes": "Dispensers at 44-48 inches may appear high but could be within compliant reach range depending on approach direction. Counter-mounted soap dispensers may comply if the counter is within reach range."
+    }
+  },
+  "inaccessible_counter": {
+    "id": "inaccessible_counter",
+    "category": "counters",
+    "title": "Inaccessible Service Counter",
+    "description": "Sales or service counter exceeds 36-inch maximum height with no accessible section or alternative.",
+    "codes": {
+      "federal_ada": {
+        "section": "904.4",
+        "title": "Sales and Service Counters",
+        "requirement": "A portion of the counter surface must be 36 inches maximum above the floor and 36 inches minimum in length. Alternatively, an auxiliary counter or equivalent facilitation must be provided."
+      },
+      "cbc_title24": {
+        "section": "11B-904.4",
+        "title": "Sales and Service Counters",
+        "requirement": "CBC requires 34-inch maximum counter height (stricter than ADA's 36 inches) for at least one accessible service position. Must be at least 36 inches long."
+      },
+      "sf_local": null
+    },
+    "severity": "medium",
+    "legal_risk": "Inaccessible counters prevent wheelchair users from conducting transactions. Under the Unruh Act, $4,000+ per occurrence. Retail and food service businesses are heavily targeted for counter height violations in California.",
+    "estimated_cost": 4000,
+    "cost_unit": "per counter section",
+    "cost_note": "SF market rate for lowering a 36-inch section of counter or adding an auxiliary counter. Includes demolition, new counter construction, and finish work. Simple auxiliary counter addition may cost less.",
+    "remediation": {
+      "summary": "Lower a section of counter to 34 inches (CBC) or provide auxiliary counter at accessible height.",
+      "steps": [
+        "1. Measure current counter height",
+        "2. Option A: Lower a 36-inch minimum section of existing counter to 34 inches maximum (CBC standard)",
+        "3. Option B: Add an auxiliary counter or writing surface at 34 inches maximum height",
+        "4. Option C: Provide equivalent facilitation (clipboard, adjacent table)",
+        "5. Ensure counter depth at accessible section matches rest of counter",
+        "6. Provide knee clearance for forward approach if applicable",
+        "7. No permit typically required for counter modifications"
+      ],
+      "contractor_type": "Millwork contractor or general contractor",
+      "permit_required": false,
+      "permit_type": "",
+      "timeline": "1-3 weeks"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["Service counter at chest height for standing person", "Counter that a seated person clearly cannot see over or reach across", "No visible lowered section of counter", "Cash register or POS terminal on high counter with no accessible alternative"],
+      "common_contexts": ["Retail checkout counters", "Restaurant order counters", "Hotel reception desks", "Bank teller counters", "Medical office reception windows"],
+      "needs_measurement": true,
+      "false_positive_notes": "A counter that appears high may have a lowered section out of frame. Some businesses use a separate accessible service area. A clipboard provided for transactions at a seated level can constitute equivalent facilitation."
+    }
+  },
+  "inaccessible_atm_or_kiosk": {
+    "id": "inaccessible_atm_or_kiosk",
+    "category": "counters",
+    "title": "Inaccessible ATM or Kiosk",
+    "description": "Self-service kiosk, ATM, or interactive terminal is not accessible to persons with disabilities.",
+    "codes": {
+      "federal_ada": {
+        "section": "707",
+        "title": "Automatic Teller Machines and Fare Machines",
+        "requirement": "ATMs and fare machines must provide accessible operable parts within reach range (15-48 inches), speech output capability, Braille instructions, and input controls usable without vision. Clear floor space for forward or parallel approach."
+      },
+      "cbc_title24": {
+        "section": "11B-707",
+        "title": "Automatic Teller Machines and Fare Machines",
+        "requirement": "Same requirements as ADA. CBC additionally requires that at least one ATM at each location be accessible and on an accessible route."
+      },
+      "sf_local": null
+    },
+    "severity": "medium",
+    "legal_risk": "Inaccessible kiosks exclude persons with mobility and vision disabilities from self-service. Under the Unruh Act, $4,000+ per occurrence. ATM and kiosk accessibility has become an active litigation area in California.",
+    "estimated_cost": 5000,
+    "cost_unit": "per kiosk",
+    "cost_note": "SF market rate for replacing or modifying a kiosk for accessibility. Software modifications for speech output may be additional. Some kiosk manufacturers offer ADA-compliant models as replacements.",
+    "remediation": {
+      "summary": "Replace or modify kiosk to provide accessible controls, reach range, and speech output.",
+      "steps": [
+        "1. Evaluate current kiosk for accessibility deficiencies",
+        "2. Check reach range: all operable parts must be 15-48 inches above floor",
+        "3. Ensure clear floor space for wheelchair approach (30 x 48 inches minimum)",
+        "4. Verify or add speech output capability with privacy option (headphone jack)",
+        "5. Add Braille instructions and tactile controls",
+        "6. If modifications not feasible, replace with ADA-compliant model",
+        "7. Ensure kiosk is on an accessible route"
+      ],
+      "contractor_type": "Kiosk vendor or IT contractor",
+      "permit_required": false,
+      "permit_type": "",
+      "timeline": "2-6 weeks depending on replacement vs. modification"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["Kiosk with touchscreen mounted above comfortable seated reach", "ATM on raised platform with no ramp", "Self-checkout terminal with no clear floor space for wheelchair", "Payment terminal mounted too high on pole or stand"],
+      "common_contexts": ["Bank ATMs", "Transit fare machines", "Self-checkout stations", "Check-in kiosks at hotels and airports", "Parking payment machines"],
+      "needs_measurement": true,
+      "false_positive_notes": "Many modern ATMs are designed to be accessible. A kiosk may appear too high but actually have operable parts within reach range. Check if an alternative accessible kiosk exists at the same location."
+    }
+  },
+  "inaccessible_queue": {
+    "id": "inaccessible_queue",
+    "category": "counters",
+    "title": "Inaccessible Queue or Waiting Line",
+    "description": "Queue or waiting line configuration does not allow wheelchair passage or circulation.",
+    "codes": {
+      "federal_ada": {
+        "section": "403.5",
+        "title": "Walking Surfaces - Clear Width",
+        "requirement": "Queues and waiting lines must provide a minimum 36-inch clear width for wheelchair passage. Turns within queue must provide adequate clearance for wheelchair turning."
+      },
+      "cbc_title24": {
+        "section": "11B-403.5",
+        "title": "Clear Width",
+        "requirement": "Same 36-inch minimum width requirement. CBC does not allow the ADA's 32-inch constriction exception, making all queue sections require 36 inches minimum."
+      },
+      "sf_local": null
+    },
+    "severity": "medium",
+    "legal_risk": "Inaccessible queues force wheelchair users to bypass lines, creating unequal service. Under the Unruh Act, $4,000+ per occurrence. Stanchion-based queues that are too narrow or have tight switchbacks are common violators.",
+    "estimated_cost": 1000,
+    "cost_unit": "per queue",
+    "cost_note": "SF market rate for reconfiguring stanchion-based queue layout. If permanent fixtures (railings, counters) define the queue, cost may be significantly higher.",
+    "remediation": {
+      "summary": "Reconfigure queue layout to provide minimum 36-inch clear width throughout with accessible turns.",
+      "steps": [
+        "1. Measure clear width of queue at all points including turns",
+        "2. Reconfigure stanchions or barriers to provide 36-inch minimum clear width",
+        "3. At 180-degree turns, provide 60-inch turning space or 48-inch minimum aisle width",
+        "4. Remove any steps or level changes within the queue path",
+        "5. Train staff on maintaining accessible queue configuration",
+        "6. Establish bypass procedure for wheelchair users if queue cannot be fully modified"
+      ],
+      "contractor_type": "Facility management or general contractor for permanent fixtures",
+      "permit_required": false,
+      "permit_type": "",
+      "timeline": "1-3 days for stanchion-based; 2-4 weeks for permanent fixture modifications"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["Narrow stanchion queue lanes", "Queue with tight switchback turns", "Rope barriers creating paths too narrow for wheelchair", "Queue involving steps or level changes"],
+      "common_contexts": ["Bank lobbies", "Restaurant waiting areas", "Box office and ticket counter areas", "Government service centers", "Retail checkout areas"],
+      "needs_measurement": true,
+      "false_positive_notes": "Stanchion-based queues can be easily reconfigured — the current photo may show a non-accessible setup that could be different at other times. Staff may provide queue bypass for wheelchair users (though this is not a substitute for an accessible queue)."
+    }
+  },
+  "inaccessible_dining_surface": {
+    "id": "inaccessible_dining_surface",
+    "category": "counters",
+    "title": "Inaccessible Dining Surface",
+    "description": "Dining or work surface does not provide wheelchair clearance or is at non-compliant height.",
+    "codes": {
+      "federal_ada": {
+        "section": "902",
+        "title": "Dining Surfaces and Work Surfaces",
+        "requirement": "Dining and work surface tops must be 28-34 inches above floor. Knee clearance: 27 inches minimum height, 30 inches minimum width, and 19 inches minimum depth. At least 5% of seating (but not less than 1) must be accessible."
+      },
+      "cbc_title24": {
+        "section": "11B-902",
+        "title": "Dining Surfaces and Work Surfaces",
+        "requirement": "Same height and clearance requirements as ADA. CBC requires that accessible seating be distributed throughout the dining area, not clustered in one location."
+      },
+      "sf_local": null
+    },
+    "severity": "medium",
+    "legal_risk": "Inaccessible dining surfaces prevent wheelchair users from eating at restaurants or using work tables. Under the Unruh Act, $4,000+ per occurrence. Restaurant dining accessibility is actively litigated in San Francisco.",
+    "estimated_cost": 2000,
+    "cost_unit": "per table",
+    "cost_note": "SF market rate for providing accessible dining surfaces. May involve replacing fixed booth seating with accessible tables, modifying existing tables for knee clearance, or adding wheelchair-accessible positions.",
+    "remediation": {
+      "summary": "Provide accessible dining surfaces with proper height and knee clearance at 5% of seating positions.",
+      "steps": [
+        "1. Count total seating positions and calculate 5% requirement (minimum 1)",
+        "2. Identify or create accessible dining positions with 28-34 inch table height",
+        "3. Ensure 27-inch knee clearance height, 30-inch width, 19-inch depth",
+        "4. Remove fixed chairs from accessible positions to allow wheelchair approach",
+        "5. Distribute accessible seating throughout dining area (not all in one section)",
+        "6. Ensure accessible seating is on an accessible route",
+        "7. Maintain accessible positions during service (don't block with chairs or equipment)"
+      ],
+      "contractor_type": "Restaurant furniture supplier or general contractor for built-in seating",
+      "permit_required": false,
+      "permit_type": "",
+      "timeline": "1-2 weeks"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["All dining seating is fixed booths with no wheelchair-accessible tables", "Tables with center pedestals blocking knee clearance", "High bar-height tables only", "Closely spaced tables without wheelchair circulation room"],
+      "common_contexts": ["Fast-food restaurants with fixed seating", "Cafes with high-top tables", "Bars with only bar-height seating", "Food courts with attached seating"],
+      "needs_measurement": true,
+      "false_positive_notes": "Standard table height (29-30 inches) typically complies with the 28-34 inch requirement. Movable chairs can usually be removed to create wheelchair space. At least one accessible table is often present even if not obvious in photos."
+    }
+  },
+  "path_of_travel_trigger": {
+    "id": "path_of_travel_trigger",
+    "category": "california_sf",
+    "title": "Path of Travel Accessibility Trigger",
+    "description": "Building renovation exceeds California's 20% valuation threshold, triggering mandatory accessibility upgrades beyond the area of alteration.",
+    "codes": {
+      "federal_ada": {
+        "section": "28 CFR 36.403",
+        "title": "Alterations: Path of Travel",
+        "requirement": "When a primary function area is altered, the path of travel to the altered area must be made accessible. Obligation limited to 20% of the overall cost of the alteration (disproportionate cost defense)."
+      },
+      "cbc_title24": {
+        "section": "11B-202.4",
+        "title": "Path of Travel Requirements",
+        "requirement": "When alterations, structural repairs, or additions are made, an accessible path of travel to the altered area is required. Cost limited to 20% of adjusted construction cost. For projects exceeding the valuation threshold ($209,208 in 2026), full compliance may be required unless unreasonable hardship is demonstrated."
+      },
+      "sf_local": {
+        "section": "SF Building Code",
+        "title": "Accessibility Upgrades for Alterations",
+        "requirement": "SF DBI enforces CBC path of travel requirements. Projects exceeding the valuation threshold must demonstrate unreasonable hardship to limit path of travel compliance. All TI projects require accessibility review."
+      }
+    },
+    "severity": "high",
+    "legal_risk": "Failure to address path of travel during renovations violates CBC and creates ongoing Unruh Act exposure ($4,000+ per occurrence). SF DBI may withhold permits or certificate of occupancy for non-compliance.",
+    "estimated_cost": 25000,
+    "cost_unit": "per project",
+    "cost_note": "Path of travel upgrades typically cost 10-20% of the renovation budget. For a $200,000 renovation, expect $20,000-$40,000 in accessibility upgrades covering entrance, route, restrooms, drinking fountains, and signage.",
+    "remediation": {
+      "summary": "Evaluate and implement required accessibility upgrades along path of travel as part of renovation project.",
+      "steps": [
+        "1. Calculate adjusted construction cost of renovation project",
+        "2. Compare against current valuation threshold ($209,208 for 2026)",
+        "3. Determine scope of path of travel elements: primary entrance, route to altered area, restrooms, drinking fountains, signage",
+        "4. If under threshold: allocate up to 20% of construction cost to accessibility upgrades",
+        "5. If over threshold: plan for full accessibility compliance unless unreasonable hardship demonstrated",
+        "6. Prioritize upgrades per CBC priority order: entrance access, route access, restroom access, other elements",
+        "7. Include accessibility scope in SF DBI permit application",
+        "8. Engage CASp inspector for compliance verification"
+      ],
+      "contractor_type": "Licensed general contractor with CASp consultant",
+      "permit_required": true,
+      "permit_type": "SF DBI Building Permit (included in renovation permit)",
+      "timeline": "Concurrent with renovation project"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction. Path of travel expenses are part of the renovation cost basis."
+    },
+    "detection": {
+      "visual_cues": ["Active renovation or construction at building", "Construction permits visible in window", "Recently completed renovation with no accessibility improvements visible", "Modernized interior with outdated or inaccessible entrance"],
+      "common_contexts": ["Tenant improvement projects", "Building renovations and remodels", "Restaurant build-outs in existing spaces", "Office modernization projects"],
+      "needs_measurement": false,
+      "false_positive_notes": "Not all renovations trigger path of travel requirements — only alterations to primary function areas. Cosmetic changes (paint, carpet, fixtures) may not trigger requirements. The 20% cost limitation provides some protection for small renovations."
+    }
+  },
+  "missing_casp_inspection": {
+    "id": "missing_casp_inspection",
+    "category": "california_sf",
+    "title": "Missing CASp Inspection",
+    "description": "Business has not obtained a Certified Access Specialist (CASp) inspection as recommended or required by California law.",
+    "codes": {
+      "federal_ada": {
+        "section": "N/A",
+        "title": "Not Applicable",
+        "requirement": "CASp is a California-specific program. Federal ADA does not require or reference CASp inspections."
+      },
+      "cbc_title24": {
+        "section": "SB 1608 / AB 1379",
+        "title": "Certified Access Specialist Program",
+        "requirement": "California SB 1608 created the CASp program. A CASp inspection provides qualified defendant status in construction-related accessibility claims, requiring early court evaluation of compliance and 90-day stay for correction."
+      },
+      "sf_local": {
+        "section": "SF ABE Program",
+        "title": "CASp Requirement",
+        "requirement": "SF Accessible Business Entrance program requires CASp inspection or licensed architect/engineer review for certain building categories. CASp reports are filed with SF DBI."
+      }
+    },
+    "severity": "medium",
+    "legal_risk": "Without a CASp inspection, businesses lose significant legal protections in California. CASp-inspected businesses get: 90-day stay to fix violations before lawsuit proceeds, early evaluation of claims, and reduced statutory damages ($1,000-$2,000 instead of $4,000+). The cost of inspection is tiny compared to litigation exposure.",
+    "estimated_cost": 3500,
+    "cost_unit": "per inspection",
+    "cost_note": "SF market rate for a comprehensive CASp inspection of a commercial property. Small retail spaces may cost less ($1,500-$2,500). Large facilities with parking and multiple floors can exceed $5,000.",
+    "remediation": {
+      "summary": "Hire a Certified Access Specialist to conduct a full accessibility inspection and provide a CASp report.",
+      "steps": [
+        "1. Find a Certified Access Specialist through the California Division of the State Architect (DSA) directory",
+        "2. Schedule comprehensive accessibility inspection of the property",
+        "3. CASp will inspect: entrances, routes, parking, restrooms, counters, signage, and all public-facing elements",
+        "4. Receive CASp inspection report with findings and remediation recommendations",
+        "5. Post CASp inspection certificate in a visible location (provides legal notice)",
+        "6. Develop remediation plan based on CASp findings with prioritization",
+        "7. File required documentation with SF DBI for ABE program compliance",
+        "8. Implement corrections and schedule follow-up CASp verification if needed"
+      ],
+      "contractor_type": "Certified Access Specialist (CASp)",
+      "permit_required": false,
+      "permit_type": "",
+      "timeline": "2-4 weeks for inspection and report"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "CASp inspection costs are eligible for IRS Section 44 Disabled Access Credit (small businesses) and Section 190 Barrier Removal Deduction. The inspection itself is a deductible business expense."
+    },
+    "detection": {
+      "visual_cues": ["No CASp inspection certificate posted in window or entry", "Multiple visible accessibility violations suggesting no professional review", "Building with no accessibility improvements despite being in business"],
+      "common_contexts": ["Small businesses unaware of CASp program", "New businesses that did not conduct pre-opening accessibility review", "Businesses in older buildings with no recent renovations"],
+      "needs_measurement": false,
+      "false_positive_notes": "A CASp inspection may have been completed but the certificate is not visible in the photo. Some businesses display certificates inside rather than in the window. The absence of visible violations does not mean a CASp inspection was conducted, and vice versa."
+    }
+  },
+  "sf_business_entrance_noncompliant": {
+    "id": "sf_business_entrance_noncompliant",
+    "category": "california_sf",
+    "title": "SF Accessible Business Entrance Non-Compliance",
+    "description": "Business entrance fails to meet San Francisco's Accessible Business Entrance (ABE) program requirements.",
+    "codes": {
+      "federal_ada": {
+        "section": "206.4",
+        "title": "Entrances",
+        "requirement": "Federal ADA requires at least 60% of public entrances to be accessible. SF ABE program goes further by requiring all primary business entrances to be accessible."
+      },
+      "cbc_title24": {
+        "section": "11B-206.4",
+        "title": "Entrances",
+        "requirement": "CBC requires accessible entrances with the primary entrance being accessible when technically feasible."
+      },
+      "sf_local": {
+        "section": "SF Ordinance 51-16 / 22-25",
+        "title": "Accessible Business Entrance Program",
+        "requirement": "All primary entrances to places of public accommodation must be accessible. Property owners must: obtain inspection, submit compliance checklist, apply for permits within 90 days of checklist submission, and complete improvements by category deadline."
+      }
+    },
+    "severity": "high",
+    "legal_risk": "Non-compliance with SF ABE program results in enforcement action by SF DBI in addition to Unruh Act litigation exposure ($4,000+ per occurrence). SF DBI may issue Notice of Violation and daily penalties for missed deadlines.",
+    "estimated_cost": 15000,
+    "cost_unit": "per entrance",
+    "cost_note": "SF market rate for bringing a business entrance into ABE compliance, including ramp or threshold modifications, door widening, hardware replacement, and signage. Costs vary widely based on existing conditions.",
+    "remediation": {
+      "summary": "Bring primary business entrance into full compliance with SF ABE program requirements.",
+      "steps": [
+        "1. Determine building's ABE category (1-4 based on building type and occupancy)",
+        "2. Hire CASp or licensed architect/engineer to complete Category Checklist Compliance Form",
+        "3. Submit completed checklist to SF DBI",
+        "4. Apply for necessary building permits within 90 days of checklist submission",
+        "5. Complete entrance accessibility improvements (ramp, door, threshold, hardware, signage)",
+        "6. Schedule SF DBI inspection for permit sign-off",
+        "7. Maintain compliance documentation"
+      ],
+      "contractor_type": "Licensed general contractor with CASp consultant",
+      "permit_required": true,
+      "permit_type": "SF DBI OTC Permit (Accessible Business Entrance compliance)",
+      "timeline": "8-16 weeks including permitting and construction"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["Steps at primary business entrance with no ramp", "Narrow door at main entrance", "Non-compliant threshold at primary entrance", "No ABE compliance documentation visible", "Business in older building with no entrance accessibility improvements"],
+      "common_contexts": ["Storefronts in San Francisco's older commercial districts", "Businesses in Victorian or Edwardian-era buildings", "Restaurants and retail in hilly neighborhoods", "New businesses in un-renovated spaces"],
+      "needs_measurement": false,
+      "false_positive_notes": "Some buildings may have received hardship exemptions from SF DBI. Technical infeasibility determinations may allow alternative compliance measures. A building may be in an approved compliance timeline with work pending."
+    }
+  },
+  "historic_building_no_alt_compliance": {
+    "id": "historic_building_no_alt_compliance",
+    "category": "california_sf",
+    "title": "Historic Building Without Alternative Compliance Plan",
+    "description": "Qualified historic building has not established an alternative compliance plan for accessibility.",
+    "codes": {
+      "federal_ada": {
+        "section": "4.1.7",
+        "title": "Accessible Buildings: Historic Preservation",
+        "requirement": "Alterations to qualified historic buildings must comply with ADA to the maximum extent feasible. When full compliance would threaten or destroy historical significance, alternative methods of access may be used."
+      },
+      "cbc_title24": {
+        "section": "11B-202.5",
+        "title": "Qualified Historical Buildings and Facilities",
+        "requirement": "CBC allows alternative compliance methods for qualified historical buildings when standard compliance would threaten the historical significance. Must use alternative compliance per California Historical Building Code (CHBC). State Historic Preservation Officer consultation may be required."
+      },
+      "sf_local": {
+        "section": "SF Planning Code Art. 10/11",
+        "title": "Historic Preservation",
+        "requirement": "SF landmarks and buildings in historic districts may qualify for alternative compliance. Must coordinate with SF Planning Department Historic Preservation Commission and SF DBI."
+      }
+    },
+    "severity": "medium",
+    "legal_risk": "Historic buildings are not exempt from accessibility requirements. Without an alternative compliance plan, the building must meet standard ADA/CBC requirements. Under the Unruh Act, $4,000+ per occurrence. Historic status is not a defense without a documented alternative compliance plan.",
+    "estimated_cost": 10000,
+    "cost_unit": "per building",
+    "cost_note": "SF market rate for developing an alternative compliance plan for a historic building. Includes CASp inspection, historical architect consultation, and documentation. Actual remediation costs are additional.",
+    "remediation": {
+      "summary": "Develop and document an alternative compliance plan that provides maximum accessibility while preserving historic character.",
+      "steps": [
+        "1. Verify building's qualification as a historic structure (National Register, California Register, or local landmark)",
+        "2. Hire architect experienced in both historic preservation and accessibility",
+        "3. Conduct CASp inspection identifying all accessibility barriers",
+        "4. Evaluate which standard compliance measures would threaten historical significance",
+        "5. Develop alternative compliance methods per California Historical Building Code (CHBC)",
+        "6. Document rationale for each alternative method",
+        "7. Submit alternative compliance plan to SF DBI and SF Historic Preservation Commission if applicable",
+        "8. Implement approved alternative methods",
+        "9. Maintain plan documentation on file"
+      ],
+      "contractor_type": "Historic preservation architect with CASp consultant",
+      "permit_required": true,
+      "permit_type": "SF DBI Building Permit with Historic Preservation review",
+      "timeline": "3-6 months including review and approvals"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction. Historic Rehabilitation Tax Credits (federal and state) may also apply if building is income-producing."
+    },
+    "detection": {
+      "visual_cues": ["Clearly historic building (Victorian, Edwardian, Art Deco architecture) with no accessibility features", "Historic plaque or designation visible with no accessible entrance", "Ornate entrance with steps and no ramp or alternative access"],
+      "common_contexts": ["San Francisco Victorian and Edwardian buildings", "Buildings in historic districts (Jackson Square, Civic Center)", "National Register-listed buildings", "Local landmarks"],
+      "needs_measurement": false,
+      "false_positive_notes": "Not all old buildings are designated historic. A building must be formally qualified as historic to use alternative compliance. Modern buildings designed to look historic do not qualify. Some historic buildings have made full ADA compliance without alternative methods."
+    }
+  },
+  "cbc_stricter_slope_violation": {
+    "id": "cbc_stricter_slope_violation",
+    "category": "california_sf",
+    "title": "CBC Stricter Slope Requirement Violation",
+    "description": "Ramp meets federal ADA standards but fails California's stricter CBC slope requirements for existing buildings.",
+    "codes": {
+      "federal_ada": {
+        "section": "405.2",
+        "title": "Ramp Slope",
+        "requirement": "ADA allows existing ramps to have steeper slopes in limited situations: 1:10 maximum for 6-inch maximum rise, 1:8 maximum for 3-inch maximum rise (existing buildings only)."
+      },
+      "cbc_title24": {
+        "section": "11B-405.2",
+        "title": "Slope",
+        "requirement": "CBC does NOT allow the ADA exceptions for steeper slopes in existing buildings. All ramps in California must meet the 1:12 maximum running slope regardless of when they were constructed. This makes CBC significantly stricter for existing buildings."
+      },
+      "sf_local": null
+    },
+    "severity": "medium",
+    "legal_risk": "In California, meeting ADA but not CBC creates full legal exposure under the Unruh Act ($4,000+ per occurrence). Courts apply the stricter CBC standard. Business owners who believe their ramp is 'ADA compliant' may be surprised by California's stricter requirements.",
+    "estimated_cost": 15000,
+    "cost_unit": "per ramp",
+    "cost_note": "SF market rate for rebuilding a ramp to meet CBC 1:12 standard when existing ramp uses ADA's steeper-slope exception. Often requires extending ramp length, which may involve significant site work.",
+    "remediation": {
+      "summary": "Rebuild ramp to meet CBC's strict 1:12 maximum slope requirement without ADA exceptions.",
+      "steps": [
+        "1. Measure existing ramp slope to determine current grade",
+        "2. Calculate required run length at 1:12 ratio for the total rise",
+        "3. Design new ramp layout accommodating longer run (may require switchback)",
+        "4. Apply for SF DBI alterations permit",
+        "5. Demolish existing non-compliant ramp",
+        "6. Construct new ramp at 1:12 maximum slope with all required features",
+        "7. Install compliant handrails, landings, and edge protection",
+        "8. Schedule final inspection"
+      ],
+      "contractor_type": "Licensed general contractor",
+      "permit_required": true,
+      "permit_type": "SF DBI Alterations Permit",
+      "timeline": "4-8 weeks"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction."
+    },
+    "detection": {
+      "visual_cues": ["Existing ramp that appears moderately steep (steeper than 1:12 but not extreme)", "Short ramp covering noticeable height change", "Ramp at existing/older building that may have been built to older ADA exception standards"],
+      "common_contexts": ["Older buildings with ramps built before CBC tightened requirements", "Ramps designed by out-of-state firms applying federal ADA only", "Retrofits that used ADA's existing building exceptions"],
+      "needs_measurement": true,
+      "false_positive_notes": "Ramps at or below 1:12 (8.33%) comply with both ADA and CBC. This violation is specifically about ramps between 1:12 and 1:8 slope that would pass ADA but fail CBC. Precise measurement is essential — visual assessment cannot reliably distinguish 1:12 from 1:10 slope."
+    }
+  },
+  "tenant_improvement_trigger": {
+    "id": "tenant_improvement_trigger",
+    "category": "california_sf",
+    "title": "Tenant Improvement Accessibility Trigger",
+    "description": "Tenant improvement project triggers mandatory accessibility upgrades under CBC path of travel requirements.",
+    "codes": {
+      "federal_ada": {
+        "section": "28 CFR 36.403",
+        "title": "Alterations: Path of Travel",
+        "requirement": "When alterations affect usability of a primary function area, the path of travel must be made accessible. Cost limited to 20% of alteration cost."
+      },
+      "cbc_title24": {
+        "section": "11B-202.4",
+        "title": "Path of Travel Requirements",
+        "requirement": "Tenant improvements (TIs) that alter primary function areas trigger path of travel upgrades. The scope includes: primary entrance, route to altered area, restrooms serving the area, drinking fountains, and signage. The 20% cost cap applies, but projects exceeding the valuation threshold may require full compliance."
+      },
+      "sf_local": {
+        "section": "SF DBI Policy",
+        "title": "Tenant Improvement Accessibility Review",
+        "requirement": "SF DBI reviews all TI permit applications for accessibility trigger compliance. Plans must show path of travel upgrades or provide cost documentation for the 20% limitation. CASp review recommended for complex projects."
+      }
+    },
+    "severity": "high",
+    "legal_risk": "Completing a TI without required accessibility upgrades violates CBC and exposes both tenant and landlord to Unruh Act litigation ($4,000+ per occurrence). SF DBI may withhold certificate of occupancy. Future plaintiffs can point to the TI as evidence that accessibility should have been addressed.",
+    "estimated_cost": 20000,
+    "cost_unit": "per project",
+    "cost_note": "SF market rate for path of travel upgrades triggered by a TI project. Typically 10-20% of the TI construction budget. Includes entrance, route, restroom, and signage improvements within the 20% cost cap.",
+    "remediation": {
+      "summary": "Include required accessibility upgrades in tenant improvement scope per CBC path of travel requirements.",
+      "steps": [
+        "1. Calculate adjusted construction cost of TI project",
+        "2. Determine if project alters a primary function area (triggers path of travel)",
+        "3. Calculate 20% budget for accessibility upgrades",
+        "4. Prioritize upgrades per CBC priority order: entrance, route, restrooms, other",
+        "5. If budget exceeds 20%: document with SF DBI for disproportionate cost exemption",
+        "6. Include accessibility scope in TI permit application",
+        "7. Coordinate accessibility work with TI construction schedule",
+        "8. Schedule CASp inspection for compliance verification",
+        "9. Complete work before requesting certificate of occupancy"
+      ],
+      "contractor_type": "Licensed general contractor with CASp consultant",
+      "permit_required": true,
+      "permit_type": "SF DBI Building Permit (combined with TI permit)",
+      "timeline": "Concurrent with TI project timeline"
+    },
+    "tax_credits": {
+      "eligible": true,
+      "notes": "Eligible for IRS Section 44 Disabled Access Credit and Section 190 Barrier Removal Deduction. Accessibility costs are part of the TI cost basis for depreciation."
+    },
+    "detection": {
+      "visual_cues": ["Recently renovated interior with outdated/inaccessible entrance", "New storefront build-out in older building shell", "Modern fixtures inside with original non-compliant doors/ramps", "Construction permits visible for interior renovation"],
+      "common_contexts": ["Restaurant build-outs in existing retail spaces", "Office tenant improvements", "Retail store renovations", "Medical/dental office fit-outs in commercial buildings"],
+      "needs_measurement": false,
+      "false_positive_notes": "Not all interior work triggers path of travel requirements. Cosmetic changes (paint, wallpaper, carpet) are typically not alterations affecting primary function areas. Mechanical, electrical, or plumbing work in non-public areas may not trigger requirements."
+    }
+  }
+}
