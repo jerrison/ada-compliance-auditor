@@ -13,9 +13,8 @@ User uploads photo
       → Try RocketRide pipeline first (pipeline/ada_auditor.pipe.json)
       → Fallback: direct Gemini 2.0 Flash API call
     → Raw analysis JSON (violations, severity, confidence)
-      → Enrichment layer maps violations to:
-        - ADA code sections (backend/data/ada_codes.json)
-        - Remediation cost estimates (backend/data/cost_estimates.json)
+      → Enrichment layer maps violations to knowledge base (backend/data/ada_knowledge_base.json):
+        - ADA/CBC/SF code sections, remediation steps, cost estimates, legal risk
     → Enriched JSON response → Frontend renders report
 ```
 
@@ -28,8 +27,7 @@ User uploads photo
 │   ├── pipeline_client.py      # RocketRide SDK integration
 │   ├── violations.py           # ADA code enrichment + cost estimation
 │   └── data/
-│       ├── ada_codes.json      # 18 violation types → ADA sections
-│       └── cost_estimates.json # 18 violation types → cost ranges
+│       └── ada_knowledge_base.json  # 51 violation types → codes, costs, remediation, detection
 ├── frontend/                   # Static web UI
 │   ├── index.html              # Tailwind CSS dark-theme layout
 │   ├── app.js                  # Upload, API call, result rendering
@@ -48,9 +46,9 @@ User uploads photo
 | File | Responsibility |
 |------|---------------|
 | `main.py` | FastAPI app, CORS middleware, `/api/analyze` endpoint, serves frontend static files |
-| `gemini_client.py` | Wraps Gemini 2.0 Flash for image analysis. Structured prompt defines 18 violation types. Temperature 0.2, JSON response format |
+| `gemini_client.py` | Wraps Gemini 2.0 Flash for image analysis. Dynamic prompt built from knowledge base with 51 violation types and visual detection cues. Temperature 0.2, JSON response format |
 | `pipeline_client.py` | Connects to RocketRide engine at `localhost:5565`. Base64 encodes images, sends through pipeline. Graceful fallback on failure |
-| `violations.py` | Loads ADA code + cost JSON data. Maps each violation to ADA section, title, requirement text, and cost range (low/high) |
+| `violations.py` | Loads knowledge base. Enriches violations with codes, costs, remediation, legal risk. Produces structured report JSON with priority sorting |
 
 ### Frontend (`frontend/`)
 
@@ -75,6 +73,15 @@ RocketRide visual pipeline: webhook source → image processor → Gemini 2.0 Fl
 | `GOOGLE_CLOUD_PROJECT` | Yes | GCP project ID for Vertex AI |
 | `GOOGLE_CLOUD_LOCATION` | No | GCP region (default: `us-central1`) |
 
-## Violation Types (18 total)
+## Violation Types (51 total)
 
-missing_ramp, missing_handrail, narrow_doorway, round_door_knob, missing_accessible_parking_sign, missing_parking_striping, missing_curb_cut, missing_tactile_signage, missing_grab_bars, blocked_accessible_route, no_accessible_entrance, step_only_entrance, protruding_objects, inaccessible_counter, missing_directional_signage, steep_ramp, missing_detectable_warnings, inaccessible_restroom
+Organized into 8 categories:
+
+- **california_sf** — California Building Code and SF-specific requirements
+- **counters** — Counter height and accessibility
+- **entrances** — Door hardware, thresholds, entrance accessibility
+- **parking** — Accessible parking spaces, signage, striping
+- **ramps** — Ramp slope, handrails, landings
+- **restrooms** — Grab bars, clearances, fixtures
+- **routes** — Accessible paths of travel, surfaces, obstructions
+- **signage** — Tactile, directional, and informational signage

@@ -37,7 +37,7 @@ cd backend && uv run uvicorn main:app --reload --port 8000
 ## Architecture Rules
 
 - **Two execution paths**: RocketRide pipeline (primary) → Direct Gemini API (fallback). Always try pipeline first.
-- **Data files are source of truth**: `backend/data/ada_codes.json` and `backend/data/cost_estimates.json` define the 18 supported violation types. New violation types must be added to both files.
+- **Data files are source of truth**: `backend/data/ada_knowledge_base.json` defines the 51 supported violation types. New violation types must be added to this file.
 - **Frontend is static**: served by FastAPI's StaticFiles mount. No SSR, no build step.
 - **CORS is wide open** (`allow_origins=["*"]`) — acceptable for hackathon/demo, not production.
 
@@ -47,8 +47,7 @@ cd backend && uv run uvicorn main:app --reload --port 8000
 - API endpoint: `POST /api/analyze` (accepts multipart file upload)
 - Gemini prompt: defined inline in `backend/gemini_client.py`
 - Pipeline config: `pipeline/ada_auditor.pipe.json`
-- ADA reference data: `backend/data/ada_codes.json`
-- Cost data: `backend/data/cost_estimates.json`
+- ADA knowledge base: `backend/data/ada_knowledge_base.json`
 
 ## Environment Setup
 
@@ -62,7 +61,13 @@ Optional: Start RocketRide local engine for pipeline mode (VS Code extension req
 
 ## Testing
 
-No test suite yet. To validate manually:
+```bash
+uv run pytest tests/ -v
+```
+
+18 unit tests cover `gemini_client.py` (prompt construction, violation types, visual cues) and `violations.py` (enrichment, sorting, severity, costs, report structure).
+
+To validate end-to-end manually:
 1. Start the server (`cd backend && uv run uvicorn main:app --reload --port 8000`)
 2. Open http://localhost:8000
 3. Upload a photo of a building entrance or public space
