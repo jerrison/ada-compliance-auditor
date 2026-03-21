@@ -75,7 +75,8 @@ def _generate_headline(violations):
     top_sev = "critical" if "high" in by_sev else "moderate" if "medium" in by_sev else "minor"
     count = by_sev.get("high", by_sev.get("medium", by_sev.get("low", 0)))
     cat_str = " and ".join(sorted(categories)[:2])
-    return f"{count} {top_sev} access barrier(s) found — {cat_str} require attention"
+    barrier = "barrier" if count == 1 else "barriers"
+    return f"{count} {top_sev} access {barrier} found — {cat_str} require attention"
 
 
 def _sort_key(violation):
