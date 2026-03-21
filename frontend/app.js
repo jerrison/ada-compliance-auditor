@@ -6,12 +6,20 @@ var uploadContent = document.getElementById('upload-content');
 var fileInput = document.getElementById('file-input');
 var preview = document.getElementById('preview');
 var locationField = document.getElementById('location-field');
+var locateBtn = document.getElementById('locate-btn');
+var locationDetail = document.getElementById('location-detail');
+var standardLabel = document.getElementById('standard-label');
 var analyzeBtn = document.getElementById('analyze-btn');
 var progressEl = document.getElementById('progress');
 var resultsEl = document.getElementById('results');
 var violationsList = document.getElementById('violations-list');
 var positiveSection = document.getElementById('positive-section');
 var positiveList = document.getElementById('positive-list');
+var positiveCount = document.getElementById('positive-count');
+var complianceBanner = document.getElementById('compliance-banner');
+var complianceIcon = document.getElementById('compliance-icon');
+var complianceLabel = document.getElementById('compliance-label');
+var complianceSublabel = document.getElementById('compliance-sublabel');
 var followupSection = document.getElementById('followup-section');
 var followupList = document.getElementById('followup-list');
 var downloadPdfBtn = document.getElementById('download-pdf-btn');
@@ -22,9 +30,97 @@ var historyEmpty = document.getElementById('history-empty');
 var selectedFile = null;
 var currentPdfUrl = null;
 var currentReportData = null;
+var detectedState = '';
+var detectedLocation = '';
 
 function clearChildren(el) {
   while (el.firstChild) el.removeChild(el.firstChild);
+}
+
+// ── Standard Label & Analyze Button ─────────────────────────────
+function updateStandardLabel(state) {
+  if (!standardLabel) return;
+  var s = (state || '').trim().toLowerCase();
+  if (s === 'california' || s === 'ca') {
+    standardLabel.textContent = 'Federal ADA + CA CBC Title 24';
+  } else if (state) {
+    standardLabel.textContent = 'Federal ADA Standards (' + state + ')';
+  } else {
+    standardLabel.textContent = 'Federal ADA Standards';
+  }
+}
+
+function updateAnalyzeButton() {
+  analyzeBtn.disabled = !(selectedFile && locationField.value.trim());
+}
+
+locationField.addEventListener('input', updateAnalyzeButton);
+
+// ── Google Places Autocomplete ──────────────────────────────────
+(async function initPlaces() {
+  try {
+    var resp = await fetch('/api/config');
+    var cfg = await resp.json();
+    var key = cfg.google_maps_api_key;
+    if (!key) return;
+    var script = document.createElement('script');
+    script.src = 'https://maps.googleapis.com/maps/api/js?key=' + key + '&libraries=places';
+    script.onload = function() {
+      var autocomplete = new google.maps.places.Autocomplete(locationField, { types: ['address'] });
+      autocomplete.addListener('place_changed', function() {
+        var place = autocomplete.getPlace();
+        if (!place || !place.address_components) return;
+        detectedLocation = place.formatted_address || locationField.value;
+        for (var i = 0; i < place.address_components.length; i++) {
+          var comp = place.address_components[i];
+          if (comp.types.indexOf('administrative_area_level_1') !== -1) {
+            detectedState = comp.long_name;
+            break;
+          }
+        }
+        updateStandardLabel(detectedState);
+        if (locationDetail) locationDetail.textContent = detectedState ? 'State: ' + detectedState : '';
+        updateAnalyzeButton();
+      });
+    };
+    document.head.appendChild(script);
+  } catch(e) {}
+})();
+
+// ── Geolocation (Locate Me) ────────────────────────────────────
+if (locateBtn) {
+  locateBtn.addEventListener('click', function() {
+    if (!navigator.geolocation) return;
+    locateBtn.disabled = true;
+    navigator.geolocation.getCurrentPosition(function(pos) {
+      var lat = pos.coords.latitude;
+      var lon = pos.coords.longitude;
+      fetch('https://nominatim.openstreetmap.org/reverse?format=json&lat=' + lat + '&lon=' + lon)
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          var addr = data.display_name || (lat + ', ' + lon);
+          locationField.value = addr;
+          detectedLocation = addr;
+          var addrObj = data.address || {};
+          detectedState = addrObj.state || '';
+          updateStandardLabel(detectedState);
+          if (locationDetail) locationDetail.textContent = detectedState ? 'State: ' + detectedState : '';
+          updateAnalyzeButton();
+        })
+        .catch(function() {
+          locationField.value = lat + ', ' + lon;
+          updateAnalyzeButton();
+        })
+        .finally(function() { locateBtn.disabled = false; });
+    }, function() { locateBtn.disabled = false; });
+  });
+}
+
+// Auto-geolocation on mobile
+if (/Mobi|Android/i.test(navigator.userAgent) && navigator.geolocation) {
+  window.addEventListener('load', function() {
+    if (locateBtn) locateBtn.click();
+  });
 }
 
 // ── Navigation ──────────────────────────────────────────────────
@@ -61,12 +157,18 @@ function handleFile(file) {
   preview.src = URL.createObjectURL(file);
   preview.classList.remove('hidden');
   uploadContent.classList.add('hidden');
-  analyzeBtn.disabled = false;
+  updateAnalyzeButton();
 }
 
 // ── SSE Analysis ────────────────────────────────────────────────
 analyzeBtn.addEventListener('click', async function() {
   if (!selectedFile) return;
+  var loc = locationField.value.trim();
+  if (!loc) {
+    locationField.style.borderColor = '#f43f5e';
+    setTimeout(function() { locationField.style.borderColor = ''; }, 2000);
+    return;
+  }
   analyzeBtn.disabled = true;
   analyzeBtn.textContent = 'Analyzing...';
   resultsEl.classList.add('hidden');
@@ -75,8 +177,8 @@ analyzeBtn.addEventListener('click', async function() {
 
   var formData = new FormData();
   formData.append('file', selectedFile);
-  var loc = locationField.value.trim();
   if (loc) formData.append('location_label', loc);
+  formData.append('state', detectedState);
   formData.append('session_id', getSessionId());
 
   try {
@@ -192,11 +294,36 @@ function renderResults(data) {
   // PDF button
   if (currentPdfUrl) { downloadPdfBtn.classList.remove('hidden'); } else { downloadPdfBtn.classList.add('hidden'); }
 
+  // Compliance banner
+  if (complianceBanner) {
+    var isCompliant = violations.length === 0;
+    complianceBanner.classList.remove('hidden');
+    if (isCompliant) {
+      complianceBanner.className = 'rounded-2xl p-5 border border-emerald-900/40 bg-emerald-950/20 text-center';
+      complianceIcon.className = 'mx-auto w-12 h-12 rounded-full flex items-center justify-center mb-3 bg-emerald-600';
+      complianceIcon.innerHTML = '<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>';
+      complianceLabel.textContent = 'No Violations Detected';
+      complianceLabel.className = 'text-lg font-bold mb-1 text-emerald-400';
+      complianceSublabel.textContent = 'This space appears to meet accessibility standards';
+      complianceSublabel.className = 'text-sm text-emerald-300/70';
+    } else {
+      complianceBanner.className = 'rounded-2xl p-5 border border-rose-900/40 bg-rose-950/20 text-center';
+      complianceIcon.className = 'mx-auto w-12 h-12 rounded-full flex items-center justify-center mb-3 bg-rose-600';
+      complianceIcon.innerHTML = '<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>';
+      complianceLabel.textContent = violations.length + ' Violation' + (violations.length !== 1 ? 's' : '') + ' Found';
+      complianceLabel.className = 'text-lg font-bold mb-1 text-rose-400';
+      complianceSublabel.textContent = 'Review details below and address high-severity items first';
+      complianceSublabel.className = 'text-sm text-rose-300/70';
+    }
+  }
+
   // Positive features
   clearChildren(positiveList);
-  if (data.positive_features && data.positive_features.length > 0) {
+  var posFeatures = data.positive_features || [];
+  if (posFeatures.length > 0) {
     positiveSection.classList.remove('hidden');
-    data.positive_features.forEach(function(f) {
+    if (positiveCount) positiveCount.textContent = '(' + posFeatures.length + ')';
+    posFeatures.forEach(function(f) {
       var li = document.createElement('li');
       li.className = 'flex items-start gap-2 text-sm text-emerald-300';
       li.innerHTML = '<svg class="w-4 h-4 mt-0.5 shrink-0 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg><span>' + escHtml(f) + '</span>';
@@ -474,15 +601,20 @@ newScanBtn.addEventListener('click', function() {
   selectedFile = null;
   currentPdfUrl = null;
   currentReportData = null;
+  detectedState = '';
+  detectedLocation = '';
   fileInput.value = '';
   preview.src = '';
   preview.classList.add('hidden');
   uploadContent.classList.remove('hidden');
   locationField.value = '';
+  if (locationDetail) locationDetail.textContent = '';
+  updateStandardLabel('');
   analyzeBtn.disabled = true;
   resultsEl.classList.add('hidden');
   progressEl.classList.add('hidden');
   downloadPdfBtn.classList.add('hidden');
+  if (complianceBanner) complianceBanner.classList.add('hidden');
   clearChildren(violationsList);
   clearChildren(positiveList);
   clearChildren(followupList);
@@ -504,6 +636,7 @@ async function saveToHistory(report) {
       } catch(e) {}
     }
     var violations = report.violations || [];
+    var posCount = (report.positive_features || []).length;
     await saveReport({
       id: report.report_id || report.id || crypto.randomUUID(),
       date: new Date().toISOString(),
@@ -514,6 +647,8 @@ async function saveToHistory(report) {
       confirmedCount: violations.filter(function(v){return (v.confidence||0)>=0.7;}).length,
       potentialCount: violations.filter(function(v){return (v.confidence||0)<0.7;}).length,
       violationCount: violations.length,
+      isCompliant: violations.length === 0,
+      positiveCount: posCount,
       costRange: report.total_estimated_cost ? '$'+((report.total_estimated_cost.low||0).toLocaleString()) : '$0',
       pdfUrl: report.pdf_url || null,
       reportData: report
@@ -524,7 +659,11 @@ async function saveToHistory(report) {
 async function loadHistory(filter) {
   try {
     var reports = await getAllReports();
-    if (filter && filter !== 'all') reports = reports.filter(function(r){return r.riskLevel===filter;});
+    if (filter === 'compliant') {
+      reports = reports.filter(function(r){return r.isCompliant || r.riskLevel==='none';});
+    } else if (filter && filter !== 'all') {
+      reports = reports.filter(function(r){return r.riskLevel===filter;});
+    }
     clearChildren(historyList);
     if (reports.length === 0) { historyEmpty.classList.remove('hidden'); return; }
     historyEmpty.classList.add('hidden');
@@ -540,10 +679,12 @@ async function loadHistory(filter) {
       }
       var info = document.createElement('div');
       info.className = 'flex-1 min-w-0';
+      var badgeClass = (r.isCompliant || r.riskLevel === 'none') ? 'risk-none' : 'risk-' + (r.riskLevel||'unknown');
+      var badgeText = (r.isCompliant || r.riskLevel === 'none') ? 'COMPLIANT' : (r.riskLevel||'?').toUpperCase();
       info.innerHTML =
         '<div class="flex items-center justify-between mb-0.5">' +
           '<p class="text-sm font-medium text-slate-200 truncate">' + escHtml(r.location||'Unknown') + '</p>' +
-          '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold risk-' + (r.riskLevel||'unknown') + ' shrink-0 ml-2">' + (r.riskLevel||'?').toUpperCase() + '</span>' +
+          '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold ' + badgeClass + ' shrink-0 ml-2">' + badgeText + '</span>' +
         '</div>' +
         '<p class="text-[10px] text-slate-500 font-mono">' + new Date(r.date).toLocaleDateString() + '</p>' +
         '<div class="flex gap-3 mt-0.5 text-[10px] text-slate-500">' +
