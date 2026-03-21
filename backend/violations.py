@@ -117,7 +117,7 @@ def enrich_violations(analysis, address="", location_type=""):
             "category": entry.get("category", "general"),
             "title": entry.get("title", violation.get("description", vtype)),
             # Structured codes (our format)
-            "codes": entry.get("codes", {"federal_ada": None, "cbc_title24": None, "sf_local": None}),
+            "codes": entry.get("codes", {"federal_ada": None, "cbc_title24": None, "local_codes": {}}),
             # Flat code fields (teammate's frontend/PDF format)
             "ada_section": federal.get("section", "N/A"),
             "ada_title": federal.get("title", "N/A"),
