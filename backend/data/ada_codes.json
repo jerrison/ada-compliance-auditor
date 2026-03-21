@@ -1,0 +1,110 @@
+{
+  "missing_ramp": {
+    "ada_section": "405",
+    "title": "Ramps",
+    "description": "Ramps along accessible routes must have a running slope no steeper than 1:12 and a minimum clear width of 36 inches.",
+    "requirement": "An accessible route with a ramp must be provided where there is a change in level greater than 1/2 inch."
+  },
+  "missing_handrail": {
+    "ada_section": "405.8",
+    "title": "Handrails on Ramps",
+    "description": "Ramps with a rise greater than 6 inches must have handrails on both sides.",
+    "requirement": "Handrails must be 34-38 inches above the ramp surface and extend 12 inches beyond the top and bottom."
+  },
+  "narrow_doorway": {
+    "ada_section": "404.2.3",
+    "title": "Door Clear Width",
+    "description": "Doorways must provide a minimum clear opening width of 32 inches.",
+    "requirement": "Measured between the face of the door and the opposite stop when the door is open 90 degrees."
+  },
+  "round_door_knob": {
+    "ada_section": "404.2.7",
+    "title": "Door Hardware",
+    "description": "Door hardware must be operable with one hand without tight grasping, pinching, or twisting of the wrist.",
+    "requirement": "Lever handles, push-type, or U-shaped handles are compliant. Round knobs are not."
+  },
+  "missing_accessible_parking_sign": {
+    "ada_section": "502.6",
+    "title": "Accessible Parking Signage",
+    "description": "Accessible parking spaces must be identified by signs with the International Symbol of Accessibility.",
+    "requirement": "Signs must be 60 inches minimum above the ground, measured to the bottom of the sign."
+  },
+  "missing_parking_striping": {
+    "ada_section": "502.3",
+    "title": "Accessible Parking Access Aisle",
+    "description": "Access aisles must be marked to discourage parking in them and must be level.",
+    "requirement": "Access aisles must be 60 inches wide minimum (96 inches for van-accessible)."
+  },
+  "missing_curb_cut": {
+    "ada_section": "406",
+    "title": "Curb Ramps",
+    "description": "Curb ramps must be provided wherever an accessible route crosses a curb.",
+    "requirement": "Curb ramps must have a maximum slope of 1:12 and detectable warning surfaces."
+  },
+  "missing_tactile_signage": {
+    "ada_section": "703.2",
+    "title": "Raised Characters and Braille Signs",
+    "description": "Signs identifying rooms and spaces must include raised characters and Grade 2 Braille.",
+    "requirement": "Mounted 48-60 inches above floor on the latch side of the door."
+  },
+  "missing_grab_bars": {
+    "ada_section": "604.5",
+    "title": "Grab Bars in Toilet Rooms",
+    "description": "Grab bars must be provided on the side wall and rear wall closest to the toilet.",
+    "requirement": "Side grab bar: 42 inches minimum. Rear grab bar: 36 inches minimum. Mounted 33-36 inches above floor."
+  },
+  "blocked_accessible_route": {
+    "ada_section": "402",
+    "title": "Accessible Routes",
+    "description": "Accessible routes must be continuous, unobstructed paths connecting all accessible elements.",
+    "requirement": "Minimum clear width of 36 inches (44 inches in corridors with frequent use)."
+  },
+  "no_accessible_entrance": {
+    "ada_section": "206.4",
+    "title": "Accessible Entrances",
+    "description": "At least 60% of all public entrances must be accessible.",
+    "requirement": "Accessible entrances must be connected to accessible routes and identified with the ISA if not all entrances are accessible."
+  },
+  "step_only_entrance": {
+    "ada_section": "404.2.5",
+    "title": "Thresholds at Doorways",
+    "description": "Thresholds at doorways must not exceed 1/2 inch in height (3/4 inch for sliding doors).",
+    "requirement": "Changes in level greater than 1/2 inch require a ramp or other accessible means."
+  },
+  "protruding_objects": {
+    "ada_section": "307",
+    "title": "Protruding Objects",
+    "description": "Objects on walls or posts must not protrude more than 4 inches into circulation paths if mounted between 27 and 80 inches above the floor.",
+    "requirement": "Objects below 27 inches can protrude any amount. Objects above 80 inches are not restricted."
+  },
+  "inaccessible_counter": {
+    "ada_section": "904.4",
+    "title": "Sales and Service Counters",
+    "description": "A portion of the counter must be 36 inches maximum above the floor and 36 inches minimum in length.",
+    "requirement": "Alternatively, an auxiliary counter or equivalent facilitation must be provided."
+  },
+  "missing_directional_signage": {
+    "ada_section": "703.5",
+    "title": "Directional and Informational Signs",
+    "description": "Signs providing directions to accessible features must include the International Symbol of Accessibility.",
+    "requirement": "Must be placed at decision points along accessible routes."
+  },
+  "steep_ramp": {
+    "ada_section": "405.2",
+    "title": "Ramp Slope",
+    "description": "Ramp running slope must not exceed 1:12 (8.33%).",
+    "requirement": "Cross slope must not exceed 1:48. Rise for any ramp run must be 30 inches maximum."
+  },
+  "missing_detectable_warnings": {
+    "ada_section": "705",
+    "title": "Detectable Warning Surfaces",
+    "description": "Truncated dome surfaces must be provided at curb ramps, transit platform edges, and other hazardous vehicular areas.",
+    "requirement": "Domes must contrast visually with adjacent surfaces (light-on-dark or dark-on-light)."
+  },
+  "inaccessible_restroom": {
+    "ada_section": "603",
+    "title": "Toilet and Bathing Rooms",
+    "description": "At least one of each type of toilet room must be accessible and on an accessible route.",
+    "requirement": "Must include accessible turning space (60-inch diameter), accessible fixtures, and proper signage."
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "_comment": "This is a placeholder. Build the actual pipeline visually in VS Code using the RocketRide extension.",
+  "_instructions": [
+    "1. Install the RocketRide extension in VS Code",
+    "2. Open this file - it will render in the visual pipeline builder",
+    "3. Add nodes: Source (webhook) → Image → LLM (Google Gemini) → Output",
+    "4. Configure the Gemini LLM node with the analysis prompt from backend/gemini_client.py",
+    "5. Set the source node to accept image input via webhook",
+    "6. Wire the output to return structured JSON"
+  ],
+  "pipeline": {
+    "name": "ADA Compliance Auditor",
+    "description": "Analyzes photos of buildings and public spaces for ADA accessibility violations using Gemini Vision",
+    "nodes": [
+      {
+        "id": "source",
+        "type": "source/webhook",
+        "config": {
+          "description": "Receives image upload from web frontend"
+        }
+      },
+      {
+        "id": "image_processor",
+        "type": "image/processor",
+        "config": {
+          "description": "Prepares image for LLM analysis"
+        }
+      },
+      {
+        "id": "gemini_analysis",
+        "type": "llm/google",
+        "config": {
+          "model": "gemini-2.0-flash",
+          "temperature": 0.2,
+          "max_tokens": 4096,
+          "response_format": "json",
+          "system_prompt": "You are an expert ADA compliance auditor. Analyze the image for accessibility violations and return structured JSON."
+        }
+      },
+      {
+        "id": "output",
+        "type": "infrastructure/output",
+        "config": {
+          "format": "json"
+        }
+      }
+    ],
+    "connections": [
+      { "from": "source", "to": "image_processor" },
+      { "from": "image_processor", "to": "gemini_analysis" },
+      { "from": "gemini_analysis", "to": "output" }
+    ]
+  }
+}
