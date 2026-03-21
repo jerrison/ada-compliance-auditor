@@ -34,8 +34,14 @@ FRONTEND_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "fronten
 _pdf_store: dict[str, bytes] = {}
 
 
+@app.get("/api/config")
+async def get_config():
+    """Return client-safe configuration values."""
+    return {"google_maps_api_key": os.getenv("GOOGLE_MAPS_API_KEY", "")}
+
+
 @app.post("/api/analyze")
-async def analyze(file: UploadFile = File(...), location_label: str = Form("")):
+async def analyze(file: UploadFile = File(...), location_label: str = Form(""), state: str = Form("")):
     """Analyze image via 3-pass Gemini pipeline with SSE progress streaming."""
     contents = await file.read()
     mime_type = file.content_type or "image/jpeg"
@@ -43,7 +49,7 @@ async def analyze(file: UploadFile = File(...), location_label: str = Form("")):
     async def event_stream():
         space_type = "unknown"
 
-        async for pass_result in run_analysis_pipeline(contents, mime_type):
+        async for pass_result in run_analysis_pipeline(contents, mime_type, state=state):
             if pass_result.pass_name == "scene_classification":
                 space_type = pass_result.data.get("space_type", "unknown")
                 yield "data: {}\n\n".format(json.dumps({
@@ -73,7 +79,7 @@ async def analyze(file: UploadFile = File(...), location_label: str = Form("")):
                     "summary": pass_result.data.get("summary", ""),
                 }
 
-                enriched = enrich_violations(merged)
+                enriched = enrich_violations(merged, state=state)
                 enriched["follow_up_suggestions"] = pass_result.data.get(
                     "follow_up_suggestions", []
                 )
