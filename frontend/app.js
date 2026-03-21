@@ -68,8 +68,17 @@ function handleFile(file) {
   preview.src = URL.createObjectURL(file);
   preview.classList.remove('hidden');
   uploadContent.classList.add('hidden');
-  analyzeBtn.disabled = false;
+  updateAnalyzeButton();
 }
+
+function updateAnalyzeButton() {
+  var hasFile = !!selectedFile;
+  var hasLocation = locationField.value.trim().length > 0;
+  analyzeBtn.disabled = !(hasFile && hasLocation);
+}
+
+// Update button state when location changes
+locationField.addEventListener('input', updateAnalyzeButton);
 
 // ── Google Places Autocomplete ───────────────────────────────────
 var placesAutocomplete = null;
@@ -189,6 +198,12 @@ function updateStandardLabel(state) {
 // ── SSE Analysis ────────────────────────────────────────────────
 analyzeBtn.addEventListener('click', async function() {
   if (!selectedFile) return;
+  if (!locationField.value.trim()) {
+    locationField.classList.add('border-rose-500');
+    locationField.focus();
+    setTimeout(function() { locationField.classList.remove('border-rose-500'); }, 2000);
+    return;
+  }
   analyzeBtn.disabled = true;
   analyzeBtn.textContent = 'Analyzing...';
   resultsEl.classList.add('hidden');
@@ -764,6 +779,15 @@ function getSessionId() {
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
     navigator.serviceWorker.register('/static/sw.js').catch(function(e){});
+  });
+}
+
+// Auto-request location on mobile (if no location set yet)
+if ('geolocation' in navigator && /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
+  window.addEventListener('load', function() {
+    if (!locationField.value.trim()) {
+      locateBtn.click();
+    }
   });
 }
 
