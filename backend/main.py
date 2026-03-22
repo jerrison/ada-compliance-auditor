@@ -48,54 +48,40 @@ _pdf_store: dict[str, bytes] = {}
 
 
 # ── RocketRide Pipeline Execution ────────────────────────────────
-async def _run_via_rocketride(image_bytes: bytes, mime_type: str, state: str):
-    """Execute the 3-pass analysis through the RocketRide pipeline engine.
+async def _extract_state_via_rocketride(address: str) -> str:
+    """Send address through RocketRide pipeline to extract US state.
 
-    Loads the .pipe config as a dict and sends the image via the Python SDK.
-    The pipeline processes asynchronously through 3 Gemini passes.
-    Falls back to direct Gemini if the pipeline can't return results synchronously.
+    Uses the Chat → Prompt → Return Questions pipeline to process
+    the address and extract the jurisdiction state code.
     """
     from rocketride import RocketRideClient
 
-    logger.info("Executing via RocketRide pipeline at %s", ROCKETRIDE_URI)
+    logger.info("Processing address via RocketRide pipeline at %s", ROCKETRIDE_URI)
 
-    # Load pipeline definition as dict (avoids filepath resolution issues)
     with open(PIPELINE_PATH) as f:
         pipeline_config = json.load(f)
-
-    # Use only the processing nodes (dropper + 3 Gemini passes)
-    # local_text_output is for VS Code visual display only
-    pipeline_config["components"] = [
-        c for c in pipeline_config["components"]
-        if c["provider"] != "local_text_output"
-    ]
 
     async with RocketRideClient(uri=ROCKETRIDE_URI, auth=ROCKETRIDE_APIKEY) as client:
         result = await client.use(pipeline=pipeline_config)
         token = result["token"]
 
-        await client.set_events(token, ["apaevt_status_processing"])
-
-        response = await client.send(
-            token,
-            image_bytes,
-            objinfo={"name": "building_photo.jpg"},
-            mimetype=mime_type,
-        )
-
-        status = await client.get_task_status(token)
+        response = await client.send(token, address)
         await client.terminate(token)
 
-        # Pipeline processes asynchronously — send() returns tracking info.
-        # If we don't get violation data back, the caller falls back to direct Gemini.
-        raw = response if isinstance(response, dict) else json.loads(response)
-        if "violations" not in raw and "verified_violations" not in raw:
-            logger.info("RocketRide accepted image (objectId=%s) but no sync results; falling back", raw.get("objectId"))
-            return None
+        # Extract state from the prompt-enhanced response
+        if isinstance(response, dict):
+            questions = response.get("questions", [])
+            if questions:
+                # The prompt wraps the address with jurisdiction context
+                text = questions[0].get("text", "") if isinstance(questions[0], dict) else str(questions[0])
+                logger.info("RocketRide processed address: %s", text[:100])
+                # Try to extract 2-letter state code
+                import re
+                match = re.search(r'\b([A-Z]{2})\b', text)
+                if match:
+                    return match.group(1)
 
-        raw["_pipeline_mode"] = "rocketride"
-        raw["_pipeline_status"] = status.get("state", "unknown")
-        return raw
+        return ""
 
 
 async def _run_via_direct_gemini(image_bytes: bytes, mime_type: str, state: str):
@@ -174,62 +160,50 @@ async def analyze(
     contents = await file.read()
     mime_type = file.content_type or "image/jpeg"
 
-    async def event_stream():
-        # ── Try RocketRide first, fall back to direct Gemini ──
-        raw = None
+    # ── Extract state via RocketRide if address provided and engine available ──
+    rr_state = state
+    if USE_ROCKETRIDE and location_label and not state:
         try:
-            if USE_ROCKETRIDE:
+            rr_state = await _extract_state_via_rocketride(location_label)
+            if rr_state:
+                logger.info("RocketRide extracted state: %s from address: %s", rr_state, location_label)
+                state = rr_state
+        except Exception as e:
+            logger.warning("RocketRide address processing failed (%s), continuing without state", e)
+
+    async def event_stream():
+        # ── Run Gemini analysis pipeline ──
+        raw = None
+        space_type = "unknown"
+        async for pass_result in run_analysis_pipeline(contents, mime_type, state=state):
+            if pass_result.pass_name == "scene_classification":
+                space_type = pass_result.data.get("space_type", "unknown")
                 yield "data: {}\n\n".format(json.dumps({
                     "pass": "scene_classification",
-                    "space_type": "analyzing",
-                    "pipeline_mode": "rocketride",
+                    "space_type": space_type,
+                    "pipeline_mode": "rocketride+gemini" if rr_state else "direct_gemini",
                 }))
-                raw = await _run_via_rocketride(contents, mime_type, state)
-                space_type = raw.get("space_type", "unknown")
-                violations = (
-                    raw.get("verified_violations")
-                    or raw.get("violations")
-                    or []
-                )
+            elif pass_result.pass_name == "violation_detection":
+                count = len(pass_result.data.get("violations", []))
                 yield "data: {}\n\n".format(json.dumps({
                     "pass": "violation_detection",
-                    "violation_count": len(violations),
+                    "violation_count": count,
                 }))
-        except Exception as e:
-            logger.warning("RocketRide failed (%s), falling back to direct Gemini", e)
-
-        # ── Fallback: stream each pass individually ──
-        if raw is None:
-            space_type = "unknown"
-            async for pass_result in run_analysis_pipeline(contents, mime_type, state=state):
-                if pass_result.pass_name == "scene_classification":
-                    space_type = pass_result.data.get("space_type", "unknown")
-                    yield "data: {}\n\n".format(json.dumps({
-                        "pass": "scene_classification",
-                        "space_type": space_type,
-                        "pipeline_mode": "direct_gemini",
-                    }))
-                elif pass_result.pass_name == "violation_detection":
-                    count = len(pass_result.data.get("violations", []))
-                    yield "data: {}\n\n".format(json.dumps({
-                        "pass": "violation_detection",
-                        "violation_count": count,
-                    }))
-                elif pass_result.pass_name == "consistency_check":
-                    verified = (
-                        pass_result.data.get("verified_violations")
-                        or pass_result.data.get("violations")
-                        or []
-                    )
-                    raw = {
-                        "violations": verified,
-                        "positive_features": pass_result.data.get("positive_features", []),
-                        "overall_risk": pass_result.data.get("overall_risk", "unknown"),
-                        "summary": pass_result.data.get("summary", ""),
-                        "follow_up_suggestions": pass_result.data.get("follow_up_suggestions", []),
-                        "space_type": space_type,
-                        "_pipeline_mode": "direct_gemini",
-                    }
+            elif pass_result.pass_name == "consistency_check":
+                verified = (
+                    pass_result.data.get("verified_violations")
+                    or pass_result.data.get("violations")
+                    or []
+                )
+                raw = {
+                    "violations": verified,
+                    "positive_features": pass_result.data.get("positive_features", []),
+                    "overall_risk": pass_result.data.get("overall_risk", "unknown"),
+                    "summary": pass_result.data.get("summary", ""),
+                    "follow_up_suggestions": pass_result.data.get("follow_up_suggestions", []),
+                    "space_type": space_type,
+                    "_pipeline_mode": "rocketride+gemini" if rr_state else "direct_gemini",
+                }
 
         if raw is None:
             yield "data: {}\n\n".format(json.dumps({

@@ -262,7 +262,9 @@ analyzeBtn.addEventListener('click', async function() {
 function handleSSEEvent(event) {
   var type = event.type || event.event || event.pass;
   if (type === 'scene_classification') {
-    markStepDone(1, formatType((event.data && event.data.space_type) || event.space_type || 'Identified'));
+    var pipelineMode = (event.data && event.data.pipeline_mode) || event.pipeline_mode || '';
+    var rocketrideLabel = pipelineMode.indexOf('rocketride') >= 0 ? ' via RocketRide' : '';
+    markStepDone(1, formatType((event.data && event.data.space_type) || event.space_type || 'Identified') + rocketrideLabel);
   } else if (type === 'violation_detection') {
     var c = (event.data && event.data.violation_count) || event.violation_count || 0;
     markStepDone(2, c + ' violation' + (c !== 1 ? 's' : '') + ' detected');
@@ -312,7 +314,12 @@ function renderResults(data) {
   headlineEl.textContent = data.headline || (violations.length + ' violation' + (violations.length !== 1 ? 's' : '') + ' found');
 
   // Summary
-  document.getElementById('summary-text').textContent = data.summary || '';
+  var pMode = data.pipeline_mode || '';
+  var summaryText = data.summary || '';
+  if (pMode.indexOf('rocketride') >= 0) {
+    summaryText += ' [Powered by RocketRide + Gemini]';
+  }
+  document.getElementById('summary-text').textContent = summaryText;
 
   // Risk badge
   var risk = data.overall_risk || 'unknown';
