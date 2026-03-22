@@ -69,7 +69,7 @@
       },
       "input": [
         {
-          "lane": "questions",
+          "lane": "tags",
           "from": "dropper_1"
         }
       ]
@@ -109,7 +109,7 @@
       },
       "input": [
         {
-          "lane": "questions",
+          "lane": "answers",
           "from": "llm_gemini_1"
         }
       ]
@@ -149,7 +149,7 @@
       },
       "input": [
         {
-          "lane": "questions",
+          "lane": "answers",
           "from": "llm_gemini_2"
         }
       ]
@@ -176,7 +176,7 @@
       },
       "input": [
         {
-          "lane": "text",
+          "lane": "answers",
           "from": "llm_gemini_3"
         }
       ]
