@@ -8,7 +8,30 @@
       "id": "webhook_input",
       "provider": "webhook",
       "config": {
+        "hideForm": true,
+        "mode": "Source",
+        "parameters": {},
+        "type": "webhook",
         "description": "Receives building photo from web frontend or API client"
+      },
+      "ui": {
+        "position": {
+          "x": 100,
+          "y": 300
+        },
+        "measured": {
+          "width": 160,
+          "height": 135
+        },
+        "data": {
+          "provider": "webhook",
+          "class": [
+            "source"
+          ],
+          "type": "default",
+          "content": ""
+        },
+        "formDataValid": true
       }
     },
     {
@@ -21,8 +44,28 @@
         "max_output_tokens": 256,
         "response_format": "json"
       },
+      "ui": {
+        "position": {
+          "x": 450,
+          "y": 300
+        },
+        "measured": {
+          "width": 160,
+          "height": 44
+        },
+        "data": {
+          "provider": "gemini",
+          "class": "default",
+          "type": "default",
+          "content": ""
+        },
+        "formDataValid": true
+      },
       "input": [
-        { "from": "webhook_input", "lane": "output" }
+        {
+          "from": "webhook_input",
+          "lane": "output"
+        }
       ]
     },
     {
@@ -35,8 +78,28 @@
         "max_output_tokens": 8192,
         "response_format": "json"
       },
+      "ui": {
+        "position": {
+          "x": 800,
+          "y": 300
+        },
+        "measured": {
+          "width": 160,
+          "height": 44
+        },
+        "data": {
+          "provider": "gemini",
+          "class": "default",
+          "type": "default",
+          "content": ""
+        },
+        "formDataValid": true
+      },
       "input": [
-        { "from": "pass1_scene_classification", "lane": "answer" }
+        {
+          "from": "pass1_scene_classification",
+          "lane": "answer"
+        }
       ]
     },
     {
@@ -49,8 +112,28 @@
         "max_output_tokens": 8192,
         "response_format": "json"
       },
+      "ui": {
+        "position": {
+          "x": 1150,
+          "y": 300
+        },
+        "measured": {
+          "width": 160,
+          "height": 44
+        },
+        "data": {
+          "provider": "gemini",
+          "class": "default",
+          "type": "default",
+          "content": ""
+        },
+        "formDataValid": true
+      },
       "input": [
-        { "from": "pass2_violation_detection", "lane": "answer" }
+        {
+          "from": "pass2_violation_detection",
+          "lane": "answer"
+        }
       ]
     },
     {
@@ -60,9 +143,34 @@
         "format": "json",
         "description": "Returns the final verified compliance report"
       },
+      "ui": {
+        "position": {
+          "x": 1500,
+          "y": 300
+        },
+        "measured": {
+          "width": 160,
+          "height": 44
+        },
+        "data": {
+          "provider": "response",
+          "class": "default",
+          "type": "default",
+          "content": ""
+        },
+        "formDataValid": true
+      },
       "input": [
-        { "from": "pass3_consistency_check", "lane": "answer" }
+        {
+          "from": "pass3_consistency_check",
+          "lane": "answer"
+        }
       ]
     }
-  ]
+  ],
+  "viewport": {
+    "x": 0,
+    "y": 100,
+    "zoom": 0.65
+  }
 }
