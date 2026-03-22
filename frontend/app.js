@@ -56,35 +56,84 @@ function updateAnalyzeButton() {
 
 locationField.addEventListener('input', updateAnalyzeButton);
 
-// ── Google Places Autocomplete ──────────────────────────────────
+// ── Address Autocomplete ────────────────────────────────────────
 (async function initPlaces() {
   try {
     var resp = await fetch('/api/config');
     var cfg = await resp.json();
     var key = cfg.google_maps_api_key;
-    if (!key) return;
-    var script = document.createElement('script');
-    script.src = 'https://maps.googleapis.com/maps/api/js?key=' + key + '&libraries=places';
-    script.onload = function() {
-      var autocomplete = new google.maps.places.Autocomplete(locationField, { types: ['address'] });
-      autocomplete.addListener('place_changed', function() {
-        var place = autocomplete.getPlace();
-        if (!place || !place.address_components) return;
-        detectedLocation = place.formatted_address || locationField.value;
-        for (var i = 0; i < place.address_components.length; i++) {
-          var comp = place.address_components[i];
-          if (comp.types.indexOf('administrative_area_level_1') !== -1) {
-            detectedState = comp.long_name;
-            break;
+    if (key) {
+      // Google Places Autocomplete (if API key is available)
+      var script = document.createElement('script');
+      script.src = 'https://maps.googleapis.com/maps/api/js?key=' + key + '&libraries=places';
+      script.onload = function() {
+        var autocomplete = new google.maps.places.Autocomplete(locationField, { types: ['address'] });
+        autocomplete.addListener('place_changed', function() {
+          var place = autocomplete.getPlace();
+          if (!place || !place.address_components) return;
+          detectedLocation = place.formatted_address || locationField.value;
+          for (var i = 0; i < place.address_components.length; i++) {
+            var comp = place.address_components[i];
+            if (comp.types.indexOf('administrative_area_level_1') !== -1) {
+              detectedState = comp.long_name;
+              break;
+            }
           }
-        }
-        updateStandardLabel(detectedState);
-        if (locationDetail) locationDetail.textContent = detectedState ? 'State: ' + detectedState : '';
-        updateAnalyzeButton();
-      });
-    };
-    document.head.appendChild(script);
+          updateStandardLabel(detectedState);
+          if (locationDetail) locationDetail.textContent = detectedState ? 'State: ' + detectedState : '';
+          updateAnalyzeButton();
+        });
+      };
+      document.head.appendChild(script);
+      return; // Google Places active, skip Nominatim fallback
+    }
   } catch(e) {}
+
+  // Nominatim fallback autocomplete (no API key needed)
+  var sugBox = document.createElement('div');
+  sugBox.className = 'nominatim-suggestions';
+  sugBox.style.cssText = 'position:absolute;z-index:100;width:100%;background:var(--surface-lowest,#fff);border-radius:0 0 0.75rem 0.75rem;box-shadow:0 4px 32px rgba(25,28,30,0.1);display:none;max-height:240px;overflow-y:auto;';
+  locationField.parentElement.style.position = 'relative';
+  locationField.parentElement.appendChild(sugBox);
+
+  var debounceTimer = null;
+  locationField.addEventListener('input', function() {
+    var q = locationField.value.trim();
+    if (q.length < 3) { sugBox.style.display = 'none'; return; }
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(function() {
+      fetch('https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=5&countrycodes=us&q=' + encodeURIComponent(q))
+        .then(function(r) { return r.json(); })
+        .then(function(results) {
+          sugBox.innerHTML = '';
+          if (!results.length) { sugBox.style.display = 'none'; return; }
+          results.forEach(function(r) {
+            var item = document.createElement('div');
+            item.style.cssText = 'padding:10px 14px;cursor:pointer;font-size:0.8125rem;color:var(--on-surface,#191c1e);border-top:1px solid var(--surface-container,#eceef0);';
+            item.textContent = r.display_name;
+            item.addEventListener('mousedown', function(e) {
+              e.preventDefault();
+              locationField.value = r.display_name;
+              detectedLocation = r.display_name;
+              detectedState = (r.address && r.address.state) || '';
+              updateStandardLabel(detectedState);
+              if (locationDetail) locationDetail.textContent = detectedState ? 'State: ' + detectedState : '';
+              updateAnalyzeButton();
+              sugBox.style.display = 'none';
+            });
+            item.addEventListener('mouseenter', function() { item.style.background = 'var(--surface-low,#f2f4f6)'; });
+            item.addEventListener('mouseleave', function() { item.style.background = 'none'; });
+            sugBox.appendChild(item);
+          });
+          sugBox.style.display = 'block';
+        })
+        .catch(function() { sugBox.style.display = 'none'; });
+    }, 300);
+  });
+
+  locationField.addEventListener('blur', function() {
+    setTimeout(function() { sugBox.style.display = 'none'; }, 200);
+  });
 })();
 
 // ── Geolocation (Locate Me) ────────────────────────────────────
