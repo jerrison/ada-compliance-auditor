@@ -15,7 +15,7 @@ from google import genai
 from google.genai.types import GenerateContentConfig, Part
 
 DATA_DIR = Path(__file__).parent / "data"
-MODEL = "gemini-2.5-flash-lite"
+MODEL = "gemini-2.5-flash"
 
 _client = None
 

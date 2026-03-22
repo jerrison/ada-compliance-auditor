@@ -16,7 +16,7 @@ from prompts import (
 
 logger = logging.getLogger(__name__)
 
-MODEL = "gemini-2.5-flash-lite"
+MODEL = "gemini-2.5-flash"
 
 _client = None
 

@@ -1,185 +1,184 @@
 {
-  "name": "ADA Compliance Auditor",
-  "description": "3-pass AI pipeline: Scene Classification → Violation Detection → Consistency Check",
-  "project_id": "ada-compliance-auditor",
-  "source": "photo_input",
   "viewport": {
-    "x": 0,
-    "y": 0,
-    "zoom": 0.6
+    "x": -1045.0741663577744,
+    "y": -371.75178108284285,
+    "zoom": 1.6540467368865337
   },
+  "name": "ADA Compliance Auditor",
+  "description": "3-pass AI pipeline: Photo → Scene Classification → Violation Detection → Consistency Check → Report",
+  "source": "dropper_1",
   "components": [
     {
-      "id": "photo_input",
-      "name": "Photo Upload",
-      "provider": "webhook",
+      "id": "dropper_1",
+      "provider": "dropper",
       "config": {
-        "type": "webhook",
-        "mode": "Source",
         "hideForm": true,
-        "parameters": {}
+        "mode": "Source",
+        "parameters": {},
+        "type": "dropper"
       },
       "ui": {
-        "position": { "x": 100, "y": 250 },
-        "measured": { "width": 180, "height": 140 },
+        "position": {
+          "x": 100,
+          "y": 400
+        },
+        "measured": {
+          "width": 160,
+          "height": 65
+        },
         "data": {
-          "provider": "webhook",
-          "class": ["source"],
-          "type": "default",
-          "content": "Photo Upload"
+          "provider": "dropper",
+          "class": "source",
+          "type": "default"
         },
         "formDataValid": true
       }
     },
     {
-      "id": "scene_classify",
-      "name": "Pass 1: Scene Classification",
-      "provider": "gemini",
+      "id": "llm_gemini_1",
+      "provider": "llm_gemini",
       "config": {
-        "model": "gemini-2.5-flash-lite",
-        "temperature": 0.2,
-        "maxOutputTokens": 256
+        "profile": "gemini-2_5-flash",
+        "gemini-3-pro": {},
+        "gemini-2.5-flash": {
+          "apiKey": "literal:${GEMINI_API_KEY}",
+          "systemInstruction": "You are an ADA compliance expert. Analyze the provided photograph and classify it into exactly one of the following space types: entrance, parking_lot, interior, restroom, sidewalk_path, counter_service_area. Consider the primary function and physical characteristics of the space shown. Respond ONLY with valid JSON in this exact format: {\"space_type\": \"<type>\"} where <type> is one of the space types listed above."
+        },
+        "parameters": {
+          "google": {}
+        },
+        "gemini-2_5-flash": {
+          "apikey": "literal:${GEMINI_API_KEY}"
+        }
       },
       "ui": {
-        "position": { "x": 450, "y": 250 },
-        "measured": { "width": 180, "height": 100 },
+        "position": {
+          "x": 500,
+          "y": 400
+        },
+        "measured": {
+          "width": 160,
+          "height": 65
+        },
         "data": {
-          "provider": "gemini",
-          "class": ["llm"],
-          "type": "default",
-          "content": "Pass 1: Scene Classification"
+          "provider": "llm_gemini",
+          "class": "llm",
+          "type": "default"
         },
         "formDataValid": true
       },
       "input": [
-        { "from": "photo_input", "lane": "Image" }
+        {
+          "lane": "data",
+          "from": "dropper_1"
+        }
       ]
     },
     {
-      "id": "scene_prompt",
-      "name": "Scene Prompt",
-      "provider": "prompt",
+      "id": "llm_gemini_2",
+      "provider": "llm_gemini",
       "config": {
-        "text": "You are an expert ADA compliance auditor. Classify the space type shown in this image. Return JSON: {\"space_type\": \"entrance|parking|restroom|interior|sidewalk|counter\"}"
-      },
-      "ui": {
-        "position": { "x": 450, "y": 80 },
-        "measured": { "width": 180, "height": 80 },
-        "data": {
-          "provider": "prompt",
-          "class": ["other"],
-          "type": "default",
-          "content": "Scene Prompt"
+        "profile": "gemini-2_5-flash",
+        "gemini-3-pro": {},
+        "gemini-2.5-flash": {
+          "apiKey": "literal:${GEMINI_API_KEY}",
+          "systemInstruction": "You are an ADA compliance expert specializing in the California Building Code (CBC) and Title 24 accessibility standards. Analyze the provided photograph for ADA accessibility violations. Check for: missing ramps, narrow doorways, round door knobs, missing handrails, steep ramps, missing accessible parking signs, missing parking striping, blocked accessible routes, missing curb cuts, surface gaps or cracks, protruding objects, missing tactile signage, missing grab bars, insufficient stall size, high mirror placement, inaccessible counters, inaccessible queues. For each violation detected, provide: violation_type, severity (low/medium/high), confidence (0.0-1.0), description, reasoning. WARNING: Avoid false positives. Only flag violations you can visually confirm. Respond ONLY with valid JSON: {\"violations\": [...], \"positive_features\": [...]}"
         },
-        "formDataValid": true
-      }
-    },
-    {
-      "id": "violation_detect",
-      "name": "Pass 2: Violation Detection",
-      "provider": "gemini",
-      "config": {
-        "model": "gemini-2.5-flash-lite",
-        "temperature": 0.2,
-        "maxOutputTokens": 8192
+        "parameters": {
+          "google": {}
+        },
+        "gemini-2_5-flash": {
+          "apikey": "literal:${GEMINI_API_KEY}"
+        }
       },
       "ui": {
-        "position": { "x": 800, "y": 250 },
-        "measured": { "width": 180, "height": 100 },
+        "position": {
+          "x": 780,
+          "y": 380
+        },
+        "measured": {
+          "width": 160,
+          "height": 65
+        },
         "data": {
-          "provider": "gemini",
-          "class": ["llm"],
-          "type": "default",
-          "content": "Pass 2: Violation Detection"
+          "provider": "llm_gemini",
+          "class": "llm",
+          "type": "default"
         },
         "formDataValid": true
       },
       "input": [
-        { "from": "scene_classify", "lane": "Text" }
+        {
+          "lane": "answers",
+          "from": "llm_gemini_1"
+        }
       ]
     },
     {
-      "id": "violation_prompt",
-      "name": "Detection Prompt",
-      "provider": "prompt",
+      "id": "llm_gemini_3",
+      "provider": "llm_gemini",
       "config": {
-        "text": "You are an expert ADA compliance auditor. Analyze this image for ADA accessibility violations. Check 51 violation types covering entrances, parking, restrooms, signage, counters. Return JSON with 'violations' array (violation_type, severity, confidence, description) and 'positive_features' array."
-      },
-      "ui": {
-        "position": { "x": 800, "y": 80 },
-        "measured": { "width": 180, "height": 80 },
-        "data": {
-          "provider": "prompt",
-          "class": ["other"],
-          "type": "default",
-          "content": "Detection Prompt"
+        "profile": "gemini-2_5-flash",
+        "gemini-3-pro": {},
+        "gemini-2.5-flash": {
+          "apiKey": "literal:${GEMINI_API_KEY}",
+          "systemInstruction": "You are an ADA compliance expert performing a consistency review. A previous analysis pass detected potential violations. Please: 1) VERIFY each violation against the image, 2) REMOVE contradictory or duplicate violations, 3) ADJUST confidence scores based on evidence strength, 4) FLAG violations needing additional evidence. Be conservative — only include violations you are confident about. Respond ONLY with valid JSON: {\"verified_violations\": [...], \"removed_violations\": [...], \"follow_up_suggestions\": [...]}"
         },
-        "formDataValid": true
-      }
-    },
-    {
-      "id": "consistency_check",
-      "name": "Pass 3: Consistency Check",
-      "provider": "gemini",
-      "config": {
-        "model": "gemini-2.5-flash-lite",
-        "temperature": 0.1,
-        "maxOutputTokens": 8192
+        "parameters": {
+          "google": {}
+        },
+        "gemini-2_5-flash": {
+          "apikey": "literal:${GEMINI_API_KEY}"
+        }
       },
       "ui": {
-        "position": { "x": 1150, "y": 250 },
-        "measured": { "width": 180, "height": 100 },
+        "position": {
+          "x": 1300,
+          "y": 400
+        },
+        "measured": {
+          "width": 160,
+          "height": 65
+        },
         "data": {
-          "provider": "gemini",
-          "class": ["llm"],
-          "type": "default",
-          "content": "Pass 3: Consistency Check"
+          "provider": "llm_gemini",
+          "class": "llm",
+          "type": "default"
         },
         "formDataValid": true
       },
       "input": [
-        { "from": "violation_detect", "lane": "Text" }
+        {
+          "lane": "answers",
+          "from": "llm_gemini_2"
+        }
       ]
     },
     {
-      "id": "verify_prompt",
-      "name": "Verification Prompt",
-      "provider": "prompt",
-      "config": {
-        "text": "You are an expert ADA compliance auditor performing a final consistency check. Review these violations against the image. Remove false positives, adjust confidence. Return JSON with 'verified_violations' array and 'positive_features' array. Be conservative."
-      },
-      "ui": {
-        "position": { "x": 1150, "y": 80 },
-        "measured": { "width": 180, "height": 80 },
-        "data": {
-          "provider": "prompt",
-          "class": ["other"],
-          "type": "default",
-          "content": "Verification Prompt"
-        },
-        "formDataValid": true
-      }
-    },
-    {
-      "id": "report_output",
-      "name": "Compliance Report",
+      "id": "local_text_output_1",
       "provider": "local_text_output",
-      "config": {
-        "format": "json"
-      },
+      "config": {},
       "ui": {
-        "position": { "x": 1500, "y": 250 },
-        "measured": { "width": 180, "height": 100 },
+        "position": {
+          "x": 1700,
+          "y": 400
+        },
+        "measured": {
+          "width": 160,
+          "height": 44
+        },
         "data": {
           "provider": "local_text_output",
-          "class": ["infrastructure"],
-          "type": "default",
-          "content": "Compliance Report"
+          "class": "infrastructure",
+          "type": "default"
         },
         "formDataValid": true
       },
       "input": [
-        { "from": "consistency_check", "lane": "Text" }
+        {
+          "lane": "answers",
+          "from": "llm_gemini_3"
+        }
       ]
     }
   ]

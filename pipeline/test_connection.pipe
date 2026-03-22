@@ -1,0 +1,113 @@
+{
+  "viewport": {
+    "x": -58.49998345874167,
+    "y": 345.0276776112692,
+    "zoom": 0.5
+  },
+  "name": "",
+  "description": "",
+  "components": [
+    {
+      "id": "dropper_1",
+      "provider": "dropper",
+      "config": {
+        "hideForm": true,
+        "mode": "Source",
+        "parameters": {},
+        "type": "dropper"
+      },
+      "ui": {
+        "position": {
+          "x": 360,
+          "y": 500
+        },
+        "measured": {
+          "width": 160,
+          "height": 65
+        },
+        "data": {
+          "provider": "dropper",
+          "class": "source",
+          "type": "default"
+        },
+        "formDataValid": true
+      }
+    },
+    {
+      "id": "parse_1",
+      "provider": "parse",
+      "config": {},
+      "ui": {
+        "position": {
+          "x": 640,
+          "y": 480
+        },
+        "measured": {
+          "width": 160,
+          "height": 135
+        },
+        "data": {
+          "provider": "parse",
+          "class": "data",
+          "type": "default"
+        },
+        "formDataValid": true
+      },
+      "input": [
+        {
+          "lane": "tags",
+          "from": "dropper_1"
+        }
+      ]
+    },
+    {
+      "id": "llm_gemini_1",
+      "provider": "llm_gemini",
+      "config": {
+        "profile": "gemini-3-pro",
+        "gemini-3-pro": {}
+      },
+      "ui": {
+        "position": {
+          "x": 900,
+          "y": 500
+        },
+        "measured": {
+          "width": 160,
+          "height": 65
+        },
+        "data": {
+          "provider": "llm_gemini",
+          "class": "llm",
+          "type": "default"
+        },
+        "formDataValid": false
+      }
+    },
+    {
+      "id": "llm_gemini_2",
+      "provider": "llm_gemini",
+      "config": {
+        "profile": "gemini-3-pro",
+        "gemini-3-pro": {}
+      },
+      "ui": {
+        "position": {
+          "x": 1140,
+          "y": 280
+        },
+        "measured": {
+          "width": 160,
+          "height": 65
+        },
+        "data": {
+          "provider": "llm_gemini",
+          "class": "llm",
+          "type": "default"
+        },
+        "formDataValid": false
+      }
+    }
+  ],
+  "project_id": "c7bbc118-a6d7-4243-b8c2-386edf9cf7fd"
+}
