@@ -1,54 +1,68 @@
 {
-  "_comment": "This is a placeholder. Build the actual pipeline visually in VS Code using the RocketRide extension.",
-  "_instructions": [
-    "1. Install the RocketRide extension in VS Code",
-    "2. Open this file - it will render in the visual pipeline builder",
-    "3. Add nodes: Source (webhook) → Image → LLM (Google Gemini) → Output",
-    "4. Configure the Gemini LLM node with the analysis prompt from backend/gemini_client.py",
-    "5. Set the source node to accept image input via webhook",
-    "6. Wire the output to return structured JSON"
-  ],
-  "pipeline": {
-    "name": "ADA Compliance Auditor",
-    "description": "Analyzes photos of buildings and public spaces for ADA accessibility violations using Gemini Vision",
-    "nodes": [
-      {
-        "id": "source",
-        "type": "source/webhook",
-        "config": {
-          "description": "Receives image upload from web frontend"
-        }
-      },
-      {
-        "id": "image_processor",
-        "type": "image/processor",
-        "config": {
-          "description": "Prepares image for LLM analysis"
-        }
-      },
-      {
-        "id": "gemini_analysis",
-        "type": "llm/google",
-        "config": {
-          "model": "gemini-2.0-flash",
-          "temperature": 0.2,
-          "max_tokens": 4096,
-          "response_format": "json",
-          "system_prompt": "You are an expert ADA compliance auditor. Analyze the image for accessibility violations and return structured JSON."
-        }
-      },
-      {
-        "id": "output",
-        "type": "infrastructure/output",
-        "config": {
-          "format": "json"
-        }
+  "name": "ADA Compliance Auditor",
+  "description": "3-pass AI pipeline analyzing photos of buildings for ADA accessibility violations using Google Gemini",
+  "project_id": "ada-compliance-auditor",
+  "source": "webhook_input",
+  "components": [
+    {
+      "id": "webhook_input",
+      "provider": "webhook",
+      "config": {
+        "description": "Receives building photo from web frontend or API client"
       }
-    ],
-    "connections": [
-      { "from": "source", "to": "image_processor" },
-      { "from": "image_processor", "to": "gemini_analysis" },
-      { "from": "gemini_analysis", "to": "output" }
-    ]
-  }
+    },
+    {
+      "id": "pass1_scene_classification",
+      "provider": "gemini",
+      "config": {
+        "model": "gemini-2.5-flash-lite",
+        "system_prompt": "You are an expert ADA compliance auditor performing scene classification. Analyze the image and identify the type of space shown. Return JSON with a single field 'space_type' set to one of: entrance, parking, restroom, interior, sidewalk, counter, hallway, elevator, stairway. Only return the JSON object, nothing else.",
+        "temperature": 0.2,
+        "max_output_tokens": 256,
+        "response_format": "json"
+      },
+      "input": [
+        { "from": "webhook_input", "lane": "output" }
+      ]
+    },
+    {
+      "id": "pass2_violation_detection",
+      "provider": "gemini",
+      "config": {
+        "model": "gemini-2.5-flash-lite",
+        "system_prompt": "You are an expert ADA compliance auditor. Analyze the image for ADA accessibility violations. For each violation found, return: violation_type, severity (high/medium/low), confidence (0-1), description, and category. Check for: missing ramps, narrow doorways, missing handrails, inaccessible parking, blocked routes, missing tactile signage, grab bar issues, counter height violations, and all other ADA Title III requirements. Return JSON with a 'violations' array and a 'positive_features' array.",
+        "temperature": 0.2,
+        "max_output_tokens": 8192,
+        "response_format": "json"
+      },
+      "input": [
+        { "from": "pass1_scene_classification", "lane": "answer" }
+      ]
+    },
+    {
+      "id": "pass3_consistency_check",
+      "provider": "gemini",
+      "config": {
+        "model": "gemini-2.5-flash-lite",
+        "system_prompt": "You are an expert ADA compliance auditor performing a final consistency check. Review the previously detected violations against the original image. For each violation: verify it is real (not a false positive), adjust confidence scores, and remove any incorrect findings. Return the verified violations as JSON with 'verified_violations' array and 'positive_features' array. Be conservative -- only include violations you are confident about.",
+        "temperature": 0.1,
+        "max_output_tokens": 8192,
+        "response_format": "json"
+      },
+      "input": [
+        { "from": "pass2_violation_detection", "lane": "answer" }
+      ]
+    },
+    {
+      "id": "response_output",
+      "provider": "response",
+      "config": {
+        "format": "json",
+        "description": "Returns the final verified compliance report"
+      },
+      "input": [
+        { "from": "pass3_consistency_check", "lane": "answer" }
+      ]
+    }
+  ]
 }

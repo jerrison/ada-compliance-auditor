@@ -16,6 +16,12 @@ from gemini_pipeline import run_analysis_pipeline
 from violations import enrich_violations
 from pdf_generator import generate_pdf_report
 
+# RocketRide integration (optional -- used when ROCKETRIDE_URI is set)
+ROCKETRIDE_URI = os.getenv("ROCKETRIDE_URI", "")
+ROCKETRIDE_APIKEY = os.getenv("ROCKETRIDE_APIKEY", "")
+PIPELINE_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "pipeline", "ada_auditor.pipe.json")
+_rr_client = None
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -119,6 +125,88 @@ async def download_pdf(pdf_id: str):
             "Content-Disposition": "attachment; filename=ada-audit-{}.pdf".format(pdf_id[:8])
         },
     )
+
+
+@app.get("/api/pipeline/status")
+async def pipeline_status():
+    """Check if RocketRide pipeline is available."""
+    return {
+        "rocketride_available": bool(ROCKETRIDE_URI),
+        "rocketride_uri": ROCKETRIDE_URI or None,
+        "pipeline_file": PIPELINE_PATH,
+        "mode": "rocketride" if ROCKETRIDE_URI else "direct_gemini",
+    }
+
+
+@app.post("/api/pipeline/run")
+async def run_pipeline(file: UploadFile = File(...), location_label: str = Form(""), state: str = Form("")):
+    """Run analysis via RocketRide pipeline (requires ROCKETRIDE_URI env var)."""
+    global _rr_client
+    if not ROCKETRIDE_URI:
+        return Response(status_code=400, content=json.dumps({
+            "error": "RocketRide not configured. Set ROCKETRIDE_URI env var or use /api/analyze for direct Gemini."
+        }), media_type="application/json")
+
+    try:
+        from rocketride import RocketRideClient
+
+        contents = await file.read()
+        mime_type = file.content_type or "image/jpeg"
+
+        async with RocketRideClient(uri=ROCKETRIDE_URI, auth=ROCKETRIDE_APIKEY) as client:
+            # Start the pipeline
+            result = await client.use(filepath=PIPELINE_PATH)
+            token = result["token"]
+
+            # Send the image into the pipeline
+            response = await client.send(
+                token,
+                contents,
+                objinfo={"name": "building_photo.jpg"},
+                mimetype=mime_type,
+            )
+
+            # Get the pipeline output
+            status = await client.get_task_status(token)
+            await client.terminate(token)
+
+            # Enrich the raw pipeline output
+            raw_report = response if isinstance(response, dict) else json.loads(response)
+            verified = raw_report.get("verified_violations") or raw_report.get("violations", [])
+            merged = {
+                "violations": verified,
+                "positive_features": raw_report.get("positive_features", []),
+                "overall_risk": raw_report.get("overall_risk", "unknown"),
+                "summary": raw_report.get("summary", ""),
+            }
+            enriched = enrich_violations(merged, state=state)
+            enriched["space_type"] = raw_report.get("space_type", "unknown")
+            enriched["pipeline_mode"] = "rocketride"
+            enriched["pipeline_status"] = status.get("state", "unknown")
+
+            # Generate PDF
+            pdf_bytes = generate_pdf_report(
+                report=enriched,
+                location_label=location_label or "Unknown Location",
+                space_type=enriched["space_type"],
+                image_bytes=contents,
+            )
+            pdf_id = str(uuid.uuid4())
+            _pdf_store[pdf_id] = pdf_bytes
+            enriched["pdf_url"] = "/api/reports/{}/pdf".format(pdf_id)
+
+            return enriched
+
+    except ImportError:
+        return Response(status_code=500, content=json.dumps({
+            "error": "rocketride package not installed. Run: uv add rocketride"
+        }), media_type="application/json")
+    except Exception as e:
+        logger.error("RocketRide pipeline failed: %s", e)
+        return Response(status_code=500, content=json.dumps({
+            "error": str(e),
+            "fallback": "Use /api/analyze for direct Gemini analysis"
+        }), media_type="application/json")
 
 
 @app.get("/")
