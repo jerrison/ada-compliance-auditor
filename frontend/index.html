@@ -24,7 +24,7 @@
         <span class="text-[10px] font-mono text-emerald-400/80 uppercase tracking-[0.2em]">Active Scanner</span>
       </div>
       <h1 class="text-2xl font-bold text-white" style="font-family:'DM Sans',sans-serif">ADA Compliance Auditor</h1>
-      <p class="text-slate-500 text-xs mt-1 font-mono">Federal ADA + CA CBC Title 24 + SF Local Codes</p>
+      <p id="standard-label" class="text-slate-500 text-xs mt-1 font-mono">Federal ADA Standards</p>
     </header>
 
     <!-- Upload Area -->
@@ -46,9 +46,20 @@
 
     <!-- Location Input -->
     <div class="mb-4">
-      <input type="text" id="location-field"
-             placeholder="Address or location name (optional)"
-             class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500/30 transition font-mono" />
+      <div class="flex gap-2">
+        <input type="text" id="location-field" required
+               placeholder="Enter address (required)"
+               class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500/30 transition font-mono" />
+        <button id="locate-btn" type="button"
+                class="bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl px-3 flex items-center justify-center transition"
+                title="Locate Me">
+          <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+        </button>
+      </div>
+      <p id="location-detail" class="text-[10px] text-slate-500 mt-1 font-mono"></p>
     </div>
 
     <!-- Analyze Button -->
@@ -140,9 +151,20 @@
         </button>
       </div>
 
+      <!-- Compliance Banner -->
+      <div id="compliance-banner" class="hidden rounded-2xl p-5 border text-center">
+        <div id="compliance-icon" class="mx-auto w-12 h-12 rounded-full flex items-center justify-center mb-3"></div>
+        <p id="compliance-label" class="text-lg font-bold mb-1"></p>
+        <p id="compliance-sublabel" class="text-sm"></p>
+      </div>
+
       <!-- Compliant Features -->
       <div id="positive-section" class="hidden rounded-2xl p-5 border border-emerald-900/40 bg-emerald-950/20">
-        <h3 class="text-sm font-bold text-emerald-400 uppercase tracking-wide mb-3 font-mono">Compliant Features Detected</h3>
+        <div class="flex items-center gap-2 mb-3">
+          <h3 class="text-sm font-bold text-emerald-400 uppercase tracking-wide font-mono">Compliant Features Detected</h3>
+          <span id="positive-count" class="text-xs font-mono text-emerald-500"></span>
+          <div class="flex-1 h-px bg-emerald-900/40"></div>
+        </div>
         <ul id="positive-list" class="space-y-1.5"></ul>
       </div>
 
@@ -209,6 +231,7 @@
     <!-- Filter -->
     <div id="history-filter" class="flex gap-2 mb-4 overflow-x-auto pb-1">
       <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="compliant">Compliant</button>
       <button class="filter-btn" data-filter="high">High Risk</button>
       <button class="filter-btn" data-filter="medium">Medium</button>
       <button class="filter-btn" data-filter="low">Low</button>

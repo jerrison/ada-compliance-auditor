@@ -135,9 +135,15 @@ class TestEnrichViolations:
         assert "Automatic door at main entrance" in result["positive_features"]
 
     def test_disclaimer_present(self):
-        """disclaimer is included in enriched output."""
-        result = enrich_violations(_make_raw_analysis())
+        """disclaimer is included in enriched output for California."""
+        result = enrich_violations(_make_raw_analysis(), state="California")
         assert "CASp" in result["disclaimer"]
+
+    def test_disclaimer_no_casp_for_other_states(self):
+        """disclaimer does not mention CASp for non-California states."""
+        result = enrich_violations(_make_raw_analysis(), state="Texas")
+        assert "CASp" not in result["disclaimer"]
+        assert "ADA" in result["disclaimer"]
 
 
 # --- Teammate's tests (updated for flat output format & KB data) ---
@@ -169,15 +175,28 @@ SAMPLE_ANALYSIS = {
 }
 
 
-def test_enrichment_includes_california_codes():
-    result = enrich_violations(SAMPLE_ANALYSIS)
+def test_enrichment_includes_california_codes_when_in_ca():
+    result = enrich_violations(SAMPLE_ANALYSIS, state="California")
     violation = result["violations"][0]
     assert "cbc_section" in violation
     assert "cbc_title" in violation
 
 
+def test_enrichment_excludes_cbc_when_not_in_ca():
+    result = enrich_violations(SAMPLE_ANALYSIS, state="Texas")
+    violation = result["violations"][0]
+    assert "cbc_section" not in violation
+
+
+def test_enrichment_federal_always_included():
+    result = enrich_violations(SAMPLE_ANALYSIS, state="New York")
+    violation = result["violations"][0]
+    assert "ada_section" in violation
+    assert "ada_title" in violation
+
+
 def test_enrichment_includes_federal_and_california():
-    result = enrich_violations(SAMPLE_ANALYSIS)
+    result = enrich_violations(SAMPLE_ANALYSIS, state="California")
     violation = result["violations"][0]
     assert "ada_section" in violation
     assert "cbc_section" in violation
@@ -191,10 +210,22 @@ def test_enrichment_tracks_confirmed_vs_potential():
     assert result["potential_count"] == 1  # round_door_knob at 0.6
 
 
-def test_enrichment_includes_stricter_flag():
-    result = enrich_violations(SAMPLE_ANALYSIS)
+def test_enrichment_includes_stricter_flag_for_california():
+    result = enrich_violations(SAMPLE_ANALYSIS, state="California")
     ramp = result["violations"][0]
     assert "stricter_than_federal" in ramp
+
+
+def test_enrichment_standard_applied_california():
+    result = enrich_violations(SAMPLE_ANALYSIS, state="California")
+    assert result["standard_applied"] == "California Building Code (CBC) + Federal ADA"
+    assert result["state"] == "California"
+
+
+def test_enrichment_standard_applied_federal():
+    result = enrich_violations(SAMPLE_ANALYSIS, state="Texas")
+    assert result["standard_applied"] == "Federal ADA"
+    assert result["state"] == "Texas"
 
 
 def test_enrichment_cost_totals():

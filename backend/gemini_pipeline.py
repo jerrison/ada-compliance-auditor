@@ -61,7 +61,7 @@ def _call_gemini(image_bytes: bytes, mime_type: str, prompt: str) -> dict:
         return json.loads(response.text)
 
 
-async def run_analysis_pipeline(image_bytes: bytes, mime_type: str) -> AsyncGenerator[PassResult, None]:
+async def run_analysis_pipeline(image_bytes: bytes, mime_type: str, state: str = "") -> AsyncGenerator[PassResult, None]:
     # Pass 1: Scene Classification
     logger.info("Pass 1: Scene classification")
     scene_result = _call_gemini(image_bytes, mime_type, build_scene_classification_prompt())
@@ -70,7 +70,7 @@ async def run_analysis_pipeline(image_bytes: bytes, mime_type: str) -> AsyncGene
 
     # Pass 2: Violation Detection (scoped)
     logger.info("Pass 2: Violation detection for %s", space_type)
-    detection_result = _call_gemini(image_bytes, mime_type, build_violation_detection_prompt(space_type))
+    detection_result = _call_gemini(image_bytes, mime_type, build_violation_detection_prompt(space_type, state=state))
     yield PassResult(pass_name="violation_detection", data=detection_result)
 
     # Pass 3: Consistency Check
