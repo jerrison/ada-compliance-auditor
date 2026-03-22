@@ -167,7 +167,7 @@ def _build_executive_summary(elements, report, styles):
         ["Confirmed", str(report.get("confirmed_count", 0))],
         ["Potential", str(report.get("potential_count", 0))],
         ["Estimated Cost", "${:,} - ${:,}".format(cost_low, cost_high)],
-        ["Standard", "ADA + CA CBC Title 24"],
+        ["Standard", report.get("standard_applied", "Federal ADA")],
     ]
     t = Table(metrics_data, colWidths=[2.5 * inch, 4 * inch])
     t.setStyle(_header_table_style())
@@ -237,13 +237,14 @@ def _build_violation_pages(elements, violations, styles):
                 v.get("ada_title", ""),
                 Paragraph(v.get("ada_requirement", ""), styles["BodyGray"]),
             ],
-            [
+        ]
+        if v.get("cbc_section"):
+            code_data.append([
                 "CA CBC Title 24",
                 v.get("cbc_section", ""),
                 v.get("cbc_title", ""),
                 Paragraph(v.get("cbc_requirement", ""), styles["BodyGray"]),
-            ],
-        ]
+            ])
         ct = Table(code_data, colWidths=[1.2 * inch, 1 * inch, 1.3 * inch, 3 * inch])
         ct.setStyle(_header_table_style())
         elements.append(ct)
