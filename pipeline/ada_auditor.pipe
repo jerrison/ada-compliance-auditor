@@ -1,0 +1,186 @@
+{
+  "name": "ADA Compliance Auditor",
+  "description": "3-pass AI pipeline: Scene Classification → Violation Detection → Consistency Check",
+  "project_id": "ada-compliance-auditor",
+  "source": "photo_input",
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 0.6
+  },
+  "components": [
+    {
+      "id": "photo_input",
+      "name": "Photo Upload",
+      "provider": "webhook",
+      "config": {
+        "type": "webhook",
+        "mode": "Source",
+        "hideForm": true,
+        "parameters": {}
+      },
+      "ui": {
+        "position": { "x": 100, "y": 250 },
+        "measured": { "width": 180, "height": 140 },
+        "data": {
+          "provider": "webhook",
+          "class": ["source"],
+          "type": "default",
+          "content": "Photo Upload"
+        },
+        "formDataValid": true
+      }
+    },
+    {
+      "id": "scene_classify",
+      "name": "Pass 1: Scene Classification",
+      "provider": "gemini",
+      "config": {
+        "model": "gemini-2.5-flash-lite",
+        "temperature": 0.2,
+        "maxOutputTokens": 256
+      },
+      "ui": {
+        "position": { "x": 450, "y": 250 },
+        "measured": { "width": 180, "height": 100 },
+        "data": {
+          "provider": "gemini",
+          "class": ["llm"],
+          "type": "default",
+          "content": "Pass 1: Scene Classification"
+        },
+        "formDataValid": true
+      },
+      "input": [
+        { "from": "photo_input", "lane": "Image" }
+      ]
+    },
+    {
+      "id": "scene_prompt",
+      "name": "Scene Prompt",
+      "provider": "prompt",
+      "config": {
+        "text": "You are an expert ADA compliance auditor. Classify the space type shown in this image. Return JSON: {\"space_type\": \"entrance|parking|restroom|interior|sidewalk|counter\"}"
+      },
+      "ui": {
+        "position": { "x": 450, "y": 80 },
+        "measured": { "width": 180, "height": 80 },
+        "data": {
+          "provider": "prompt",
+          "class": ["other"],
+          "type": "default",
+          "content": "Scene Prompt"
+        },
+        "formDataValid": true
+      }
+    },
+    {
+      "id": "violation_detect",
+      "name": "Pass 2: Violation Detection",
+      "provider": "gemini",
+      "config": {
+        "model": "gemini-2.5-flash-lite",
+        "temperature": 0.2,
+        "maxOutputTokens": 8192
+      },
+      "ui": {
+        "position": { "x": 800, "y": 250 },
+        "measured": { "width": 180, "height": 100 },
+        "data": {
+          "provider": "gemini",
+          "class": ["llm"],
+          "type": "default",
+          "content": "Pass 2: Violation Detection"
+        },
+        "formDataValid": true
+      },
+      "input": [
+        { "from": "scene_classify", "lane": "Text" }
+      ]
+    },
+    {
+      "id": "violation_prompt",
+      "name": "Detection Prompt",
+      "provider": "prompt",
+      "config": {
+        "text": "You are an expert ADA compliance auditor. Analyze this image for ADA accessibility violations. Check 51 violation types covering entrances, parking, restrooms, signage, counters. Return JSON with 'violations' array (violation_type, severity, confidence, description) and 'positive_features' array."
+      },
+      "ui": {
+        "position": { "x": 800, "y": 80 },
+        "measured": { "width": 180, "height": 80 },
+        "data": {
+          "provider": "prompt",
+          "class": ["other"],
+          "type": "default",
+          "content": "Detection Prompt"
+        },
+        "formDataValid": true
+      }
+    },
+    {
+      "id": "consistency_check",
+      "name": "Pass 3: Consistency Check",
+      "provider": "gemini",
+      "config": {
+        "model": "gemini-2.5-flash-lite",
+        "temperature": 0.1,
+        "maxOutputTokens": 8192
+      },
+      "ui": {
+        "position": { "x": 1150, "y": 250 },
+        "measured": { "width": 180, "height": 100 },
+        "data": {
+          "provider": "gemini",
+          "class": ["llm"],
+          "type": "default",
+          "content": "Pass 3: Consistency Check"
+        },
+        "formDataValid": true
+      },
+      "input": [
+        { "from": "violation_detect", "lane": "Text" }
+      ]
+    },
+    {
+      "id": "verify_prompt",
+      "name": "Verification Prompt",
+      "provider": "prompt",
+      "config": {
+        "text": "You are an expert ADA compliance auditor performing a final consistency check. Review these violations against the image. Remove false positives, adjust confidence. Return JSON with 'verified_violations' array and 'positive_features' array. Be conservative."
+      },
+      "ui": {
+        "position": { "x": 1150, "y": 80 },
+        "measured": { "width": 180, "height": 80 },
+        "data": {
+          "provider": "prompt",
+          "class": ["other"],
+          "type": "default",
+          "content": "Verification Prompt"
+        },
+        "formDataValid": true
+      }
+    },
+    {
+      "id": "report_output",
+      "name": "Compliance Report",
+      "provider": "local_text_output",
+      "config": {
+        "format": "json"
+      },
+      "ui": {
+        "position": { "x": 1500, "y": 250 },
+        "measured": { "width": 180, "height": 100 },
+        "data": {
+          "provider": "local_text_output",
+          "class": ["infrastructure"],
+          "type": "default",
+          "content": "Compliance Report"
+        },
+        "formDataValid": true
+      },
+      "input": [
+        { "from": "consistency_check", "lane": "Text" }
+      ]
+    }
+  ]
+}

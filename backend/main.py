@@ -1,3 +1,8 @@
+"""ADA Compliance Auditor — FastAPI backend.
+
+Primary execution path: RocketRide pipeline (when ROCKETRIDE_URI is set).
+Fallback: Direct Gemini API calls via gemini_pipeline.py.
+"""
 import os
 import json
 import uuid
@@ -16,17 +21,21 @@ from gemini_pipeline import run_analysis_pipeline
 from violations import enrich_violations
 from pdf_generator import generate_pdf_report
 
-# RocketRide integration (optional -- used when ROCKETRIDE_URI is set)
-ROCKETRIDE_URI = os.getenv("ROCKETRIDE_URI", "")
-ROCKETRIDE_APIKEY = os.getenv("ROCKETRIDE_APIKEY", "")
-PIPELINE_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "pipeline", "ada_auditor.pipe.json")
-_rr_client = None
-
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-app = FastAPI(title="ADA Compliance Auditor")
+# ── Configuration ────────────────────────────────────────────────
+ROCKETRIDE_URI = os.getenv("ROCKETRIDE_URI", "")
+ROCKETRIDE_APIKEY = os.getenv("ROCKETRIDE_APIKEY", "")
+PIPELINE_PATH = os.path.join(
+    os.path.dirname(os.path.dirname(__file__)),
+    "pipeline", "ada_auditor.pipe",
+)
+FRONTEND_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend")
 
+USE_ROCKETRIDE = bool(ROCKETRIDE_URI)
+
+app = FastAPI(title="ADA Compliance Auditor")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -34,79 +43,197 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-FRONTEND_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend")
-
-# Temporary PDF storage (in-memory for hackathon)
+# In-memory PDF store (hackathon)
 _pdf_store: dict[str, bytes] = {}
 
+
+# ── RocketRide Pipeline Execution ────────────────────────────────
+async def _run_via_rocketride(image_bytes: bytes, mime_type: str, state: str):
+    """Execute the 3-pass analysis through the RocketRide pipeline engine."""
+    from rocketride import RocketRideClient
+
+    logger.info("Executing via RocketRide pipeline at %s", ROCKETRIDE_URI)
+
+    async with RocketRideClient(uri=ROCKETRIDE_URI, auth=ROCKETRIDE_APIKEY) as client:
+        result = await client.use(filepath=PIPELINE_PATH)
+        token = result["token"]
+
+        response = await client.send(
+            token,
+            image_bytes,
+            objinfo={"name": "building_photo.jpg"},
+            mimetype=mime_type,
+        )
+
+        status = await client.get_task_status(token)
+        await client.terminate(token)
+
+        raw = response if isinstance(response, dict) else json.loads(response)
+        raw["_pipeline_mode"] = "rocketride"
+        raw["_pipeline_status"] = status.get("state", "unknown")
+        return raw
+
+
+async def _run_via_direct_gemini(image_bytes: bytes, mime_type: str, state: str):
+    """Execute the 3-pass analysis via direct Gemini API calls (fallback)."""
+    logger.info("Executing via direct Gemini API (fallback)")
+
+    results = {}
+    async for pass_result in run_analysis_pipeline(image_bytes, mime_type, state=state):
+        results[pass_result.pass_name] = pass_result.data
+
+    consistency = results.get("consistency_check", {})
+    verified = (
+        consistency.get("verified_violations")
+        or consistency.get("violations")
+        or []
+    )
+
+    raw = {
+        "violations": verified,
+        "positive_features": consistency.get("positive_features", []),
+        "overall_risk": consistency.get("overall_risk", "unknown"),
+        "summary": consistency.get("summary", ""),
+        "space_type": results.get("scene_classification", {}).get("space_type", "unknown"),
+        "follow_up_suggestions": consistency.get("follow_up_suggestions", []),
+        "_pipeline_mode": "direct_gemini",
+    }
+    return raw
+
+
+# ── API Endpoints ────────────────────────────────────────────────
 
 @app.get("/api/config")
 async def get_config():
     """Return client-safe configuration values."""
-    return {"google_maps_api_key": os.getenv("GOOGLE_MAPS_API_KEY", "")}
+    return {
+        "google_maps_api_key": os.getenv("GOOGLE_MAPS_API_KEY", ""),
+        "pipeline_mode": "rocketride" if USE_ROCKETRIDE else "direct_gemini",
+    }
+
+
+@app.get("/api/pipeline/status")
+async def pipeline_status():
+    """Check pipeline execution mode and RocketRide availability."""
+    return {
+        "mode": "rocketride" if USE_ROCKETRIDE else "direct_gemini",
+        "rocketride_uri": ROCKETRIDE_URI or None,
+        "rocketride_available": USE_ROCKETRIDE,
+        "pipeline_file": PIPELINE_PATH,
+    }
 
 
 @app.post("/api/analyze")
-async def analyze(file: UploadFile = File(...), location_label: str = Form(""), state: str = Form("")):
-    """Analyze image via 3-pass Gemini pipeline with SSE progress streaming."""
+async def analyze(
+    file: UploadFile = File(...),
+    location_label: str = Form(""),
+    state: str = Form(""),
+):
+    """Analyze image for ADA compliance violations.
+
+    Routes through RocketRide pipeline when available, falls back to
+    direct Gemini API calls otherwise. Streams progress via SSE.
+    """
     contents = await file.read()
     mime_type = file.content_type or "image/jpeg"
 
     async def event_stream():
-        space_type = "unknown"
-
-        async for pass_result in run_analysis_pipeline(contents, mime_type, state=state):
-            if pass_result.pass_name == "scene_classification":
-                space_type = pass_result.data.get("space_type", "unknown")
+        # ── Try RocketRide first, fall back to direct Gemini ──
+        raw = None
+        try:
+            if USE_ROCKETRIDE:
                 yield "data: {}\n\n".format(json.dumps({
                     "pass": "scene_classification",
-                    "space_type": space_type,
+                    "space_type": "analyzing",
+                    "pipeline_mode": "rocketride",
                 }))
-
-            elif pass_result.pass_name == "violation_detection":
-                count = len(pass_result.data.get("violations", []))
-                yield "data: {}\n\n".format(json.dumps({
-                    "pass": "violation_detection",
-                    "violation_count": count,
-                }))
-
-            elif pass_result.pass_name == "consistency_check":
-                # Pass 3 returns "verified_violations" (not "violations")
-                # Fall back to "violations" if the model uses that key instead
-                verified = (
-                    pass_result.data.get("verified_violations")
-                    or pass_result.data.get("violations")
+                raw = await _run_via_rocketride(contents, mime_type, state)
+                space_type = raw.get("space_type", "unknown")
+                violations = (
+                    raw.get("verified_violations")
+                    or raw.get("violations")
                     or []
                 )
-                merged = {
-                    "violations": verified,
-                    "positive_features": pass_result.data.get("positive_features", []),
-                    "overall_risk": pass_result.data.get("overall_risk", "unknown"),
-                    "summary": pass_result.data.get("summary", ""),
-                }
-
-                enriched = enrich_violations(merged, state=state)
-                enriched["follow_up_suggestions"] = pass_result.data.get(
-                    "follow_up_suggestions", []
-                )
-                enriched["space_type"] = space_type
-
-                # Generate PDF
-                pdf_bytes = generate_pdf_report(
-                    report=enriched,
-                    location_label=location_label or "Unknown Location",
-                    space_type=space_type,
-                    image_bytes=contents,
-                )
-                pdf_id = str(uuid.uuid4())
-                _pdf_store[pdf_id] = pdf_bytes
-
-                enriched["pdf_url"] = "/api/reports/{}/pdf".format(pdf_id)
-
                 yield "data: {}\n\n".format(json.dumps({
-                    "pass": "complete",
-                    "report": enriched,
+                    "pass": "violation_detection",
+                    "violation_count": len(violations),
                 }))
+        except Exception as e:
+            logger.warning("RocketRide failed (%s), falling back to direct Gemini", e)
+
+        # ── Fallback: stream each pass individually ──
+        if raw is None:
+            space_type = "unknown"
+            async for pass_result in run_analysis_pipeline(contents, mime_type, state=state):
+                if pass_result.pass_name == "scene_classification":
+                    space_type = pass_result.data.get("space_type", "unknown")
+                    yield "data: {}\n\n".format(json.dumps({
+                        "pass": "scene_classification",
+                        "space_type": space_type,
+                        "pipeline_mode": "direct_gemini",
+                    }))
+                elif pass_result.pass_name == "violation_detection":
+                    count = len(pass_result.data.get("violations", []))
+                    yield "data: {}\n\n".format(json.dumps({
+                        "pass": "violation_detection",
+                        "violation_count": count,
+                    }))
+                elif pass_result.pass_name == "consistency_check":
+                    verified = (
+                        pass_result.data.get("verified_violations")
+                        or pass_result.data.get("violations")
+                        or []
+                    )
+                    raw = {
+                        "violations": verified,
+                        "positive_features": pass_result.data.get("positive_features", []),
+                        "overall_risk": pass_result.data.get("overall_risk", "unknown"),
+                        "summary": pass_result.data.get("summary", ""),
+                        "follow_up_suggestions": pass_result.data.get("follow_up_suggestions", []),
+                        "space_type": space_type,
+                        "_pipeline_mode": "direct_gemini",
+                    }
+
+        if raw is None:
+            yield "data: {}\n\n".format(json.dumps({
+                "pass": "error",
+                "message": "Analysis failed — no result from pipeline",
+            }))
+            return
+
+        # ── Enrich with knowledge base ──
+        space_type = raw.get("space_type", "unknown")
+        violations = (
+            raw.get("verified_violations")
+            or raw.get("violations")
+            or []
+        )
+        merged = {
+            "violations": violations,
+            "positive_features": raw.get("positive_features", []),
+            "overall_risk": raw.get("overall_risk", "unknown"),
+            "summary": raw.get("summary", ""),
+        }
+        enriched = enrich_violations(merged, state=state)
+        enriched["follow_up_suggestions"] = raw.get("follow_up_suggestions", [])
+        enriched["space_type"] = space_type
+        enriched["pipeline_mode"] = raw.get("_pipeline_mode", "unknown")
+
+        # ── Generate PDF ──
+        pdf_bytes = generate_pdf_report(
+            report=enriched,
+            location_label=location_label or "Unknown Location",
+            space_type=space_type,
+            image_bytes=contents,
+        )
+        pdf_id = str(uuid.uuid4())
+        _pdf_store[pdf_id] = pdf_bytes
+        enriched["pdf_url"] = "/api/reports/{}/pdf".format(pdf_id)
+
+        yield "data: {}\n\n".format(json.dumps({
+            "pass": "complete",
+            "report": enriched,
+        }))
 
     return StreamingResponse(event_stream(), media_type="text/event-stream")
 
@@ -117,7 +244,6 @@ async def download_pdf(pdf_id: str):
     pdf_bytes = _pdf_store.get(pdf_id)
     if not pdf_bytes:
         return Response(status_code=404, content="Report not found")
-
     return Response(
         content=pdf_bytes,
         media_type="application/pdf",
@@ -125,88 +251,6 @@ async def download_pdf(pdf_id: str):
             "Content-Disposition": "attachment; filename=ada-audit-{}.pdf".format(pdf_id[:8])
         },
     )
-
-
-@app.get("/api/pipeline/status")
-async def pipeline_status():
-    """Check if RocketRide pipeline is available."""
-    return {
-        "rocketride_available": bool(ROCKETRIDE_URI),
-        "rocketride_uri": ROCKETRIDE_URI or None,
-        "pipeline_file": PIPELINE_PATH,
-        "mode": "rocketride" if ROCKETRIDE_URI else "direct_gemini",
-    }
-
-
-@app.post("/api/pipeline/run")
-async def run_pipeline(file: UploadFile = File(...), location_label: str = Form(""), state: str = Form("")):
-    """Run analysis via RocketRide pipeline (requires ROCKETRIDE_URI env var)."""
-    global _rr_client
-    if not ROCKETRIDE_URI:
-        return Response(status_code=400, content=json.dumps({
-            "error": "RocketRide not configured. Set ROCKETRIDE_URI env var or use /api/analyze for direct Gemini."
-        }), media_type="application/json")
-
-    try:
-        from rocketride import RocketRideClient
-
-        contents = await file.read()
-        mime_type = file.content_type or "image/jpeg"
-
-        async with RocketRideClient(uri=ROCKETRIDE_URI, auth=ROCKETRIDE_APIKEY) as client:
-            # Start the pipeline
-            result = await client.use(filepath=PIPELINE_PATH)
-            token = result["token"]
-
-            # Send the image into the pipeline
-            response = await client.send(
-                token,
-                contents,
-                objinfo={"name": "building_photo.jpg"},
-                mimetype=mime_type,
-            )
-
-            # Get the pipeline output
-            status = await client.get_task_status(token)
-            await client.terminate(token)
-
-            # Enrich the raw pipeline output
-            raw_report = response if isinstance(response, dict) else json.loads(response)
-            verified = raw_report.get("verified_violations") or raw_report.get("violations", [])
-            merged = {
-                "violations": verified,
-                "positive_features": raw_report.get("positive_features", []),
-                "overall_risk": raw_report.get("overall_risk", "unknown"),
-                "summary": raw_report.get("summary", ""),
-            }
-            enriched = enrich_violations(merged, state=state)
-            enriched["space_type"] = raw_report.get("space_type", "unknown")
-            enriched["pipeline_mode"] = "rocketride"
-            enriched["pipeline_status"] = status.get("state", "unknown")
-
-            # Generate PDF
-            pdf_bytes = generate_pdf_report(
-                report=enriched,
-                location_label=location_label or "Unknown Location",
-                space_type=enriched["space_type"],
-                image_bytes=contents,
-            )
-            pdf_id = str(uuid.uuid4())
-            _pdf_store[pdf_id] = pdf_bytes
-            enriched["pdf_url"] = "/api/reports/{}/pdf".format(pdf_id)
-
-            return enriched
-
-    except ImportError:
-        return Response(status_code=500, content=json.dumps({
-            "error": "rocketride package not installed. Run: uv add rocketride"
-        }), media_type="application/json")
-    except Exception as e:
-        logger.error("RocketRide pipeline failed: %s", e)
-        return Response(status_code=500, content=json.dumps({
-            "error": str(e),
-            "fallback": "Use /api/analyze for direct Gemini analysis"
-        }), media_type="application/json")
 
 
 @app.get("/")
