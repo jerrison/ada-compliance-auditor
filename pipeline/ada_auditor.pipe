@@ -41,14 +41,14 @@
         "profile": "gemini-2_5-flash",
         "gemini-3-pro": {},
         "gemini-2.5-flash": {
-          "apiKey": "literal:${GEMINI_API_KEY}",
+          "apiKey": "${ROCKETRIDE_GEMINI_API_KEY}",
           "systemInstruction": "You are an ADA compliance expert. Analyze the provided photograph and classify it into exactly one of the following space types: entrance, parking_lot, interior, restroom, sidewalk_path, counter_service_area. Consider the primary function and physical characteristics of the space shown. Respond ONLY with valid JSON in this exact format: {\"space_type\": \"<type>\"} where <type> is one of the space types listed above."
         },
         "parameters": {
           "google": {}
         },
         "gemini-2_5-flash": {
-          "apikey": "literal:${GEMINI_API_KEY}"
+          "apikey": "${ROCKETRIDE_GEMINI_API_KEY}"
         }
       },
       "ui": {
@@ -69,7 +69,7 @@
       },
       "input": [
         {
-          "lane": "data",
+          "lane": "questions",
           "from": "dropper_1"
         }
       ]
@@ -81,14 +81,14 @@
         "profile": "gemini-2_5-flash",
         "gemini-3-pro": {},
         "gemini-2.5-flash": {
-          "apiKey": "literal:${GEMINI_API_KEY}",
+          "apiKey": "${ROCKETRIDE_GEMINI_API_KEY}",
           "systemInstruction": "You are an ADA compliance expert specializing in the California Building Code (CBC) and Title 24 accessibility standards. Analyze the provided photograph for ADA accessibility violations. Check for: missing ramps, narrow doorways, round door knobs, missing handrails, steep ramps, missing accessible parking signs, missing parking striping, blocked accessible routes, missing curb cuts, surface gaps or cracks, protruding objects, missing tactile signage, missing grab bars, insufficient stall size, high mirror placement, inaccessible counters, inaccessible queues. For each violation detected, provide: violation_type, severity (low/medium/high), confidence (0.0-1.0), description, reasoning. WARNING: Avoid false positives. Only flag violations you can visually confirm. Respond ONLY with valid JSON: {\"violations\": [...], \"positive_features\": [...]}"
         },
         "parameters": {
           "google": {}
         },
         "gemini-2_5-flash": {
-          "apikey": "literal:${GEMINI_API_KEY}"
+          "apikey": "${ROCKETRIDE_GEMINI_API_KEY}"
         }
       },
       "ui": {
@@ -109,7 +109,7 @@
       },
       "input": [
         {
-          "lane": "answers",
+          "lane": "questions",
           "from": "llm_gemini_1"
         }
       ]
@@ -121,14 +121,14 @@
         "profile": "gemini-2_5-flash",
         "gemini-3-pro": {},
         "gemini-2.5-flash": {
-          "apiKey": "literal:${GEMINI_API_KEY}",
+          "apiKey": "${ROCKETRIDE_GEMINI_API_KEY}",
           "systemInstruction": "You are an ADA compliance expert performing a consistency review. A previous analysis pass detected potential violations. Please: 1) VERIFY each violation against the image, 2) REMOVE contradictory or duplicate violations, 3) ADJUST confidence scores based on evidence strength, 4) FLAG violations needing additional evidence. Be conservative — only include violations you are confident about. Respond ONLY with valid JSON: {\"verified_violations\": [...], \"removed_violations\": [...], \"follow_up_suggestions\": [...]}"
         },
         "parameters": {
           "google": {}
         },
         "gemini-2_5-flash": {
-          "apikey": "literal:${GEMINI_API_KEY}"
+          "apikey": "${ROCKETRIDE_GEMINI_API_KEY}"
         }
       },
       "ui": {
@@ -149,7 +149,7 @@
       },
       "input": [
         {
-          "lane": "answers",
+          "lane": "questions",
           "from": "llm_gemini_2"
         }
       ]
@@ -176,7 +176,7 @@
       },
       "input": [
         {
-          "lane": "answers",
+          "lane": "text",
           "from": "llm_gemini_3"
         }
       ]

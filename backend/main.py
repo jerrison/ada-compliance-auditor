@@ -49,14 +49,32 @@ _pdf_store: dict[str, bytes] = {}
 
 # ── RocketRide Pipeline Execution ────────────────────────────────
 async def _run_via_rocketride(image_bytes: bytes, mime_type: str, state: str):
-    """Execute the 3-pass analysis through the RocketRide pipeline engine."""
+    """Execute the 3-pass analysis through the RocketRide pipeline engine.
+
+    Loads the .pipe config as a dict and sends the image via the Python SDK.
+    The pipeline processes asynchronously through 3 Gemini passes.
+    Falls back to direct Gemini if the pipeline can't return results synchronously.
+    """
     from rocketride import RocketRideClient
 
     logger.info("Executing via RocketRide pipeline at %s", ROCKETRIDE_URI)
 
+    # Load pipeline definition as dict (avoids filepath resolution issues)
+    with open(PIPELINE_PATH) as f:
+        pipeline_config = json.load(f)
+
+    # Use only the processing nodes (dropper + 3 Gemini passes)
+    # local_text_output is for VS Code visual display only
+    pipeline_config["components"] = [
+        c for c in pipeline_config["components"]
+        if c["provider"] != "local_text_output"
+    ]
+
     async with RocketRideClient(uri=ROCKETRIDE_URI, auth=ROCKETRIDE_APIKEY) as client:
-        result = await client.use(filepath=PIPELINE_PATH)
+        result = await client.use(pipeline=pipeline_config)
         token = result["token"]
+
+        await client.set_events(token, ["apaevt_status_processing"])
 
         response = await client.send(
             token,
@@ -68,7 +86,13 @@ async def _run_via_rocketride(image_bytes: bytes, mime_type: str, state: str):
         status = await client.get_task_status(token)
         await client.terminate(token)
 
+        # Pipeline processes asynchronously — send() returns tracking info.
+        # If we don't get violation data back, the caller falls back to direct Gemini.
         raw = response if isinstance(response, dict) else json.loads(response)
+        if "violations" not in raw and "verified_violations" not in raw:
+            logger.info("RocketRide accepted image (objectId=%s) but no sync results; falling back", raw.get("objectId"))
+            return None
+
         raw["_pipeline_mode"] = "rocketride"
         raw["_pipeline_status"] = status.get("state", "unknown")
         return raw
@@ -115,11 +139,24 @@ async def get_config():
 @app.get("/api/pipeline/status")
 async def pipeline_status():
     """Check pipeline execution mode and RocketRide availability."""
+    rr_status = {"connected": False, "error": None}
+    if USE_ROCKETRIDE:
+        try:
+            from rocketride import RocketRideClient
+            async with RocketRideClient(uri=ROCKETRIDE_URI, auth=ROCKETRIDE_APIKEY) as client:
+                rr_status["connected"] = client.is_connected()
+                info = client.get_connection_info()
+                rr_status["transport"] = info.get("transport", "unknown")
+        except Exception as e:
+            rr_status["error"] = str(e)
+
     return {
         "mode": "rocketride" if USE_ROCKETRIDE else "direct_gemini",
         "rocketride_uri": ROCKETRIDE_URI or None,
         "rocketride_available": USE_ROCKETRIDE,
+        "rocketride_status": rr_status,
         "pipeline_file": PIPELINE_PATH,
+        "model": "gemini-2.5-flash",
     }
 
 
