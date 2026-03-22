@@ -2,9 +2,40 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>NSCameraUsageDescription</key>
-    <string>ADA Auditor needs camera access to photograph buildings for accessibility analysis.</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>ADA Auditor needs photo library access to select building photos for analysis.</string>
+	<!-- Camera access for photographing buildings -->
+	<key>NSCameraUsageDescription</key>
+	<string>ADA Auditor needs camera access to photograph buildings and public spaces for accessibility analysis.</string>
+
+	<!-- Photo library for selecting existing photos -->
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>ADA Auditor needs photo library access to select building photos for accessibility analysis.</string>
+
+	<!-- Location for geotagging audit reports -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>ADA Auditor uses your location to identify the building address and applicable local accessibility codes.</string>
+
+	<!-- App Transport Security — production URL is HTTPS so defaults are fine.
+	     Uncomment the block below ONLY if you need to test against a local HTTP server. -->
+	<!--
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+	</dict>
+	-->
+
+	<!-- Allow the app to declare it supports all orientations (iPhone) -->
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+
+	<!-- Status bar -->
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleDefault</string>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<true/>
 </dict>
 </plist>

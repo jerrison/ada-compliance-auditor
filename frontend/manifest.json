@@ -4,8 +4,8 @@
   "description": "AI-powered ADA accessibility auditor for California buildings",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#030712",
-  "theme_color": "#2563EB",
+  "background_color": "#f7f9fb",
+  "theme_color": "#0c1427",
   "orientation": "portrait",
   "icons": [
     {"src": "/static/icon-192.png", "sizes": "192x192", "type": "image/png"},

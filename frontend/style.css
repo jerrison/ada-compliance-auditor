@@ -1,61 +1,96 @@
-/* ── Base ──────────────────────────────────────────────── */
-body { font-family: 'DM Sans', system-ui, sans-serif; }
-.font-mono, [class*="font-mono"] { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+/* ══════════════════════════════════════════════════════════
+   Sovereign Auditor — Design System Tokens & Overrides
+   ══════════════════════════════════════════════════════════ */
+
+/* ── Design Tokens (CSS Custom Properties) ────────────── */
+:root {
+  --bg:                    #f7f9fb;
+  --surface-lowest:        #ffffff;
+  --surface-low:           #f2f4f6;
+  --surface-container:     #eceef0;
+  --surface-high:          #e6e8ea;
+  --primary:               #0c1427;
+  --primary-container:     #21283c;
+  --secondary:             #515f74;
+  --error:                 #ba1a1a;
+  --on-surface:            #191c1e;
+  --on-surface-variant:    #45474c;
+  --outline:               #75777d;
+  --outline-variant:       #c5c6cd;
+  --surface-tint:          #565e74;
+  --shadow-color:          rgba(25, 28, 30, 0.06);
+  --radius:                0.75rem;
+}
+
+/* ── Base ─────────────────────────────────────────────── */
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg) !important;
+  color: var(--on-surface) !important;
+}
+
+/* Override font-mono to still use Inter for labels */
+.font-mono, [class*="font-mono"] {
+  font-family: 'Inter', system-ui, sans-serif;
+  letter-spacing: 0.02em;
+}
 
 /* ── Drag-over ────────────────────────────────────────── */
 .drag-over {
-  border-color: #0ea5e9 !important;
-  background-color: rgba(14, 165, 233, 0.05) !important;
+  border-color: var(--primary) !important;
+  background-color: rgba(12, 20, 39, 0.03) !important;
 }
 
-/* ── Severity indicators ──────────────────────────────── */
-.severity-high   { border-left: 3px solid #f43f5e; }
-.severity-medium { border-left: 3px solid #f59e0b; }
-.severity-low    { border-left: 3px solid #0ea5e9; }
+/* ── Severity indicators — 8px pills, not full row ───── */
+.severity-high   { border-left: 4px solid var(--error); }
+.severity-medium { border-left: 4px solid #e5850a; }
+.severity-low    { border-left: 4px solid #3874cb; }
 
-.severity-badge-high   { background-color: #881337; color: #fda4af; }
-.severity-badge-medium { background-color: #78350f; color: #fcd34d; }
-.severity-badge-low    { background-color: #0c4a6e; color: #7dd3fc; }
+.severity-badge-high   { background-color: #fde8e8; color: var(--error); }
+.severity-badge-medium { background-color: #fef3e2; color: #9a6500; }
+.severity-badge-low    { background-color: #e8f0fd; color: #2756a0; }
 
-.risk-high   { background-color: #881337; color: #fda4af; }
-.risk-medium { background-color: #78350f; color: #fcd34d; }
-.risk-low    { background-color: #14532d; color: #86efac; }
-.risk-none   { background-color: #064e3b; color: #6ee7b7; }
+.risk-high   { background-color: #fde8e8; color: var(--error); }
+.risk-medium { background-color: #fef3e2; color: #9a6500; }
+.risk-low    { background-color: #e2f5ea; color: #166534; }
+.risk-none   { background-color: #e2f5ea; color: #166534; }
 
 /* ── Screen navigation ────────────────────────────────── */
 .screen { display: none; }
 .screen.active { display: block; }
 
-/* ── Bottom nav ───────────────────────────────────────── */
+/* ── Bottom nav — glassmorphism ──────────────────────── */
 .nav-btn {
   flex: 1;
   padding: 10px 0 8px;
   text-align: center;
-  color: #64748b;
+  color: var(--outline);
   transition: color 0.2s;
   background: none;
   border: none;
   cursor: pointer;
 }
-.nav-btn.active { color: #0ea5e9; }
+.nav-btn.active { color: var(--primary); }
 
 /* ── Filter buttons ───────────────────────────────────── */
 .filter-btn {
   padding: 6px 14px;
   border-radius: 9999px;
-  font-size: 12px;
-  font-weight: 500;
-  color: #94a3b8;
-  background-color: #1e293b;
-  border: 1px solid #334155;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+  background-color: var(--surface-low);
+  border: 1px solid transparent;
   cursor: pointer;
   transition: all 0.2s;
   white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 .filter-btn.active {
-  background-color: #0ea5e9;
-  color: white;
-  border-color: #0ea5e9;
+  background: linear-gradient(135deg, var(--primary), var(--primary-container));
+  color: #ffffff;
+  border-color: transparent;
 }
 
 /* ── Progress steps ───────────────────────────────────── */
@@ -63,14 +98,15 @@ body { font-family: 'DM Sans', system-ui, sans-serif; }
 
 /* ── Violation cards ──────────────────────────────────── */
 .violation-card {
-  background: #0f172a;
-  border: 1px solid #1e293b;
-  border-radius: 16px;
+  background: var(--surface-lowest);
+  border: none;
+  border-radius: var(--radius);
   overflow: hidden;
-  transition: border-color 0.2s;
+  transition: box-shadow 0.2s;
+  box-shadow: 0 1px 32px var(--shadow-color);
 }
 .violation-card:hover {
-  border-color: #334155;
+  box-shadow: 0 4px 32px rgba(25, 28, 30, 0.1);
 }
 
 .violation-card-header {
@@ -96,8 +132,8 @@ body { font-family: 'DM Sans', system-ui, sans-serif; }
   transition: transform 0.25s ease;
   width: 16px;
   height: 16px;
-  color: #475569;
-  shrink: 0;
+  color: var(--outline);
+  flex-shrink: 0;
 }
 .violation-card.expanded .violation-card-chevron {
   transform: rotate(180deg);
@@ -111,21 +147,22 @@ body { font-family: 'DM Sans', system-ui, sans-serif; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-size: 12px;
   font-weight: 700;
   flex-shrink: 0;
 }
-.priority-badge.sev-high   { background: #881337; color: #fda4af; }
-.priority-badge.sev-medium { background: #78350f; color: #fcd34d; }
-.priority-badge.sev-low    { background: #0c4a6e; color: #7dd3fc; }
+.priority-badge.sev-high   { background: #fde8e8; color: var(--error); }
+.priority-badge.sev-medium { background: #fef3e2; color: #9a6500; }
+.priority-badge.sev-low    { background: #e8f0fd; color: #2756a0; }
 
 /* ── Legal risk callout ───────────────────────────────── */
 .legal-risk-box {
-  background: rgba(244, 63, 94, 0.06);
-  border: 1px solid rgba(244, 63, 94, 0.15);
+  background: rgba(186, 26, 26, 0.04);
+  border: none;
   border-radius: 10px;
   padding: 10px 12px;
+  border-left: 3px solid var(--error);
 }
 
 /* ── Remediation steps ────────────────────────────────── */
@@ -138,21 +175,21 @@ body { font-family: 'DM Sans', system-ui, sans-serif; }
   width: 22px;
   height: 22px;
   border-radius: 6px;
-  background: #1e293b;
+  background: var(--surface-container);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-size: 10px;
   font-weight: 600;
-  color: #64748b;
+  color: var(--secondary);
   flex-shrink: 0;
   margin-top: 1px;
 }
 
 /* ── Code reference pills ─────────────────────────────── */
 .code-ref {
-  background: #1e293b;
+  background: var(--surface-low);
   border-radius: 10px;
   padding: 10px 12px;
 }
@@ -162,11 +199,11 @@ body { font-family: 'DM Sans', system-ui, sans-serif; }
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  background: #1e293b;
+  background: var(--surface-container);
   border-radius: 6px;
   padding: 4px 8px;
   font-size: 11px;
-  color: #94a3b8;
+  color: var(--on-surface-variant);
 }
 
 /* ── Cost row in summary table ────────────────────────── */
@@ -175,45 +212,387 @@ body { font-family: 'DM Sans', system-ui, sans-serif; }
   align-items: center;
   justify-content: space-between;
   padding: 8px 0;
-  border-bottom: 1px solid #1e293b;
+  border-bottom: 1px solid var(--surface-container);
 }
 .cost-row:last-child { border-bottom: none; }
 
 /* ── Tax credit card ──────────────────────────────────── */
 .tax-credit-card {
-  background: rgba(16, 185, 129, 0.05);
-  border: 1px solid rgba(16, 185, 129, 0.1);
+  background: rgba(22, 163, 74, 0.04);
+  border: none;
   border-radius: 10px;
   padding: 12px;
+  border-left: 3px solid #16a34a;
 }
 
 /* ── Severity bar segments ────────────────────────────── */
-.sev-bar-high   { background: #f43f5e; transition: width 0.6s ease; }
-.sev-bar-medium { background: #f59e0b; transition: width 0.6s ease; }
-.sev-bar-low    { background: #0ea5e9; transition: width 0.6s ease; }
+.sev-bar-high   { background: var(--error); transition: width 0.6s ease; }
+.sev-bar-medium { background: #e5850a; transition: width 0.6s ease; }
+.sev-bar-low    { background: #3874cb; transition: width 0.6s ease; }
 
-/* ── Google Places Autocomplete dark theme ───────────── */
+/* ── Google Places Autocomplete — light theme ─────────── */
 .pac-container {
-  background-color: #1e293b;
-  border: 1px solid #334155;
+  background-color: var(--surface-lowest);
+  border: none;
   border-radius: 12px;
   margin-top: 4px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-size: 13px;
+  box-shadow: 0 4px 32px var(--shadow-color);
 }
 .pac-item {
-  border-top: 1px solid #334155;
-  color: #cbd5e1;
+  border-top: 1px solid var(--surface-container);
+  color: var(--on-surface);
   padding: 8px 12px;
   cursor: pointer;
 }
 .pac-item:hover {
-  background-color: #334155;
+  background-color: var(--surface-low);
 }
 .pac-item-query {
-  color: #e2e8f0;
+  color: var(--on-surface);
 }
 .pac-matched {
-  color: #38bdf8;
+  color: var(--primary);
 }
 .pac-icon { display: none; }
+
+
+/* ══════════════════════════════════════════════════════════
+   Tailwind Utility Overrides for Light Theme
+   (remap dark-theme Tailwind classes set by app.js)
+   ══════════════════════════════════════════════════════════ */
+
+/* ── Background overrides ─────────────────────────────── */
+.bg-slate-950  { background-color: var(--bg) !important; }
+.bg-slate-900  { background-color: var(--surface-lowest) !important; }
+.bg-slate-800  { background-color: var(--surface-container) !important; }
+.bg-slate-700  { background-color: var(--surface-high) !important; }
+
+/* Surface backgrounds used in specific sections */
+.bg-slate-900\/80 { background-color: rgba(255,255,255,0.85) !important; backdrop-filter: blur(20px); }
+.bg-slate-900\/50 { background-color: var(--surface-low) !important; }
+
+/* Colored tinted backgrounds → subtle light tints */
+.bg-emerald-950\/20, .bg-emerald-950\/10 { background-color: rgba(22, 163, 74, 0.04) !important; }
+.bg-rose-950\/20    { background-color: rgba(186, 26, 26, 0.04) !important; }
+.bg-sky-950\/10     { background-color: rgba(56, 116, 203, 0.04) !important; }
+.bg-violet-950\/10  { background-color: rgba(124, 58, 237, 0.04) !important; }
+.bg-sky-500\/5      { background-color: rgba(12, 20, 39, 0.02) !important; }
+
+/* ── Text color overrides ─────────────────────────────── */
+.text-slate-200 { color: var(--on-surface) !important; }
+.text-slate-300 { color: var(--on-surface) !important; }
+.text-slate-400 { color: var(--on-surface-variant) !important; }
+.text-slate-500 { color: var(--secondary) !important; }
+.text-slate-600 { color: var(--outline) !important; }
+.text-slate-700 { color: var(--outline) !important; }
+.text-white     { color: var(--primary) !important; }
+
+/* Colored text — keep hues but darken for light bg */
+.text-emerald-400 { color: #15803d !important; }
+.text-emerald-300 { color: #166534 !important; }
+.text-emerald-300\/70 { color: rgba(22, 101, 52, 0.7) !important; }
+.text-emerald-500 { color: #16a34a !important; }
+.text-rose-400    { color: var(--error) !important; }
+.text-rose-300\/70 { color: rgba(186, 26, 26, 0.7) !important; }
+.text-amber-400   { color: #9a6500 !important; }
+.text-amber-400\/80 { color: rgba(154, 101, 0, 0.8) !important; }
+.text-rose-400\/80  { color: rgba(186, 26, 26, 0.8) !important; }
+.text-sky-400     { color: var(--primary) !important; }
+.text-sky-300     { color: var(--primary-container) !important; }
+.text-violet-400  { color: #6d28d9 !important; }
+.text-violet-300  { color: #7c3aed !important; }
+
+/* ── Border overrides ─────────────────────────────────── */
+.border-slate-800 { border-color: rgba(197, 198, 205, 0.2) !important; }
+.border-slate-700 { border-color: rgba(197, 198, 205, 0.2) !important; }
+
+/* Colored borders → softer for light theme */
+.border-emerald-900\/40, .border-emerald-900\/30 { border-color: rgba(22, 163, 74, 0.15) !important; }
+.border-rose-900\/40    { border-color: rgba(186, 26, 26, 0.15) !important; }
+.border-sky-900\/30     { border-color: rgba(56, 116, 203, 0.15) !important; }
+.border-violet-900\/30  { border-color: rgba(124, 58, 237, 0.15) !important; }
+
+/* ── Button overrides ─────────────────────────────────── */
+/* Primary CTA — gradient from primary to primary-container */
+.bg-sky-600 {
+  background: linear-gradient(135deg, var(--primary), var(--primary-container)) !important;
+}
+.hover\:bg-sky-500:hover {
+  background: linear-gradient(135deg, var(--primary-container), var(--primary)) !important;
+}
+.disabled\:bg-slate-800:disabled {
+  background: var(--surface-container) !important;
+}
+.disabled\:text-slate-600:disabled {
+  color: var(--outline) !important;
+}
+
+/* Locate button */
+.hover\:bg-slate-700:hover {
+  background-color: var(--surface-high) !important;
+}
+
+/* ── Gradient overrides ───────────────────────────────── */
+.bg-gradient-to-br { background: none !important; }
+.from-slate-900    { background-color: transparent !important; }
+.to-slate-900\/50  { background-color: transparent !important; }
+
+/* ── Specific section styling ─────────────────────────── */
+
+/* Report header card — lifted white card */
+.report-header {
+  background: var(--surface-lowest) !important;
+  border: none !important;
+  box-shadow: 0 1px 32px var(--shadow-color);
+  border-radius: var(--radius);
+}
+
+/* Stats cards */
+.stat-card {
+  background: var(--surface-lowest) !important;
+  border: none !important;
+  box-shadow: 0 1px 32px var(--shadow-color);
+  border-radius: var(--radius);
+}
+
+/* Progress panel */
+#progress {
+  background: var(--surface-lowest) !important;
+  border: none !important;
+  box-shadow: 0 1px 32px var(--shadow-color);
+}
+
+/* Upload area — underline style input feel */
+#upload-area {
+  background: var(--surface-lowest) !important;
+  border: 2px dashed rgba(197, 198, 205, 0.35) !important;
+  border-radius: var(--radius) !important;
+}
+#upload-area:hover {
+  border-color: var(--primary) !important;
+  background: var(--surface-low) !important;
+}
+#upload-area .drag-over,
+#upload-area.drag-over {
+  border-color: var(--primary) !important;
+  background: rgba(12, 20, 39, 0.03) !important;
+}
+
+/* Location input — underline style */
+#location-field {
+  background: var(--surface-low) !important;
+  border: none !important;
+  border-bottom: 2px solid var(--surface-high) !important;
+  border-radius: var(--radius) var(--radius) 0 0 !important;
+  color: var(--on-surface) !important;
+}
+#location-field::placeholder {
+  color: var(--outline) !important;
+}
+#location-field:focus {
+  border-bottom-color: var(--primary) !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Locate me button */
+#locate-btn {
+  background: var(--surface-low) !important;
+  border: none !important;
+  border-bottom: 2px solid var(--surface-high) !important;
+  border-radius: var(--radius) var(--radius) 0 0 !important;
+}
+
+/* ── Bottom nav — glassmorphism ──────────────────────── */
+nav.fixed {
+  background: rgba(255, 255, 255, 0.80) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-top: none !important;
+  box-shadow: 0 -1px 32px var(--shadow-color);
+}
+
+/* ── Divider lines → invisible (No-Line Rule) ─────────── */
+.h-px {
+  background-color: transparent !important;
+}
+
+/* Cost summary section divider */
+.border-t.border-slate-700 {
+  border-top-color: var(--surface-container) !important;
+}
+
+/* ── Sections with colored backgrounds ────────────────── */
+#cost-summary-section {
+  background: var(--surface-lowest) !important;
+  border: none !important;
+  box-shadow: 0 1px 32px var(--shadow-color);
+}
+
+#tax-credits-section {
+  background: rgba(22, 163, 74, 0.03) !important;
+  border: none !important;
+  border-left: 3px solid #16a34a;
+}
+
+#next-steps-section {
+  background: rgba(56, 116, 203, 0.03) !important;
+  border: none !important;
+  border-left: 3px solid #3874cb;
+}
+
+#followup-section {
+  background: rgba(124, 58, 237, 0.03) !important;
+  border: none !important;
+  border-left: 3px solid #7c3aed;
+}
+
+#positive-section {
+  background: rgba(22, 163, 74, 0.03) !important;
+  border: none !important;
+  border-left: 3px solid #16a34a;
+}
+
+/* Severity breakdown card */
+#severity-bar {
+  background-color: var(--surface-container) !important;
+}
+
+/* Compliance banner overrides for JS-set classes */
+#compliance-banner.rounded-2xl {
+  border: none !important;
+  box-shadow: 0 1px 32px var(--shadow-color);
+}
+
+/* Disclaimer */
+#results > .rounded-xl:last-of-type {
+  background: var(--surface-low) !important;
+  border: none !important;
+}
+
+/* ── SVG icon colors in upload area ───────────────────── */
+#upload-area svg { color: var(--outline) !important; }
+
+/* ── History cards (set by JS) ────────────────────────── */
+#history-list > div {
+  background: var(--surface-lowest) !important;
+  border: none !important;
+  box-shadow: 0 1px 32px var(--shadow-color);
+  border-radius: var(--radius) !important;
+}
+#history-list > div:hover {
+  background: var(--surface-low) !important;
+}
+
+/* ── History empty state ──────────────────────────────── */
+#history-empty svg { color: var(--outline) !important; }
+
+/* ── Active scanner indicator ─────────────────────────── */
+.bg-emerald-400 { background-color: #16a34a !important; }
+.text-emerald-400\/80 { color: rgba(22, 101, 52, 0.8) !important; }
+.animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+
+/* ── Rounded severity dots in severity bar legend ─────── */
+.bg-rose-500  { background-color: var(--error) !important; }
+.bg-amber-500 { background-color: #e5850a !important; }
+.bg-sky-500   { background-color: #3874cb !important; }
+
+/* ── Typography polish ────────────────────────────────── */
+h1, h2, h3 {
+  color: var(--primary);
+  font-family: 'Inter', sans-serif;
+}
+
+/* Labels — small uppercase with letter-spacing */
+.text-\[10px\],
+.text-\[11px\] {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Display-style large numbers */
+.text-xl, .text-lg {
+  font-weight: 700;
+}
+
+/* ── New Scan link ────────────────────────────────────── */
+#new-scan-btn {
+  color: var(--primary) !important;
+}
+#new-scan-btn:hover {
+  color: var(--primary-container) !important;
+}
+
+/* ── Download PDF button ──────────────────────────────── */
+#download-pdf-btn {
+  background: linear-gradient(135deg, var(--primary), var(--primary-container)) !important;
+  border: none;
+}
+
+/* ── Emerald indicator dot in header ──────────────────── */
+header .bg-emerald-400 {
+  background-color: var(--primary) !important;
+}
+header .text-emerald-400\/80 {
+  color: var(--secondary) !important;
+}
+
+/* ── Focus rings ──────────────────────────────────────── */
+.focus\:border-sky-500:focus  { border-color: var(--primary) !important; }
+.focus\:ring-sky-500\/30:focus { --tw-ring-color: rgba(12, 20, 39, 0.15) !important; }
+.hover\:border-sky-500:hover  { border-color: var(--primary) !important; }
+
+/* ── Rounded corners → match design system ────────────── */
+.rounded-2xl { border-radius: var(--radius) !important; }
+.rounded-xl  { border-radius: var(--radius) !important; }
+
+/* ── Analyze button — disabled state ─────────────────── */
+#analyze-btn:disabled {
+  background: var(--surface-container) !important;
+  color: var(--outline) !important;
+  cursor: not-allowed;
+}
+#analyze-btn:not(:disabled):hover {
+  background: linear-gradient(135deg, var(--primary-container), var(--primary)) !important;
+  opacity: 0.95;
+}
+
+/* ── Compliance banner — light theme overrides ────────── */
+#compliance-banner {
+  background: var(--surface-lowest) !important;
+}
+
+/* ── Spacing — embrace white space ────────────────────── */
+#results {
+  gap: 1rem;
+}
+
+/* ── Ensure .text-white inside buttons stays white ────── */
+#download-pdf-btn,
+#download-pdf-btn * {
+  color: #ffffff !important;
+}
+#analyze-btn:not(:disabled) {
+  color: #ffffff !important;
+}
+
+/* ── Scrollbar — match light theme ────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--surface-low);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--outline-variant);
+  border-radius: 3px;
+}
+
+/* ── Selection ────────────────────────────────────────── */
+::selection {
+  background: rgba(12, 20, 39, 0.12);
+  color: var(--primary);
+}
