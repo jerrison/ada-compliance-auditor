@@ -1,184 +1,55 @@
 {
-  "viewport": {
-    "x": -1045.0741663577744,
-    "y": -371.75178108284285,
-    "zoom": 1.6540467368865337
-  },
-  "name": "ADA Compliance Auditor",
-  "description": "3-pass AI pipeline: Photo → Scene Classification → Violation Detection → Consistency Check → Report",
-  "source": "dropper_1",
+  "viewport": { "x": 0, "y": 250, "zoom": 0.8 },
+  "name": "ADA Address Processor",
+  "description": "Enter an address, get the US state for jurisdiction lookup",
+  "source": "chat_1",
   "components": [
     {
-      "id": "dropper_1",
-      "provider": "dropper",
+      "id": "chat_1",
+      "provider": "chat",
       "config": {
         "hideForm": true,
         "mode": "Source",
         "parameters": {},
-        "type": "dropper"
+        "type": "chat"
       },
       "ui": {
-        "position": {
-          "x": 100,
-          "y": 400
-        },
-        "measured": {
-          "width": 160,
-          "height": 65
-        },
-        "data": {
-          "provider": "dropper",
-          "class": "source",
-          "type": "default"
-        },
+        "position": { "x": 200, "y": 400 },
+        "measured": { "width": 160, "height": 65 },
+        "data": { "provider": "chat", "class": "source", "type": "default" },
         "formDataValid": true
       }
     },
     {
-      "id": "llm_gemini_1",
-      "provider": "llm_gemini",
+      "id": "prompt_1",
+      "provider": "prompt",
       "config": {
-        "profile": "gemini-2_5-flash",
-        "gemini-3-pro": {},
-        "gemini-2.5-flash": {
-          "apiKey": "${ROCKETRIDE_GEMINI_API_KEY}",
-          "systemInstruction": "You are an ADA compliance expert. Analyze the provided photograph and classify it into exactly one of the following space types: entrance, parking_lot, interior, restroom, sidewalk_path, counter_service_area. Consider the primary function and physical characteristics of the space shown. Respond ONLY with valid JSON in this exact format: {\"space_type\": \"<type>\"} where <type> is one of the space types listed above."
-        },
-        "parameters": {
-          "google": {}
-        },
-        "gemini-2_5-flash": {
-          "apikey": "${ROCKETRIDE_GEMINI_API_KEY}"
-        }
+        "instructions": [
+          "Extract the US state from the given address. Return the two-letter state code (e.g. CA, NY, TX). If the address is in California, also note that CBC Title 24 applies."
+        ]
       },
       "ui": {
-        "position": {
-          "x": 500,
-          "y": 400
-        },
-        "measured": {
-          "width": 160,
-          "height": 65
-        },
-        "data": {
-          "provider": "llm_gemini",
-          "class": "llm",
-          "type": "default"
-        },
+        "position": { "x": 500, "y": 400 },
+        "measured": { "width": 160, "height": 65 },
+        "data": { "provider": "prompt", "class": "text", "type": "default" },
         "formDataValid": true
       },
       "input": [
-        {
-          "lane": "tags",
-          "from": "dropper_1"
-        }
+        { "lane": "questions", "from": "chat_1" }
       ]
     },
     {
-      "id": "llm_gemini_2",
-      "provider": "llm_gemini",
-      "config": {
-        "profile": "gemini-2_5-flash",
-        "gemini-3-pro": {},
-        "gemini-2.5-flash": {
-          "apiKey": "${ROCKETRIDE_GEMINI_API_KEY}",
-          "systemInstruction": "You are an ADA compliance expert specializing in the California Building Code (CBC) and Title 24 accessibility standards. Analyze the provided photograph for ADA accessibility violations. Check for: missing ramps, narrow doorways, round door knobs, missing handrails, steep ramps, missing accessible parking signs, missing parking striping, blocked accessible routes, missing curb cuts, surface gaps or cracks, protruding objects, missing tactile signage, missing grab bars, insufficient stall size, high mirror placement, inaccessible counters, inaccessible queues. For each violation detected, provide: violation_type, severity (low/medium/high), confidence (0.0-1.0), description, reasoning. WARNING: Avoid false positives. Only flag violations you can visually confirm. Respond ONLY with valid JSON: {\"violations\": [...], \"positive_features\": [...]}"
-        },
-        "parameters": {
-          "google": {}
-        },
-        "gemini-2_5-flash": {
-          "apikey": "${ROCKETRIDE_GEMINI_API_KEY}"
-        }
-      },
+      "id": "response_questions_1",
+      "provider": "response_questions",
+      "config": { "laneName": "questions" },
       "ui": {
-        "position": {
-          "x": 780,
-          "y": 380
-        },
-        "measured": {
-          "width": 160,
-          "height": 65
-        },
-        "data": {
-          "provider": "llm_gemini",
-          "class": "llm",
-          "type": "default"
-        },
+        "position": { "x": 800, "y": 400 },
+        "measured": { "width": 160, "height": 65 },
+        "data": { "provider": "response_questions", "class": "infrastructure", "type": "default" },
         "formDataValid": true
       },
       "input": [
-        {
-          "lane": "answers",
-          "from": "llm_gemini_1"
-        }
-      ]
-    },
-    {
-      "id": "llm_gemini_3",
-      "provider": "llm_gemini",
-      "config": {
-        "profile": "gemini-2_5-flash",
-        "gemini-3-pro": {},
-        "gemini-2.5-flash": {
-          "apiKey": "${ROCKETRIDE_GEMINI_API_KEY}",
-          "systemInstruction": "You are an ADA compliance expert performing a consistency review. A previous analysis pass detected potential violations. Please: 1) VERIFY each violation against the image, 2) REMOVE contradictory or duplicate violations, 3) ADJUST confidence scores based on evidence strength, 4) FLAG violations needing additional evidence. Be conservative — only include violations you are confident about. Respond ONLY with valid JSON: {\"verified_violations\": [...], \"removed_violations\": [...], \"follow_up_suggestions\": [...]}"
-        },
-        "parameters": {
-          "google": {}
-        },
-        "gemini-2_5-flash": {
-          "apikey": "${ROCKETRIDE_GEMINI_API_KEY}"
-        }
-      },
-      "ui": {
-        "position": {
-          "x": 1300,
-          "y": 400
-        },
-        "measured": {
-          "width": 160,
-          "height": 65
-        },
-        "data": {
-          "provider": "llm_gemini",
-          "class": "llm",
-          "type": "default"
-        },
-        "formDataValid": true
-      },
-      "input": [
-        {
-          "lane": "answers",
-          "from": "llm_gemini_2"
-        }
-      ]
-    },
-    {
-      "id": "local_text_output_1",
-      "provider": "local_text_output",
-      "config": {},
-      "ui": {
-        "position": {
-          "x": 1700,
-          "y": 400
-        },
-        "measured": {
-          "width": 160,
-          "height": 44
-        },
-        "data": {
-          "provider": "local_text_output",
-          "class": "infrastructure",
-          "type": "default"
-        },
-        "formDataValid": true
-      },
-      "input": [
-        {
-          "lane": "answers",
-          "from": "llm_gemini_3"
-        }
+        { "lane": "questions", "from": "prompt_1" }
       ]
     }
   ]
