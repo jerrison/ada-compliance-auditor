@@ -64,7 +64,7 @@
       "input": [
         {
           "from": "webhook_input",
-          "lane": "output"
+          "lane": "image"
         }
       ]
     },
@@ -98,7 +98,7 @@
       "input": [
         {
           "from": "pass1_scene_classification",
-          "lane": "answer"
+          "lane": "text"
         }
       ]
     },
@@ -132,7 +132,7 @@
       "input": [
         {
           "from": "pass2_violation_detection",
-          "lane": "answer"
+          "lane": "text"
         }
       ]
     },
@@ -163,7 +163,7 @@
       "input": [
         {
           "from": "pass3_consistency_check",
-          "lane": "answer"
+          "lane": "text"
         }
       ]
     }
